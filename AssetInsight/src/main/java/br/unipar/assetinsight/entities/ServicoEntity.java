@@ -30,7 +30,7 @@ public class ServicoEntity {
     private String patrimonio;
 
     @Column(name = "DS_PATRIMONIO")
-    private String descricaoPatrimonio;
+    private String dsPatrimonio;
 
     @Column(name = "NR_QUANTIDADE")
     private long quantidade;

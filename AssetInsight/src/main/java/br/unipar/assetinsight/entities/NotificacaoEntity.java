@@ -33,6 +33,6 @@ public class NotificacaoEntity {
 
     @Column(name = "DT_RECORD")
     @ColumnDefault("CURRENT_TIMESTAMP")
-    private Timestamp dtRecord;
+    private Timestamp dtEnvio;
 
 }

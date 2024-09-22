@@ -18,5 +18,5 @@ public record OrdemServicoResponse(
         StatusOrdemServicoEnum status,
         UsuarioResponse lastChangedBy,
         Timestamp lastChange,
-        boolean isArquivado
+        boolean arquivado
 ) implements Serializable { }

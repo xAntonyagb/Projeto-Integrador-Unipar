@@ -13,7 +13,7 @@ public record TarefaResponse(
         long id,
         String titulo,
         String descricao,
-        Timestamp dtPrevisao,
+        Timestamp previsao,
         AmbienteResponse ambiente,
         Timestamp lastChange,
         CategoriaResponse categoria,

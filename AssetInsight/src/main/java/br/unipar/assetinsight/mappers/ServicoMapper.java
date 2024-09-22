@@ -18,12 +18,25 @@ public interface ServicoMapper {
     @Mapping(source = "categoria", target = "categoriaEntity")
     @Mapping(source = "ambiente", target = "ambienteEntity")
     @Mapping(source = "id", target = "idServico")
+    @Mapping(source = "descricao", target = "dsPatrimonio")
     ServicoEntity toEntity(ServicoRespose response);
 
 
+    @Mapping(source = "categoriaEntity", target = "categoria")
+    @Mapping(source = "ambienteEntity", target = "ambiente")
+    @Mapping(source = "dsPatrimonio", target = "descricao")
     ServicoRequest toRequest(ServicoEntity entity);
 
-    ServicoRequest toRequest(ServicoRequest request);
+    ServicoRequest toRequest(ServicoRespose request);
 
+
+    @Mapping(source = "dtRecord", target = "lastChange")
+    @Mapping(source = "usuarioEntityCriador", target = "lastChangedBy")
+    @Mapping(source = "categoriaEntity", target = "categoria")
+    @Mapping(source = "ambienteEntity", target = "ambiente")
+    @Mapping(source = "idServico", target = "id")
+    @Mapping(source = "dsPatrimonio", target = "descricao")
     ServicoRespose toResponse(ServicoEntity entity);
+
+    ServicoRespose toResponse(ServicoRequest request);
 }

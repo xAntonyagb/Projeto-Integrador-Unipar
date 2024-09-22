@@ -34,4 +34,4 @@ build/
 
 
 ### env docker compose ###
-.env
+variables.env

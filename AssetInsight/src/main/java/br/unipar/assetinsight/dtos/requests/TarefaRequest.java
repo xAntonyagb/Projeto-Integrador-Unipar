@@ -17,7 +17,7 @@ public record TarefaRequest(
         long id,
         @NotNull @NotEmpty @NotBlank String titulo,
         @NotNull @NotEmpty @NotBlank String descricao,
-        @NotNull Timestamp dtPrevisao,
+        @NotNull Timestamp previsao,
         @NotNull AmbienteRequest ambiente,
         @NotNull CategoriaRequest categoria,
         @NotNull PrioridadeEnum prioridade,

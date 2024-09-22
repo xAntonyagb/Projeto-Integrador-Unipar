@@ -9,8 +9,9 @@ import java.sql.Timestamp;
  * DTO for {@link br.unipar.assetinsight.entities.NotificacaoEntity}
  */
 public record NotificacaoResponse(
-        long id, NotificacaoEnum tipo,
+        long id,
+        NotificacaoEnum tipo,
         String titulo,
         String descricao,
-        Timestamp dtArquivado
+        Timestamp dtEnvio
 ) implements Serializable { }

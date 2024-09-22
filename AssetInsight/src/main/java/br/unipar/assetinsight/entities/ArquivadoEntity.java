@@ -31,7 +31,7 @@ public class ArquivadoEntity {
 
     @ManyToOne
     @JoinColumn(name = "ID_TAREFA")
-    private TarefaEntity tarefa;
+    private TarefaEntity tarefaEntity;
 
     @Column(name = "DT_EXCLUIR")
     private Timestamp dtExcluir;

@@ -16,7 +16,7 @@ public record OrdemServicoRequest(
         long id,
         @NotNull @NotEmpty @NotBlank String descricao,
         @NotNull Timestamp data,
-        @NotNull @Size(min = 1) List<ServicoRequest> listServicos,
+        @NotNull @Size(min = 1) List<ServicoRequest> servicos,
         @Positive double valorTotal,
         @NotNull StatusOrdemServicoEnum status
 ) implements Serializable {}

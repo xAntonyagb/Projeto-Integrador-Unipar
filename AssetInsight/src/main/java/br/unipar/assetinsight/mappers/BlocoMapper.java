@@ -22,6 +22,7 @@ public interface BlocoMapper {
 
     BlocoRequest toRequest(BlocoResponse response);
 
+
     @Mapping(source = "dtRecord", target = "lastChange")
     @Mapping(source = "usuarioEntityCriador", target = "lastChangedBy")
     BlocoResponse toResponse(BlocoEntity entity);
