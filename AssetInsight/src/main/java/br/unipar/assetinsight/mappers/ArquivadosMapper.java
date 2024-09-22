@@ -28,9 +28,9 @@ public interface ArquivadosMapper {
     ArquivadoRequest toRequest(ArquivadoResponse response);
 
 
-    @Mapping(source = "ordemServico", target = "ordemServicoEntity")
-    @Mapping(source = "tarefa", target = "tarefaEntity")
-    @Mapping(source = "arquivadoBy", target = "usuarioEntityResponsavel")
+    @Mapping(source = "ordemServicoEntity", target = "ordemServico")
+    @Mapping(source = "tarefaEntity", target = "tarefa")
+    @Mapping(source = "usuarioEntityResponsavel", target = "arquivadoBy")
     ArquivadoResponse toResponse(ArquivadoEntity entity);
 
     ArquivadoResponse toResponse(ArquivadoRequest request);
