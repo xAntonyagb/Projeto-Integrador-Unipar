@@ -8,6 +8,8 @@ public class AssetInsightApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AssetInsightApplication.class, args);
+        System.out.println("AssetInsightApplication rodando...");
+
     }
 
 }
