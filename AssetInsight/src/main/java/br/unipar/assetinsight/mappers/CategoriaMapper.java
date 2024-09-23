@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(uses = UsuarioMapper.class)
 public interface CategoriaMapper {
     CategoriaMapper INSTANCE = Mappers.getMapper(CategoriaMapper.class);
@@ -29,4 +31,8 @@ public interface CategoriaMapper {
     CategoriaResponse toResponse(CategoriaEntity entity);
 
     CategoriaResponse toResponse(CategoriaRequest request);
+
+    List<CategoriaEntity> toEntityList(List<CategoriaRequest> request);
+    List<CategoriaRequest> toRequestList(List<CategoriaEntity> entity);
+    List<CategoriaResponse> toResponseList(List<CategoriaEntity> entity);
 }

@@ -6,6 +6,7 @@ import br.unipar.assetinsight.entities.TarefaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import java.util.List;
 
 @Mapper(uses = {CategoriaMapper.class, AmbienteMapper.class, UsuarioMapper.class})
 public interface TarefaMapper {
@@ -40,4 +41,9 @@ public interface TarefaMapper {
     TarefaResponse toResponse(TarefaEntity entity);
 
     TarefaResponse toResponse(TarefaRequest request);
+
+
+    List<TarefaEntity> toEntityList(List<TarefaRequest> request);
+    List<TarefaRequest> toRequestList(List<TarefaEntity> entity);
+    List<TarefaResponse> toResponseList(List<TarefaEntity> entity);
 }

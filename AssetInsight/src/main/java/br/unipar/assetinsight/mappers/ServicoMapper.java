@@ -6,6 +6,7 @@ import br.unipar.assetinsight.entities.ServicoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import java.util.List;
 
 @Mapper(uses = {CategoriaMapper.class, AmbienteMapper.class, UsuarioMapper.class})
 public interface ServicoMapper {
@@ -39,4 +40,9 @@ public interface ServicoMapper {
     ServicoRespose toResponse(ServicoEntity entity);
 
     ServicoRespose toResponse(ServicoRequest request);
+
+
+    List<ServicoEntity> toEntityList(List<ServicoRequest> request);
+    List<ServicoRequest> toRequestList(List<ServicoEntity> entity);
+    List<ServicoRespose> toResponseList(List<ServicoEntity> entity);
 }

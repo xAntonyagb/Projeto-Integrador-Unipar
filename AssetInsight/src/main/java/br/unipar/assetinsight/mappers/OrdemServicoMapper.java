@@ -6,6 +6,7 @@ import br.unipar.assetinsight.entities.OrdemServicoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import java.util.List;
 
 @Mapper(uses = {UsuarioMapper.class, ServicoMapper.class})
 public interface OrdemServicoMapper {
@@ -32,4 +33,9 @@ public interface OrdemServicoMapper {
     OrdemServicoResponse toResponse(OrdemServicoEntity entity);
 
     OrdemServicoResponse toResponse(OrdemServicoRequest request);
+
+
+    List<OrdemServicoEntity> toEntityList(List<OrdemServicoRequest> request);
+    List<OrdemServicoRequest> toRequestList(List<OrdemServicoEntity> entity);
+    List<OrdemServicoResponse> toResponseList(List<OrdemServicoEntity> entity);
 }

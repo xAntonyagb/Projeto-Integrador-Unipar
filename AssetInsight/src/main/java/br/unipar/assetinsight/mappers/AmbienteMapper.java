@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(uses = {BlocoMapper.class, UsuarioMapper.class})
 public interface AmbienteMapper {
     AmbienteMapper INSTANCE = Mappers.getMapper(AmbienteMapper.class);
@@ -33,4 +35,8 @@ public interface AmbienteMapper {
 
     AmbienteResponse toResponse(AmbienteRequest request);
 
+
+    List<AmbienteEntity> toEntityList(List<AmbienteRequest> request);
+    List<AmbienteRequest> toRequestList(List<AmbienteEntity> entity);
+    List<AmbienteResponse> toResponseList(List<AmbienteEntity> entity);
 }

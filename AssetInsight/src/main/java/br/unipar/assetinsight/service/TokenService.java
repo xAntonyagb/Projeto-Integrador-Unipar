@@ -2,7 +2,6 @@ package br.unipar.assetinsight.service;
 
 import br.unipar.assetinsight.dtos.requests.LoginRequest;
 import br.unipar.assetinsight.dtos.responses.LoginResponse;
-import br.unipar.assetinsight.entities.RolesEntity;
 import br.unipar.assetinsight.exceptions.UnauthorizedException;
 import br.unipar.assetinsight.repositories.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +28,6 @@ public class TokenService {
     }
 
     public LoginResponse login(LoginRequest loginRequest)  throws UnauthorizedException {
-
         var user = userRepository.findByUsernameIgnoreCase(loginRequest.username());
 
         if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {

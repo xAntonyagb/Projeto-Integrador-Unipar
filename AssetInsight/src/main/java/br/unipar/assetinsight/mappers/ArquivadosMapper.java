@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface ArquivadosMapper {
     ArquivadosMapper INSTANCE = Mappers.getMapper(ArquivadosMapper.class);
@@ -34,4 +36,9 @@ public interface ArquivadosMapper {
     ArquivadoResponse toResponse(ArquivadoEntity entity);
 
     ArquivadoResponse toResponse(ArquivadoRequest request);
+
+
+    List<ArquivadoEntity> toEntityList(List<ArquivadoRequest> request);
+    List<ArquivadoRequest> toRequestList(List<ArquivadoEntity> entity);
+    List<ArquivadoResponse> toResponseList(List<ArquivadoEntity> entity);
 }

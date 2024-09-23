@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.exceptions;
+package br.unipar.assetinsight.exceptions.handler;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Classe que vai servir de retorno visual quando ocorrer uma exessão na aplicação.
+ * Classe que vai servir de retorno quando ocorrer uma exessão na aplicação.
  * Essa classe pode retornar tanto uma lista, quano uma mensagem única.
  */
 @Getter

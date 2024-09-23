@@ -5,6 +5,7 @@ import br.unipar.assetinsight.entities.UsuarioEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import java.util.List;
 
 @Mapper(uses = RoleMapper.class)
 public interface UsuarioMapper {
@@ -20,4 +21,7 @@ public interface UsuarioMapper {
     @Mapping(target = "lastLogin", source = "dtLogin")
     UsuarioResponse toResponse(UsuarioEntity entity);
 
+
+    List<UsuarioEntity> toEntityList(List<UsuarioResponse> request);
+    List<UsuarioResponse> toResponseList(List<UsuarioEntity> entity);
 }

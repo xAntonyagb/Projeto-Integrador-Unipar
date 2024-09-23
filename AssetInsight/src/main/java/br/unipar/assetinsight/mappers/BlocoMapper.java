@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(uses = UsuarioMapper.class)
 public interface BlocoMapper {
     BlocoMapper INSTANCE = Mappers.getMapper(BlocoMapper.class);
@@ -28,4 +30,9 @@ public interface BlocoMapper {
     BlocoResponse toResponse(BlocoEntity entity);
 
     BlocoResponse toResponse(BlocoRequest request);
+
+
+    List<BlocoEntity> toEntityList(List<BlocoRequest> request);
+    List<BlocoRequest> toRequestList(List<BlocoEntity> entity);
+    List<BlocoResponse> toResponseList(List<BlocoEntity> entity);
 }
