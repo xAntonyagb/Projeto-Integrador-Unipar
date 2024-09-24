@@ -4,21 +4,15 @@ import br.unipar.assetinsight.dtos.requests.CadastroRequest;
 import br.unipar.assetinsight.dtos.responses.CadastroResponse;
 import br.unipar.assetinsight.entities.RolesEntity;
 import br.unipar.assetinsight.entities.UsuarioEntity;
-import br.unipar.assetinsight.enums.PermissoesEnum;
-import br.unipar.assetinsight.exceptions.SecurityException;
-import br.unipar.assetinsight.exceptions.TokenException;
 import br.unipar.assetinsight.exceptions.ValidationException;
 import br.unipar.assetinsight.mappers.AuthenticationMapper;
 import br.unipar.assetinsight.mappers.RoleMapper;
-import br.unipar.assetinsight.repositories.RoleRepository;
 import br.unipar.assetinsight.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AuthenticationService {

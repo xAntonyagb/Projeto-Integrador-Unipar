@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.security;
+package br.unipar.assetinsight.infra.security;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;

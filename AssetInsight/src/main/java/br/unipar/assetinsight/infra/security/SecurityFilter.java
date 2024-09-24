@@ -1,6 +1,5 @@
-package br.unipar.assetinsight.security;
+package br.unipar.assetinsight.infra.security;
 
-import br.unipar.assetinsight.exceptions.TokenException;
 import br.unipar.assetinsight.repositories.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,6 +31,10 @@ public class SecurityFilter extends OncePerRequestFilter {
         try {
             var token = this.getToken(request); // Pega o token da requisição
             var subject = tokenService.getSubjectByToken(token); // Decodifica o token utilizando a secret para pegar o username
+
+            if (subject == null) {
+                throw new SecurityException("Token inválido.");
+            }
 
             // Busca o usuário no banco de dados
             Optional<UserDetails> retorno = userRepository.findByUsernameIgnoreCase(subject);

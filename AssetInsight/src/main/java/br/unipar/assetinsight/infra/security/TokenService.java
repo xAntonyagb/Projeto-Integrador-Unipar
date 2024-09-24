@@ -1,7 +1,6 @@
-package br.unipar.assetinsight.security;
+package br.unipar.assetinsight.infra.security;
 
 import br.unipar.assetinsight.entities.UsuarioEntity;
-import br.unipar.assetinsight.exceptions.TokenException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -53,7 +52,7 @@ public class TokenService {
         try {
             return decodeToken(token).getSubject();
         } catch (Exception e) {
-            return ""; //Retorna vazio caso o token seja inválido (não lançar exceção pois será tratada pelo Repository)
+            return null; //Retorna vazio caso o token seja inválido (não lançar exceção pois será tratada pelo Repository)
         }
     }
 

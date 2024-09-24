@@ -2,7 +2,6 @@ package br.unipar.assetinsight.exceptions.handler;
 
 import br.unipar.assetinsight.exceptions.NotFoundException;
 import br.unipar.assetinsight.exceptions.SecurityException;
-import br.unipar.assetinsight.exceptions.TokenException;
 import br.unipar.assetinsight.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

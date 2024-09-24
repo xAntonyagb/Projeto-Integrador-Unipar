@@ -5,11 +5,10 @@ import br.unipar.assetinsight.dtos.requests.LoginRequest;
 import br.unipar.assetinsight.dtos.responses.CadastroResponse;
 import br.unipar.assetinsight.dtos.responses.LoginResponse;
 import br.unipar.assetinsight.entities.UsuarioEntity;
-import br.unipar.assetinsight.exceptions.SecurityException;
-import br.unipar.assetinsight.exceptions.TokenException;
+import br.unipar.assetinsight.infra.security.TokenException;
 import br.unipar.assetinsight.exceptions.ValidationException;
 import br.unipar.assetinsight.mappers.RoleMapper;
-import br.unipar.assetinsight.security.TokenService;
+import br.unipar.assetinsight.infra.security.TokenService;
 import br.unipar.assetinsight.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,9 +17,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -28,17 +26,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "Token", description = "Operações relacionadas a autentificação para utilização da API.")
 @RequestMapping("auth")
+@AllArgsConstructor
 public class AuthenticationController {
-    @Autowired
     private AuthenticationManager authenticationManager; //Faz o encode da senha e compara com hash do banco
-
-    @Autowired
     private AuthenticationService authenticationService;
-
-    @Autowired
     private TokenService tokenService;
-
-    @Autowired
     private RoleMapper roleMapper;
 
     @ApiResponses(value = {

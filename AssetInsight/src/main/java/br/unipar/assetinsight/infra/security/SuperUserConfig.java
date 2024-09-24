@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.security;
+package br.unipar.assetinsight.infra.security;
 
 import br.unipar.assetinsight.entities.RolesEntity;
 import br.unipar.assetinsight.entities.UsuarioEntity;
