@@ -10,7 +10,7 @@ import java.io.Serializable;
  * DTO para requests post de {@link ArquivadoEntity}
  */
 public record ArquivadoRequest(
-        long id,
+        Long id,
         @NotNull TipoArquivadoEnum tipo,
         @NotNull OrdemServicoRequest ordemServico,
         @NotNull TarefaRequest tarefa

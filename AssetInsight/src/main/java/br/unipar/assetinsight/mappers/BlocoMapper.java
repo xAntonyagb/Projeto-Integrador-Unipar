@@ -5,6 +5,7 @@ import br.unipar.assetinsight.dtos.responses.BlocoResponse;
 import br.unipar.assetinsight.entities.BlocoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public interface BlocoMapper {
 
     BlocoResponse toResponse(BlocoRequest request);
 
+
+    BlocoEntity updateEntity(BlocoRequest request, @MappingTarget BlocoEntity entity);
 
     List<BlocoEntity> toEntityList(List<BlocoRequest> request);
     List<BlocoRequest> toRequestList(List<BlocoEntity> entity);

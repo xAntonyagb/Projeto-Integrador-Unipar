@@ -12,7 +12,7 @@ import java.io.Serializable;
  * DTO para requests post de {@link ServicoEntity} em {@link OrdemServicoEntity}
  */
 public record ServicoRequest(
-        long id,
+        Long id,
         @NotNull @NotEmpty @NotBlank String patrimonio,
         @NotNull @NotEmpty @NotBlank String descricao,
         @Positive long quantidade,

@@ -5,6 +5,7 @@ import br.unipar.assetinsight.dtos.responses.OrdemServicoResponse;
 import br.unipar.assetinsight.entities.OrdemServicoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public interface OrdemServicoMapper {
 
     OrdemServicoResponse toResponse(OrdemServicoRequest request);
 
+
+    OrdemServicoEntity updateEntity(OrdemServicoRequest request, @MappingTarget OrdemServicoEntity entity);
 
     List<OrdemServicoEntity> toEntityList(List<OrdemServicoRequest> request);
     List<OrdemServicoRequest> toRequestList(List<OrdemServicoEntity> entity);

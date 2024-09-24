@@ -11,6 +11,6 @@ import java.io.Serializable;
  * DTO para requests post de {@link CategoriaEntity}
  */
 public record CategoriaRequest(
-        long id,
+        Long id,
         @NotNull @NotEmpty @NotBlank String descricao
 ) implements Serializable { }

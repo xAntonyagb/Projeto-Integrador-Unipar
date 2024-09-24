@@ -11,6 +11,6 @@ import java.io.Serializable;
  * DTO para requests post de {@link UsuarioEntity} em {@link RolesEntity}
  */
 public record RolesRequest(
-        long id,
+        Long id,
         @NotNull PermissoesEnum permissao
 ) implements Serializable { }

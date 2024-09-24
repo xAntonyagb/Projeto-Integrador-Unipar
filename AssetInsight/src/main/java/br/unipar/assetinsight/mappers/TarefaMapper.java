@@ -5,6 +5,7 @@ import br.unipar.assetinsight.dtos.responses.TarefaResponse;
 import br.unipar.assetinsight.entities.TarefaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public interface TarefaMapper {
 
     TarefaResponse toResponse(TarefaRequest request);
 
+
+    TarefaEntity updateEntity(TarefaRequest request, @MappingTarget TarefaEntity entity);
 
     List<TarefaEntity> toEntityList(List<TarefaRequest> request);
     List<TarefaRequest> toRequestList(List<TarefaEntity> entity);

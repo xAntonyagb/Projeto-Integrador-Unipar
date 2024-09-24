@@ -1,13 +1,12 @@
 package br.unipar.assetinsight.security;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -20,10 +19,14 @@ import java.util.logging.Logger;
 public class RSAKeys {
     private static final Logger LOGGER = Logger.getLogger(RSAKeys.class.getName());
 
-    private RSAPublicKey publicKey;
-    private RSAPrivateKey privateKey;
+    @Value("${api.security.rsa.public-key}")
+    private String publicKey;
 
-    public RSAPublicKey getPublicKey() {
+    @Value("${api.security.rsa.private-key}")
+    private String privateKey;
+
+
+    public String getPublicKey() {
         if (publicKey == null) {
             gerarChavesRSA();
             return publicKey;
@@ -31,7 +34,7 @@ public class RSAKeys {
         return publicKey;
     }
 
-    public RSAPrivateKey getPrivateKey() {
+    public String getPrivateKey() {
         if (privateKey == null) {
             gerarChavesRSA();
             return privateKey;
@@ -46,8 +49,8 @@ public class RSAKeys {
             keyGen.initialize(2048);
             KeyPair pair = keyGen.generateKeyPair();
 
-            this.publicKey = (RSAPublicKey) pair.getPublic();
-            this.privateKey = (RSAPrivateKey) pair.getPrivate();
+            this.publicKey = pair.getPublic().toString();
+            this.privateKey = pair.getPrivate().toString();
             LOGGER.info("Chaves geradas com sucesso!");
         }
         catch (NoSuchAlgorithmException ex) {

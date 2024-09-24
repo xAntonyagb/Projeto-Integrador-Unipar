@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  * DTO para requests post de {@link TarefaEntity}
  */
 public record TarefaRequest(
-        long id,
+        Long id,
         @NotNull @NotEmpty @NotBlank String titulo,
         @NotNull @NotEmpty @NotBlank String descricao,
         @NotNull Timestamp previsao,

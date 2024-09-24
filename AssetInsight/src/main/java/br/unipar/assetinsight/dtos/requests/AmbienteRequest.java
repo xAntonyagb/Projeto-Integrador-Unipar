@@ -11,7 +11,7 @@ import java.io.Serializable;
  * DTO para requests post de {@link AmbienteEntity}
  */
 public record AmbienteRequest(
-        long id,
+        Long id,
         @NotNull @NotEmpty @NotBlank String descricao,
         @NotNull BlocoRequest bloco
 ) implements Serializable { }

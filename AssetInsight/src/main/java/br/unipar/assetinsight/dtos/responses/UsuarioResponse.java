@@ -11,7 +11,6 @@ import java.util.UUID;
  * DTO for {@link br.unipar.assetinsight.entities.UsuarioEntity}
  */
 public record UsuarioResponse(
-        UUID id,
         String username,
         Timestamp dtCriacao,
         Timestamp lastLogin,

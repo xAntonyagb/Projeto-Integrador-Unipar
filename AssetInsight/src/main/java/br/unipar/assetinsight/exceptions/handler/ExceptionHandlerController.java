@@ -1,7 +1,8 @@
 package br.unipar.assetinsight.exceptions.handler;
 
 import br.unipar.assetinsight.exceptions.NotFoundException;
-import br.unipar.assetinsight.exceptions.UnauthorizedException;
+import br.unipar.assetinsight.exceptions.SecurityException;
+import br.unipar.assetinsight.exceptions.TokenException;
 import br.unipar.assetinsight.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -31,9 +32,9 @@ public class ExceptionHandlerController {
     }
 
     //Exeção de unauthorized
-    @ExceptionHandler(UnauthorizedException.class)
+    @ExceptionHandler(SecurityException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ApiExceptionDTO handleApiException(UnauthorizedException e) {
+    public ApiExceptionDTO handleApiException(SecurityException e) {
         return new ApiExceptionDTO(e.getMessage());
     }
 

@@ -11,6 +11,6 @@ import java.io.Serializable;
  * DTO para requests post de {@link BlocoEntity}
  */
 public record BlocoRequest(
-        long id,
+        Long id,
         @NotNull @NotEmpty @NotBlank String descricao
 ) implements Serializable { }

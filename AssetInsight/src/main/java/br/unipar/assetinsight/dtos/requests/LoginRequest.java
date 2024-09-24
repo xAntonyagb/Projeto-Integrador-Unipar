@@ -9,6 +9,8 @@ import java.io.Serializable;
 
 /**
  * DTO para login no sistema. Record de {@link UsuarioEntity}
+ * @param password
+ * @param username
  */
 public record LoginRequest(
         @NotNull @NotEmpty @NotBlank String username,

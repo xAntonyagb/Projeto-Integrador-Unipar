@@ -13,7 +13,7 @@ import java.util.List;
  * DTO para requests post de {@link OrdemServicoEntity}
  */
 public record OrdemServicoRequest(
-        long id,
+        Long id,
         @NotNull @NotEmpty @NotBlank String descricao,
         @NotNull Timestamp data,
         @NotNull @Size(min = 1) List<ServicoRequest> servicos,

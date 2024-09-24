@@ -5,6 +5,7 @@ import br.unipar.assetinsight.dtos.responses.ServicoRespose;
 import br.unipar.assetinsight.entities.ServicoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import java.util.List;
 
@@ -41,6 +42,8 @@ public interface ServicoMapper {
 
     ServicoRespose toResponse(ServicoRequest request);
 
+
+    ServicoEntity updateEntity(ServicoRequest request, @MappingTarget ServicoEntity entity);
 
     List<ServicoEntity> toEntityList(List<ServicoRequest> request);
     List<ServicoRequest> toRequestList(List<ServicoEntity> entity);

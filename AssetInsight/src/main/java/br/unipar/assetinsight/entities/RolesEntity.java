@@ -3,6 +3,7 @@ package br.unipar.assetinsight.entities;
 import br.unipar.assetinsight.enums.PermissoesEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table (name = "ROLE")
@@ -20,4 +21,5 @@ public class RolesEntity {
     @Column(name = "DS_PERMISSAO")
     @Enumerated(EnumType.STRING)
     private PermissoesEnum permisao;
+
 }

@@ -5,6 +5,7 @@ import br.unipar.assetinsight.dtos.responses.AmbienteResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -35,6 +36,8 @@ public interface AmbienteMapper {
 
     AmbienteResponse toResponse(AmbienteRequest request);
 
+
+    AmbienteEntity updateEntity(AmbienteRequest request, @MappingTarget AmbienteEntity entity);
 
     List<AmbienteEntity> toEntityList(List<AmbienteRequest> request);
     List<AmbienteRequest> toRequestList(List<AmbienteEntity> entity);

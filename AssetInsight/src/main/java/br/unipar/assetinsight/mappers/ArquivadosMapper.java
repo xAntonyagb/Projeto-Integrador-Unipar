@@ -5,6 +5,7 @@ import br.unipar.assetinsight.dtos.responses.ArquivadoResponse;
 import br.unipar.assetinsight.entities.ArquivadoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -37,6 +38,8 @@ public interface ArquivadosMapper {
 
     ArquivadoResponse toResponse(ArquivadoRequest request);
 
+
+    ArquivadoEntity updateEntity(ArquivadoRequest request, @MappingTarget ArquivadoEntity entity);
 
     List<ArquivadoEntity> toEntityList(List<ArquivadoRequest> request);
     List<ArquivadoRequest> toRequestList(List<ArquivadoEntity> entity);
