@@ -18,14 +18,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RestController
 @Tag(name = "Token", description = "Operações relacionadas a autentificação para utilização da API.")
 @RequestMapping("auth")
+@CrossOrigin(origins = "localhost:4200")
 @AllArgsConstructor
 public class AuthenticationController {
     private AuthenticationManager authenticationManager; //Faz o encode da senha e compara com hash do banco
@@ -64,6 +67,7 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(loginResponse);
     }
+
 
 
     @PostMapping("/cadastrar")
