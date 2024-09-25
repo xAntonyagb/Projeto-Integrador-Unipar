@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -38,4 +40,10 @@ public interface BlocoMapper {
     List<BlocoEntity> toEntityList(List<BlocoRequest> request);
     List<BlocoRequest> toRequestList(List<BlocoEntity> entity);
     List<BlocoResponse> toResponseList(List<BlocoEntity> entity);
+
+    default Page<BlocoResponse> toResponsePage(Page<BlocoEntity> entityPage) {
+        List<BlocoEntity> entities = entityPage.getContent();
+        List<BlocoResponse> responses = toResponseList(entities);
+        return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
+    }
 }

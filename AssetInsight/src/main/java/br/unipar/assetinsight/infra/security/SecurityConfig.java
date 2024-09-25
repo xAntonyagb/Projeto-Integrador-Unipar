@@ -42,16 +42,19 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "auth/cadastro").hasRole("SUPER")
-                        .requestMatchers(HttpMethod.GET,"/swagger-ui/**",
+                        .requestMatchers(HttpMethod.POST, "auth/cadastrar").hasAnyAuthority("SUPER", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET,"/swagger-ui.html",
+                                                        "/swagger-ui/**",
                                                         "/swagger-resources/**",
                                                         "/test/**",
+                                                        "api/metadata/**",
                                                         "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(securityTokenFilter, UsernamePasswordAuthenticationFilter.class) // Resgata o usuario com base no token
                 .build();
     }
+
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         String[] origins = corsOrigins.split(",");

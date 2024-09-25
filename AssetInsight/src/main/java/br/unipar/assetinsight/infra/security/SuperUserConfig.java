@@ -1,9 +1,12 @@
 package br.unipar.assetinsight.infra.security;
 
+import br.unipar.assetinsight.dtos.requests.CadastroRequest;
 import br.unipar.assetinsight.entities.RolesEntity;
 import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.enums.PermissoesEnum;
+import br.unipar.assetinsight.exceptions.ValidationException;
 import br.unipar.assetinsight.repositories.UsuarioRepository;
+import br.unipar.assetinsight.service.AuthenticationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +22,7 @@ public class SuperUserConfig implements CommandLineRunner {
     private static final Logger LOGGER = Logger.getLogger(SuperUserConfig.class.getName());
 
     @Autowired
-    private UsuarioRepository userRepository;
+    private AuthenticationService authService;
 
     @Value("${assetinsight.user.super.username}")
     private String username;
@@ -28,27 +31,17 @@ public class SuperUserConfig implements CommandLineRunner {
 
     @Override
     @Transactional
-    public void run(String... args) throws Exception {
-        RolesEntity role = new RolesEntity();
-        role.setPermisao(PermissoesEnum.SUPER);
-        role.setId(PermissoesEnum.SUPER.getId());
+    public void run(String... args) {
+        List<PermissoesEnum> roleSuper = List.of(PermissoesEnum.SUPER);
 
-        boolean isUserCadastrado = userRepository.findByListRolesContaining(role).isEmpty();
-
-        if (isUserCadastrado) {
-            LOGGER.info("Usuario Super já existe, pulando cadastro...");
-        } else {
-            String senhaCriptografada = new BCryptPasswordEncoder().encode(password);
-
-            LOGGER.info("Cadastrando usuario Super...");
-            UsuarioEntity user = new UsuarioEntity();
-            user.setUsername(username);
-            user.setPassword(senhaCriptografada);
-            List<RolesEntity> roles = List.of(role);
-            user.setListRoles(roles);
-            userRepository.save(user);
-            System.out.println("Usuario Super cadastrado com sucesso!");
+        LOGGER.info("Cadastrando usuario Super...");
+        CadastroRequest novoUsuario = new CadastroRequest(username, password, roleSuper);
+        try {
+            authService.cadastrarUsuario(novoUsuario);
+        } catch (ValidationException e) {
+            LOGGER.warning("Usuario Super já existe.");
         }
+        LOGGER.info("Usuario Super cadastrado com sucesso!");
     }
 
 }

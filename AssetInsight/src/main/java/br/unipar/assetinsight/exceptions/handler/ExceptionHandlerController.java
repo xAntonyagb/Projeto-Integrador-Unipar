@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(SecurityException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiExceptionDTO handleApiException(SecurityException e) {
+        return new ApiExceptionDTO(e.getMessage());
+    }
+
+    //Exeção de NoResourceFound
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiExceptionDTO handleApiException(NoResourceFoundException e) {
         return new ApiExceptionDTO(e.getMessage());
     }
 

@@ -4,11 +4,8 @@ import br.unipar.assetinsight.dtos.requests.CadastroRequest;
 import br.unipar.assetinsight.dtos.requests.LoginRequest;
 import br.unipar.assetinsight.dtos.responses.CadastroResponse;
 import br.unipar.assetinsight.dtos.responses.LoginResponse;
-import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.infra.security.TokenException;
 import br.unipar.assetinsight.exceptions.ValidationException;
-import br.unipar.assetinsight.mappers.RoleMapper;
-import br.unipar.assetinsight.infra.security.TokenService;
 import br.unipar.assetinsight.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,12 +15,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RestController
 @Tag(name = "Token", description = "Operações relacionadas a autentificação para utilização da API.")
@@ -31,10 +24,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @CrossOrigin(origins = "localhost:4200")
 @AllArgsConstructor
 public class AuthenticationController {
-    private AuthenticationManager authenticationManager; //Faz o encode da senha e compara com hash do banco
     private AuthenticationService authenticationService;
-    private TokenService tokenService;
-    private RoleMapper roleMapper;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ok", content =
@@ -49,26 +39,9 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) throws TokenException {
-        var usuarioSenha = new UsernamePasswordAuthenticationToken(request.username(), request.password());
-        var auth = authenticationManager.authenticate(usuarioSenha); // 401 se der ruim
-
-        var usuarioAutenticado = (UsuarioEntity) auth.getPrincipal();
-
-        var token = tokenService.generateToken(usuarioAutenticado); //Gera token a partir do usuario que já foi autenticado
-        var tokenDecoded = tokenService.decodeToken(token);
-
-        LoginResponse loginResponse = new LoginResponse(
-                token,
-                tokenDecoded.getExpiresAt(),
-                tokenDecoded.getIssuedAt(),
-                roleMapper.toPermissoesEnumList(usuarioAutenticado.getListRoles())
-        );
-
-
-        return ResponseEntity.ok(loginResponse);
+        LoginResponse response = authenticationService.doLogin(request);
+        return ResponseEntity.ok(response);
     }
-
-
 
     @PostMapping("/cadastrar")
     public ResponseEntity<CadastroResponse> cadastrarUsuario(@RequestBody @Valid CadastroRequest request) throws ValidationException {

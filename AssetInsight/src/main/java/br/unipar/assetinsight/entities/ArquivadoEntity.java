@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 public class ArquivadoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_ARQUIVADO")
     private long id;
 

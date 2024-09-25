@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 public class CategoriaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_CATEGORIA")
     private long id;
 

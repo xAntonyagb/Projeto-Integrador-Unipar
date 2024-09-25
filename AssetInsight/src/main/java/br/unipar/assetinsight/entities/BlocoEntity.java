@@ -16,9 +16,9 @@ import java.sql.Timestamp;
 public class BlocoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_BLOCO")
-    private long id;
+    private Long id;
 
     @Column(name = "DS_DESCRICAO")
     private String descricao;

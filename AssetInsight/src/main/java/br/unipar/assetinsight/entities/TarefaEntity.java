@@ -9,7 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "BLOCO")
+@Table(name = "TAREFA")
 @Getter
 @Setter
 @ToString
@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 public class TarefaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_TAREFA")
     private long id;
 

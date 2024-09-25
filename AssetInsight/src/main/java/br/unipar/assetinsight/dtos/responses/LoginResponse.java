@@ -3,7 +3,7 @@ package br.unipar.assetinsight.dtos.responses;
 import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.enums.PermissoesEnum;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public record LoginResponse(
         String acessToken,
-        Date expiresIn,
-        Date createdAt,
+        Instant expiresIn,
+        Instant createdAt,
         List<PermissoesEnum> permissoes
 ) { }

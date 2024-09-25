@@ -13,8 +13,4 @@ public enum PermissoesEnum {
     private final long id;
     private final String descricao;
 
-    public String getDescricao() {
-        return descricao;
-    }
-
 }

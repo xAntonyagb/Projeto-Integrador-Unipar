@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "USUARIO")
 @Getter
 @Setter
 @ToString

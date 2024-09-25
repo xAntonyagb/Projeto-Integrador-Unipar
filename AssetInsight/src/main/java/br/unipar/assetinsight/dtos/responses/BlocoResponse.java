@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * DTO for {@link br.unipar.assetinsight.entities.BlocoEntity}
  */
 public record BlocoResponse(
-        long id,
+        Long id,
         String descricao,
         Timestamp lastChange,
         UsuarioResponse lastChangedBy

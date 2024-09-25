@@ -20,6 +20,9 @@ public class TokenService {
     @Value("${jwt.expiration.hours}")
     private long expiration;
 
+    public Instant expirationDate;
+    public Instant IssuedAt;
+
 
     public String generateToken(UsuarioEntity usuario){
         try {
@@ -28,7 +31,7 @@ public class TokenService {
                     .withIssuer("AssetInsight")
                     .withSubject(usuario.getUsername())
                     .withExpiresAt(getExpirationDate())
-                    .withIssuedAt(Instant.now())
+                    .withIssuedAt(getIssuedAt())
                     .sign(algorithm);
 
             return token;
@@ -58,6 +61,12 @@ public class TokenService {
 
 
     private Instant getExpirationDate(){
-        return LocalDateTime.now().plusHours(expiration).toInstant(ZoneOffset.of("-03:00"));
+        expirationDate = LocalDateTime.now().plusHours(expiration).toInstant(ZoneOffset.of("-03:00"));
+        return expirationDate;
+    }
+
+    private Instant getIssuedAt(){
+        IssuedAt = LocalDateTime.now().toInstant(ZoneOffset.of("-03:00"));
+        return IssuedAt;
     }
 }

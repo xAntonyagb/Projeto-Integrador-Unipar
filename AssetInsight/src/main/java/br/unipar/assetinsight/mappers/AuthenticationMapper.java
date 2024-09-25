@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Mapper(uses = {RoleMapper.class})
 public interface AuthenticationMapper {
@@ -54,7 +55,11 @@ public interface AuthenticationMapper {
     CadastroResponse toCadastroResponse(CadastroRequest cadastroRequest);
 
 
-    default Timestamp toTimestamp(String createdAt){
-        return Timestamp.valueOf(createdAt);
+    default Instant map(Timestamp value){
+        return value.toInstant();
+    };
+
+    default Timestamp map(Instant value){
+        return Timestamp.from(value);
     };
 }

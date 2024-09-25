@@ -18,7 +18,7 @@ import java.util.List;
 public class OrdemServicoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_ORDEM_SERVICO")
     private long id;
 

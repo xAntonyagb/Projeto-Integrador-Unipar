@@ -1,6 +1,8 @@
 package br.unipar.assetinsight.infra.security;
 
+import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.repositories.UsuarioRepository;
+import br.unipar.assetinsight.utils.DataUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -36,12 +39,14 @@ public class SecurityFilter extends OncePerRequestFilter {
                 throw new SecurityException("Token inválido.");
             }
 
-            // Busca o usuário no banco de dados
-            Optional<UserDetails> retorno = userRepository.findByUsernameIgnoreCase(subject);
-            UserDetails usuario = retorno.orElseThrow(() -> new SecurityException("Usuário não pode ser encontrado."));
+            //Atualizar data de login
+            UsuarioEntity user = userRepository.findEntityByUsername(subject)
+                    .orElseThrow(() -> new SecurityException("Usuário não pode ser encontrado."));;
+            user.setDtLogin(DataUtils.getNow());
+            userRepository.save(user);
 
             //Pega os dados de autentificação do usuario
-            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 
             // Guardando o usuário autenticado no contexto do Spring Security - utilizado para validações de autorização
             SecurityContextHolder.getContext().setAuthentication(authentication);
