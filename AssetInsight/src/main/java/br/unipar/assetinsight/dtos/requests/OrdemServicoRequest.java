@@ -14,9 +14,8 @@ import java.util.List;
  */
 public record OrdemServicoRequest(
         Long id,
-        @NotNull @NotEmpty @NotBlank String descricao,
-        @NotNull Timestamp data,
-        @NotNull @Size(min = 1) List<ServicoRequest> servicos,
-        @Positive double valorTotal,
-        @NotNull StatusOrdemServicoEnum status
+        String descricao,
+        Timestamp data,
+        List<ServicoRequest> servicos,
+        @Positive double valorTotal
 ) implements Serializable {}

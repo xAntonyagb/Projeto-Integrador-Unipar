@@ -35,4 +35,7 @@ public class NotificacaoEntity {
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Timestamp dtEnvio;
 
+    @Column(name = "IS_READ")
+    @ColumnDefault("false")
+    boolean isLida;
 }

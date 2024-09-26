@@ -4,6 +4,7 @@ import br.unipar.assetinsight.exceptions.NotFoundException;
 import br.unipar.assetinsight.exceptions.SecurityException;
 import br.unipar.assetinsight.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,20 +22,27 @@ public class ExceptionHandlerController {
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptionDTO handleIllegalArgumentException(ValidationException e) {
-        return new ApiExceptionDTO(e.getMessage());
+        return new ApiExceptionDTO(e.getErrorList());
     }
 
     //Exeção de No Data Found
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiExceptionDTO handleApiException(NotFoundException e) {
-        return new ApiExceptionDTO(e.getMessage());
+        return new ApiExceptionDTO(e.getErrorList());
     }
 
     //Exeção de unauthorized
     @ExceptionHandler(SecurityException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiExceptionDTO handleApiException(SecurityException e) {
+        return new ApiExceptionDTO(e.getMessage());
+    }
+
+    //Exeção de credenciais erradas
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiExceptionDTO handleApiException(BadCredentialsException e) {
         return new ApiExceptionDTO(e.getMessage());
     }
 

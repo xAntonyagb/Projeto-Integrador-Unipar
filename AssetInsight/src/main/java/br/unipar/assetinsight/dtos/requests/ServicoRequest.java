@@ -13,11 +13,11 @@ import java.io.Serializable;
  */
 public record ServicoRequest(
         Long id,
-        @NotNull @NotEmpty @NotBlank String patrimonio,
-        @NotNull @NotEmpty @NotBlank String descricao,
-        @Positive long quantidade,
-        @Positive double valorUnit,
-        @Positive double valorTotal,
-        @NotNull CategoriaRequest categoria,
-        @NotNull AmbienteRequest ambiente
+        String patrimonio,
+        String descricao,
+        long quantidade,
+        double valorUnit,
+        double valorTotal,
+        CategoriaRequest categoria,
+        AmbienteRequest ambiente
 ) implements Serializable { }

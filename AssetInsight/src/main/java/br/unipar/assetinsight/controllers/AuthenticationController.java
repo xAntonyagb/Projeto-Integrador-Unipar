@@ -4,8 +4,6 @@ import br.unipar.assetinsight.dtos.requests.CadastroRequest;
 import br.unipar.assetinsight.dtos.requests.LoginRequest;
 import br.unipar.assetinsight.dtos.responses.CadastroResponse;
 import br.unipar.assetinsight.dtos.responses.LoginResponse;
-import br.unipar.assetinsight.infra.security.TokenException;
-import br.unipar.assetinsight.exceptions.ValidationException;
 import br.unipar.assetinsight.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +21,8 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Token", description = "Operações relacionadas a autentificação para utilização da API.")
 @RequestMapping("auth")
 @CrossOrigin(origins = "localhost:4200")
-@AllArgsConstructor
 public class AuthenticationController {
+    @Autowired
     private AuthenticationService authenticationService;
 
     @ApiResponses(value = {
@@ -38,13 +37,13 @@ public class AuthenticationController {
     @Operation(summary = "Gera um token de autenticação a partir dos dados de login.")
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) throws TokenException {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
         LoginResponse response = authenticationService.doLogin(request);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<CadastroResponse> cadastrarUsuario(@RequestBody @Valid CadastroRequest request) throws ValidationException {
+    public ResponseEntity<CadastroResponse> cadastrarUsuario(@RequestBody @Valid CadastroRequest request) {
         CadastroResponse retorno = authenticationService.cadastrarUsuario(request);
         return ResponseEntity.ok(retorno);
     }

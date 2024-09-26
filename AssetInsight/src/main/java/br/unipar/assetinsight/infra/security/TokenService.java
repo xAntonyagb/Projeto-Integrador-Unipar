@@ -1,6 +1,7 @@
 package br.unipar.assetinsight.infra.security;
 
 import br.unipar.assetinsight.entities.UsuarioEntity;
+import br.unipar.assetinsight.exceptions.SecurityException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -36,7 +37,7 @@ public class TokenService {
 
             return token;
         } catch (Exception e) {
-            throw new TokenException("Erro ao gerar token");
+            throw new SecurityException("Erro ao gerar token");
         }
     }
 

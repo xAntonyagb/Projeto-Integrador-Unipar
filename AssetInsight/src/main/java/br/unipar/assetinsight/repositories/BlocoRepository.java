@@ -8,6 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface BlocoRepository extends JpaRepository<BlocoEntity, Long> {
-    //codigo Find all com pagable
     Page<BlocoEntity> findAll(Pageable pageable);
 }

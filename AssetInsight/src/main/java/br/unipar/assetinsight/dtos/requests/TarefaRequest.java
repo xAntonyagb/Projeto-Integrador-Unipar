@@ -18,9 +18,8 @@ public record TarefaRequest(
         @NotNull @NotEmpty @NotBlank String titulo,
         @NotNull @NotEmpty @NotBlank String descricao,
         @NotNull Timestamp previsao,
-        @NotNull AmbienteRequest ambiente,
-        @NotNull CategoriaRequest categoria,
+        @NotNull Long ambiente,
+        @NotNull Long categoria,
         @NotNull PrioridadeEnum prioridade,
-        @NotNull StatusTarefaEnum status,
-        @NotNull boolean arquivado
+        @NotNull StatusTarefaEnum status
 ) implements Serializable { }
