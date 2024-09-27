@@ -1,0 +1,68 @@
+body{
+  font-family: Inter;
+}
+
+.cinza{
+  padding-top: 20px;
+  text-size-adjust: 10px;
+  color: gray;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: 300px;
+}
+
+.card-header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+
+.card-body {
+  padding-top: 8px;
+}
+.novo-ambiente{
+  background-color: white;
+  color: #D6001C;
+  border-color: #D6001C;
+  border-radius: 6px;
+
+}
+.header-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.large-button {
+  font-size: 1.2em;
+  color: #D6001C;
+  border-color: #D6001C ;
+  font-weight: 700;
+  background-color: white;
+  position: relative;
+  border-radius: 8px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  display: flex;
+  width: 30%;
+}
+
+.menu-container {
+  margin-left: auto;
+  border: none;
+  background-color: white;
+}
