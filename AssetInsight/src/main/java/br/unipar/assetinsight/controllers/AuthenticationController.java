@@ -4,6 +4,8 @@ import br.unipar.assetinsight.dtos.requests.CadastroRequest;
 import br.unipar.assetinsight.dtos.requests.LoginRequest;
 import br.unipar.assetinsight.dtos.responses.CadastroResponse;
 import br.unipar.assetinsight.dtos.responses.LoginResponse;
+import br.unipar.assetinsight.entities.UsuarioEntity;
+import br.unipar.assetinsight.mappers.AuthenticationMapper;
 import br.unipar.assetinsight.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,15 +14,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @Tag(name = "Token", description = "Operações relacionadas a autentificação para utilização da API.")
 @RequestMapping("auth")
-@CrossOrigin(origins = "localhost:4200")
 public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
@@ -44,8 +46,12 @@ public class AuthenticationController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<CadastroResponse> cadastrarUsuario(@RequestBody @Valid CadastroRequest request) {
-        CadastroResponse retorno = authenticationService.cadastrarUsuario(request);
-        return ResponseEntity.ok(retorno);
+        UsuarioEntity retorno = authenticationService.cadastrarUsuario(request);
+        CadastroResponse response = AuthenticationMapper.INSTANCE.toCadastroResponse(retorno);
+
+        URI uri = URI.create("/usuario/" + retorno.getId());
+
+        return ResponseEntity.created(uri).body(response);
     }
 
 }

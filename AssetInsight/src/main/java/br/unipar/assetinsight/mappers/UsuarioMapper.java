@@ -6,6 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
 import java.util.List;
 
 @Mapper(uses = RoleMapper.class)
@@ -27,4 +30,10 @@ public interface UsuarioMapper {
 
     List<UsuarioEntity> toEntityList(List<UsuarioResponse> request);
     List<UsuarioResponse> toResponseList(List<UsuarioEntity> entity);
+
+    default Page<UsuarioResponse> toResponsePage(Page<UsuarioEntity> entityPage) {
+        List<UsuarioEntity> entities = entityPage.getContent();
+        List<UsuarioResponse> responses = toResponseList(entities);
+        return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
+    }
 }

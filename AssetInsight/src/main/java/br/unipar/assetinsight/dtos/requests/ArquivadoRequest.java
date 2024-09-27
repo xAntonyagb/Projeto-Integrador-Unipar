@@ -12,6 +12,6 @@ import java.io.Serializable;
 public record ArquivadoRequest(
         Long id,
         @NotNull TipoArquivadoEnum tipo,
-        @NotNull OrdemServicoRequest ordemServico,
-        @NotNull TarefaRequest tarefa
+        @NotNull Long ordemServico,
+        @NotNull Long tarefa
 ) implements Serializable { }

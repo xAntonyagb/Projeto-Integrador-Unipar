@@ -1,14 +1,11 @@
 package br.unipar.assetinsight.service;
 
-import br.unipar.assetinsight.dtos.requests.AmbienteRequest;
-import br.unipar.assetinsight.dtos.requests.ServicoRequest;
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.entities.BlocoEntity;
 import br.unipar.assetinsight.entities.ServicoEntity;
 import br.unipar.assetinsight.entities.TarefaEntity;
 import br.unipar.assetinsight.exceptions.NotFoundException;
 import br.unipar.assetinsight.exceptions.ValidationException;
-import br.unipar.assetinsight.mappers.AmbienteMapper;
 import br.unipar.assetinsight.repositories.AmbienteRepository;
 import br.unipar.assetinsight.repositories.BlocoRepository;
 import br.unipar.assetinsight.repositories.ServicoRepository;

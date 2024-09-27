@@ -15,5 +15,4 @@ public interface ServicoRepository extends JpaRepository<ServicoEntity, Long> {
 
     Page<ServicoEntity> findAll(Pageable pageable);
 
-    Page<ServicoEntity> findAllByIdOrdemServico(long id, Pageable pageable);
 }

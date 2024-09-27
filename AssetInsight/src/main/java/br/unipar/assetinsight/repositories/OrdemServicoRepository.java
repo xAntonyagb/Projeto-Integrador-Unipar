@@ -1,6 +1,7 @@
 package br.unipar.assetinsight.repositories;
 
 import br.unipar.assetinsight.entities.OrdemServicoEntity;
+import br.unipar.assetinsight.entities.ServicoEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,6 @@ public interface OrdemServicoRepository extends JpaRepository<OrdemServicoEntity
 
     @Query("SELECT o FROM OrdemServicoEntity o WHERE MONTH(o.data) = :month")
     List<OrdemServicoEntity> findAllByMonth(Month month);
+
+    Page<ServicoEntity> findAllById(long id, Pageable pageable);
 }

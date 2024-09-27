@@ -7,6 +7,7 @@ import br.unipar.assetinsight.exceptions.NotFoundException;
 import br.unipar.assetinsight.exceptions.ValidationException;
 import br.unipar.assetinsight.repositories.AmbienteRepository;
 import br.unipar.assetinsight.repositories.CategoriaRepository;
+import br.unipar.assetinsight.repositories.OrdemServicoRepository;
 import br.unipar.assetinsight.repositories.ServicoRepository;
 import br.unipar.assetinsight.service.interfaces.IService;
 import br.unipar.assetinsight.utils.DataUtils;
@@ -26,6 +27,7 @@ public class ServicoService implements IService<ServicoEntity> {
     private final AmbienteRepository ambienteRepository;
     private final CategoriaRepository categoriaRepository;
     private final SecurityService securityService;
+    private final OrdemServicoRepository ordemServicoRepository;
 
     @Override
     public ServicoEntity getById(long id) {
@@ -47,7 +49,7 @@ public class ServicoService implements IService<ServicoEntity> {
     }
 
     public Page<ServicoEntity> getAllByOSId(long id, Pageable pageable) {
-        Page<ServicoEntity> servicos = servicoRepository.findAllByIdOrdemServico(id, pageable);
+        Page<ServicoEntity> servicos = ordemServicoRepository.findAllById(id, pageable);
 
         if (servicos.isEmpty()) {
             throw new NotFoundException("Nenhum serviço foi encontrado.");
@@ -56,12 +58,10 @@ public class ServicoService implements IService<ServicoEntity> {
         return servicos;
     }
 
+
     @Override
     public ServicoEntity save(ServicoEntity servicoEntity) {
-        validateServico(servicoEntity);
-
-        servicoEntity.setUsuarioEntityCriador(securityService.getUsuario());
-        servicoEntity.setDtRecord(DataUtils.getNow());
+        servicoEntity = validateServico(servicoEntity);
 
         servicoEntity = servicoRepository.save(servicoEntity);
         return servicoEntity;
@@ -79,7 +79,7 @@ public class ServicoService implements IService<ServicoEntity> {
 
     // ----------------------------------- Método pra validação de save ----------------------------------- //
 
-    public void validateServico(ServicoEntity servicoEntity) {
+    public ServicoEntity validateServico(ServicoEntity servicoEntity) {
         boolean isCategoriaPreenchida = servicoEntity.getCategoriaEntity() != null;
         boolean isAmbientePreenchido = servicoEntity.getAmbienteEntity() != null;
         List<String> errorList = new ArrayList<>();
@@ -101,5 +101,11 @@ public class ServicoService implements IService<ServicoEntity> {
         if(!errorList.isEmpty()){
             throw new ValidationException(errorList);
         }
+        servicoEntity.setCategoriaEntity(servicoEntity.getCategoriaEntity());
+        servicoEntity.setAmbienteEntity(servicoEntity.getAmbienteEntity());
+        servicoEntity.setUsuarioEntityCriador(securityService.getUsuario());
+        servicoEntity.setDtRecord(DataUtils.getNow());
+
+        return servicoEntity;
     }
 }

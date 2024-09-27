@@ -2,15 +2,21 @@ package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.ArquivadoRequest;
 import br.unipar.assetinsight.dtos.responses.ArquivadoResponse;
+import br.unipar.assetinsight.dtos.responses.OrdemServicoResponse;
+import br.unipar.assetinsight.dtos.responses.TarefaResponse;
 import br.unipar.assetinsight.entities.ArquivadoEntity;
+import br.unipar.assetinsight.entities.OrdemServicoEntity;
+import br.unipar.assetinsight.entities.TarefaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = {OrdemServicoMapper.class, TarefaMapper.class})
 public interface ArquivadosMapper {
     ArquivadosMapper INSTANCE = Mappers.getMapper(ArquivadosMapper.class);
 
@@ -44,4 +50,11 @@ public interface ArquivadosMapper {
     List<ArquivadoEntity> toEntityList(List<ArquivadoRequest> request);
     List<ArquivadoRequest> toRequestList(List<ArquivadoEntity> entity);
     List<ArquivadoResponse> toResponseList(List<ArquivadoEntity> entity);
+
+    default Page<ArquivadoResponse> toResponsePage(Page<ArquivadoEntity> entityPage) {
+        List<ArquivadoEntity> entities = entityPage.getContent();
+        List<ArquivadoResponse> responses = toResponseList(entities);
+        return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
+    }
+
 }

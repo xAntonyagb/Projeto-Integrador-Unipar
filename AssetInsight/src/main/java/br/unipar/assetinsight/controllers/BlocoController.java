@@ -6,20 +6,22 @@ import br.unipar.assetinsight.entities.BlocoEntity;
 import br.unipar.assetinsight.mappers.BlocoMapper;
 import br.unipar.assetinsight.service.BlocoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("bloco")
 public class BlocoController {
-    @Autowired
-    private BlocoService service;
+    private final BlocoService service;
 
 
     @GetMapping("/all")
@@ -58,12 +60,13 @@ public class BlocoController {
 
         BlocoResponse response = BlocoMapper.INSTANCE.toResponse(retorno);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(retorno.getId())
-                .toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(retorno.getId()).toUri();
 
-        return ResponseEntity.created(location).body(response);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(uri);
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
 }

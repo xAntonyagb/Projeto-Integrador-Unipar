@@ -60,7 +60,6 @@ public class OrdemServicoService implements IService<OrdemServicoEntity> {
         }
 
         for (int i = 0; i < ordemServico.getListServicoEntities().size(); i++) {
-            ordemServico.getListServicoEntities().get(i).setIdOrdemServico(ordemServico.getId());
             servicoService.validateServico(ordemServico.getListServicoEntities().get(i)); // Throws ValidationException
             servicoService.save(ordemServico.getListServicoEntities().get(i));
         }

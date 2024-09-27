@@ -52,7 +52,7 @@ public class AuthenticationService {
         return loginResponse;
     }
 
-    public CadastroResponse cadastrarUsuario(CadastroRequest request) throws ValidationException {
+    public UsuarioEntity cadastrarUsuario(CadastroRequest request) throws ValidationException {
         if (usuarioRepository.findByUsernameIgnoreCase(request.username()).isPresent()) {
             throw new ValidationException("Usuário já cadastrado.");
         }
@@ -62,7 +62,6 @@ public class AuthenticationService {
         List<RolesEntity> roles = roleMapper.toRolesEntityList(request.permissoes());
         UsuarioEntity usuario = new UsuarioEntity(request.username(), senhaCriptografada, roles);
 
-        UsuarioEntity usuarioEntity = usuarioRepository.save(usuario);
-        return AuthenticationMapper.INSTANCE.toCadastroResponse(usuarioEntity);
+        return usuarioRepository.save(usuario);
     }
 }

@@ -13,7 +13,6 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class UsuarioService {
-
     private final UsuarioRepository usuarioRepository;
 
     public UsuarioEntity getById(UUID id) {

@@ -2,11 +2,16 @@ package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.ServicoRequest;
 import br.unipar.assetinsight.dtos.responses.ServicoRespose;
+import br.unipar.assetinsight.entities.AmbienteEntity;
+import br.unipar.assetinsight.entities.CategoriaEntity;
 import br.unipar.assetinsight.entities.ServicoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
 import java.util.List;
 
 @Mapper(uses = {CategoriaMapper.class, AmbienteMapper.class, UsuarioMapper.class})
@@ -48,4 +53,10 @@ public interface ServicoMapper {
     List<ServicoEntity> toEntityList(List<ServicoRequest> request);
     List<ServicoRequest> toRequestList(List<ServicoEntity> entity);
     List<ServicoRespose> toResponseList(List<ServicoEntity> entity);
+
+    default Page<ServicoRespose> toResponsePage(Page<ServicoEntity> entityPage) {
+        List<ServicoEntity> entities = entityPage.getContent();
+        List<ServicoRespose> responses = toResponseList(entities);
+        return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
+    }
 }

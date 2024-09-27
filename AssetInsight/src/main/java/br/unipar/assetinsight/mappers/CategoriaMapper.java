@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -39,4 +41,27 @@ public interface CategoriaMapper {
     List<CategoriaEntity> toEntityList(List<CategoriaRequest> request);
     List<CategoriaRequest> toRequestList(List<CategoriaEntity> entity);
     List<CategoriaResponse> toResponseList(List<CategoriaEntity> entity);
+
+    default Page<CategoriaResponse> toResponsePage(Page<CategoriaEntity> entityPage) {
+        List<CategoriaEntity> entities = entityPage.getContent();
+        List<CategoriaResponse> responses = toResponseList(entities);
+        return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
+    }
+
+
+    default CategoriaEntity mapLongToEntity(Long id) {
+        if (id == null) {
+            return null;
+        }
+        CategoriaEntity entity = new CategoriaEntity();
+        entity.setId(id);
+        return entity;
+    }
+
+    default Long mapEntityToLong(CategoriaEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        return entity.getId();
+    }
 }

@@ -43,6 +43,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "auth/cadastrar").hasAnyAuthority("SUPER", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "usuario/**").hasAnyAuthority("SUPER", "ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE , "usuario/**").hasAnyAuthority("SUPER", "ADMINISTRADOR")
                         .requestMatchers(HttpMethod.GET,"/swagger-ui.html",
                                                         "/swagger-ui/**",
                                                         "/swagger-resources/**",

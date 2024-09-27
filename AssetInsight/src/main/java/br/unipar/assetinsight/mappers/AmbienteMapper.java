@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -42,4 +44,27 @@ public interface AmbienteMapper {
     List<AmbienteEntity> toEntityList(List<AmbienteRequest> request);
     List<AmbienteRequest> toRequestList(List<AmbienteEntity> entity);
     List<AmbienteResponse> toResponseList(List<AmbienteEntity> entity);
+
+    default Page<AmbienteResponse> toResponsePage(Page<AmbienteEntity> entityPage) {
+        List<AmbienteEntity> entities = entityPage.getContent();
+        List<AmbienteResponse> responses = toResponseList(entities);
+        return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
+    }
+
+
+    default AmbienteEntity mapLongToEntity(Long id) {
+        if (id == null) {
+            return null;
+        }
+        AmbienteEntity entity = new AmbienteEntity();
+        entity.setId(id);
+        return entity;
+    }
+
+    default Long mapEntityToLong(AmbienteEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        return entity.getId();
+    }
 }

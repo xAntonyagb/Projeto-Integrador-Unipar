@@ -18,7 +18,7 @@ public class NotificacaoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID_BLOCO")
+    @Column(name = "ID_NOTIFICACAO")
     private long id;
 
     @Column(name = "DS_TIPO")
@@ -35,7 +35,4 @@ public class NotificacaoEntity {
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Timestamp dtEnvio;
 
-    @Column(name = "IS_READ")
-    @ColumnDefault("false")
-    boolean isLida;
 }

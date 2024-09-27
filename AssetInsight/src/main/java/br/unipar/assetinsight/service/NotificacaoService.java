@@ -1,14 +1,10 @@
 package br.unipar.assetinsight.service;
 
-import br.unipar.assetinsight.entities.NotificacaoEntity;
-import br.unipar.assetinsight.entities.OrdemServicoEntity;
-import br.unipar.assetinsight.entities.TarefaEntity;
+import br.unipar.assetinsight.entities.*;
 import br.unipar.assetinsight.enums.NotificacaoEnum;
 import br.unipar.assetinsight.enums.StatusTarefaEnum;
 import br.unipar.assetinsight.exceptions.NotFoundException;
-import br.unipar.assetinsight.repositories.NotificacaoRepository;
-import br.unipar.assetinsight.repositories.OrdemServicoRepository;
-import br.unipar.assetinsight.repositories.TarefaRepository;
+import br.unipar.assetinsight.repositories.*;
 import br.unipar.assetinsight.service.interfaces.IService;
 import br.unipar.assetinsight.utils.CalculoUtils;
 import br.unipar.assetinsight.utils.DataUtils;
@@ -20,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +24,9 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
     private final TarefaRepository tarefaRepository;
     private final NotificacaoRepository notificacaoRepository;
     private final OrdemServicoRepository ordemServicoRepository;
+    private final NotificacaoUsuarioRepository notificacaoUsuarioRepository;
+    private final SecurityService securityService;
+    private final UsuarioRepository usuarioRepository;
 
     @Override
     public NotificacaoEntity getById(long id) {
@@ -39,7 +39,8 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
 
     @Override
     public Page<NotificacaoEntity> getAll(Pageable pageable) {
-        Page<NotificacaoEntity> notificacoes = notificacaoRepository.findAll(pageable);
+        UUID userId = securityService.getUsuario().getId();
+        Page<NotificacaoEntity> notificacoes = notificacaoUsuarioRepository.findAllByUsuario(userId, pageable);
 
         if (notificacoes.isEmpty()) {
             throw new NotFoundException("Nenhuma notificação foi encontrada");
@@ -50,7 +51,9 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
 
     @Override
     public NotificacaoEntity save(NotificacaoEntity entity) {
-        return notificacaoRepository.save(entity);
+        NotificacaoEntity notificacao = notificacaoRepository.save(entity);
+        notificarTodos(notificacao);
+        return notificacao;
     }
 
     @Override
@@ -61,7 +64,32 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
             throw new NotFoundException("Nenhuma notificação foi encontrada com o id: " + id);
         }
 
+        notificacaoUsuarioRepository.deleteByIdNotificacao(id);
         notificacaoRepository.deleteById(id);
+    }
+
+
+    public void lerNotificao(long id) {
+        UUID userId = securityService.getUsuario().getId();
+        notificacaoUsuarioRepository.markAsLida(userId, id);
+    }
+
+    public void lerTodasNotificacoes() {
+        UUID userId = securityService.getUsuario().getId();
+        notificacaoUsuarioRepository.markAllAsLida(userId);
+    }
+
+    private void notificarTodos(NotificacaoEntity notificacao) {
+        List<UsuarioEntity> usuarios = usuarioRepository.findAll();
+
+        usuarios.forEach(usuario -> {
+            NotificacaoUsuarioEntity notificacaoUsuario = new NotificacaoUsuarioEntity();
+            notificacaoUsuario.setNotificacao(notificacao);
+            notificacaoUsuario.setUsuario(usuario);
+            notificacaoUsuario.setLida(false);
+
+            notificacaoUsuarioRepository.save(notificacaoUsuario);
+        });
     }
 
     @Scheduled(cron = "0 0 0 * * *") // todo dia a meia noite exeucta automatico
@@ -77,8 +105,8 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
             notificacaoEntity.setTitulo("Tarefa atrasada");
             notificacaoEntity.setDescricao("A sua tarefa " + tarefa.getTitulo() + " está atrasada (" + DataUtils.formatarData(tarefa.getDtPrevisao()) + ").");
             notificacaoEntity.setDtEnvio(DataUtils.getNow());
-            notificacaoEntity.setLida(false);
             notificacaoRepository.save(notificacaoEntity);
+            notificarTodos(notificacaoEntity);
         }));
     }
 
@@ -88,7 +116,6 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
         notificacaoEntity.setTipo(NotificacaoEnum.ORDEM_SERVICO);
         notificacaoEntity.setTitulo("Ordem de serviço");
         notificacaoEntity.setDtEnvio(DataUtils.getNow());
-        notificacaoEntity.setLida(false);
 
         Month mesPassado = DataUtils.getMonth().minus(1);
         Month mesRetrasado = DataUtils.getMonth().minus(2);
@@ -109,6 +136,7 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
         if (vlTotalMesPassado == vlTotalMesRetrasado) {
             notificacaoEntity.setDescricao("Os gastos do mês de "+ mesPassado.name().toLowerCase() +"foram iguais ao mês anterior.");
             notificacaoRepository.save(notificacaoEntity);
+            notificarTodos(notificacaoEntity);
             return;
         }
 
@@ -127,5 +155,7 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
         }
 
         notificacaoRepository.save(notificacaoEntity);
+        notificarTodos(notificacaoEntity);
     }
+
 }

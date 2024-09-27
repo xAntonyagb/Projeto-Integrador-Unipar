@@ -1,6 +1,5 @@
 package br.unipar.assetinsight.entities;
 
-import br.unipar.assetinsight.entities.keys.ServicoEntityKey;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,18 +13,12 @@ import java.sql.Timestamp;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(ServicoEntityKey.class)
 public class ServicoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_SERVICO")
     private long idServico;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_ORDEM_SERVICO")
-    private long idOrdemServico;
 
     @Column(name = "CD_PATRIMONIO")
     private String patrimonio;
