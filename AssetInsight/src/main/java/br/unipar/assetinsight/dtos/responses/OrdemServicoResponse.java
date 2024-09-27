@@ -23,6 +23,9 @@ public record OrdemServicoResponse(
         @Schema(description = "Lista de serviços desta Ordem de serviço.", example = "[{\"id\": 1, \"patrimonio\": \"Patrimonio Exemplo\", \"descricao\": \"Descrição Exemplo\", \"quantidade\": 1, \"valorUnit\": 100.0, \"categoria\": 1, \"ambiente\": 1}]")
         List<ServicoRespose> servicos,
 
+        @Schema(description = "Quantidade de serviços que essa ordem de serviço possui.", example = "1")
+        long qtdServicos,
+
         @Schema(description = "Valor total da ordem de serviço.", example = "100.0")
         double valorTotal,
 

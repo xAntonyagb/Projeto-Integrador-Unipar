@@ -17,7 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 
@@ -31,7 +30,7 @@ public class SecurityConfig {
     private SecurityFilter securityTokenFilter;
 
     /**
-     * Configuração de segurança da aplicação com OAuth2
+     * Configuração de segurança da aplicação
      * @return SecurityFilterChain
      * @throws Exception
      */
@@ -41,19 +40,19 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "auth/login", "auth/refresh").permitAll()
                         .requestMatchers(HttpMethod.POST, "auth/cadastrar").hasAnyAuthority("SUPER", "ADMINISTRADOR")
                         .requestMatchers(HttpMethod.GET, "usuario/**").hasAnyAuthority("SUPER", "ADMINISTRADOR")
                         .requestMatchers(HttpMethod.DELETE , "usuario/**").hasAnyAuthority("SUPER", "ADMINISTRADOR")
                         .requestMatchers(HttpMethod.GET,"/swagger-ui.html",
-                                                        "/swagger-ui/**",
-                                                        "/swagger-resources/**",
-                                                        "/test/**",
-                                                        "api/metadata/**",
-                                                        "/v3/api-docs/**").permitAll()
+                                "/swagger-ui/**",
+                                "/swagger-resources/**",
+                                "/test/**",
+                                "api/metadata/**",
+                                "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(securityTokenFilter, UsernamePasswordAuthenticationFilter.class) // Resgata o usuario com base no token
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .build();
     }
 
@@ -89,6 +88,6 @@ public class SecurityConfig {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-       return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 }

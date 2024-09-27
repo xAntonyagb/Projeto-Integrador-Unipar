@@ -17,4 +17,6 @@ public interface TarefaRepository extends JpaRepository<TarefaEntity, Long> {
     Page<TarefaEntity> findAll(Pageable pageable);
 
     Optional<List<TarefaEntity>> findAllByDtPrevisaoBefore(Timestamp dataHora);
+
+    long countByCategoriaEntity_Id(long id);
 }

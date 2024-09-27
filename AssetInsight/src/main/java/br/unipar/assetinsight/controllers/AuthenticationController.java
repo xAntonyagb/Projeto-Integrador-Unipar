@@ -41,6 +41,19 @@ public class AuthenticationController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Utilizado para receber o Token de acesso através de um RefreshToken.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "401", description = "Refresh Token inválido.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
+    })
+    @PostMapping("/refresh")
+    public ResponseEntity<LoginResponse> refresh(@Valid @RequestHeader("Authorization") String refreshToken) {
+        LoginResponse response = authenticationService.doLogin(refreshToken);
+        return ResponseEntity.ok(response);
+    }
+
 
     @Operation(summary = "Utilizado para cadastrar um novo usuário. Necessário permissões de administrador para realizar a operação")
     @ApiResponses(value = {

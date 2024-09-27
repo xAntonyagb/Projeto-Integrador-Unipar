@@ -13,4 +13,6 @@ public interface AmbienteRepository extends JpaRepository<AmbienteEntity, Long> 
     Optional<List<AmbienteEntity>> findByBlocoEntityId(long id);
 
     Page<AmbienteEntity> findAll(Pageable pageable);
+
+    long countByBlocoEntityId(long id);
 }

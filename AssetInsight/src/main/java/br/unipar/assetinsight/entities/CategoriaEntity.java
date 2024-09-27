@@ -31,4 +31,15 @@ public class CategoriaEntity {
     @JoinColumn(name = "ID_USUARIO_CRIADOR")
     private UsuarioEntity usuarioEntityCriador;
 
+    @Transient
+    private long qtdTarefas;
+
+    @Transient
+    private long qtdTotalTarefas;
+
+    @Transient
+    private long qtdServicos;
+
+    @Transient
+    private long qtdTotalServicos;
 }

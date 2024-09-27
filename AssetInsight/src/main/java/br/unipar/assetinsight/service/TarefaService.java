@@ -14,6 +14,7 @@ import br.unipar.assetinsight.utils.DataUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -100,4 +101,19 @@ public class TarefaService implements IService<TarefaEntity> {
         tarefaEntity.setAmbienteEntity(ambiente.get());
         return tarefaEntity;
     }
+
+    @Scheduled(cron = "0 0 0 * * *") // todo dia a meia noite exeucta automatico
+    public void updateStatusTarefas() {
+        List<TarefaEntity> tarefas = tarefaRepository.findAll();
+
+        for (TarefaEntity tarefa : tarefas) {
+            if(tarefa.getStatus() == StatusTarefaEnum.ABERTA && tarefa.getDtPrevisao().before(DataUtils.getNow())) {
+                tarefa.setStatus(StatusTarefaEnum.ATRASADA);
+            }
+            else if (tarefa.getStatus() == StatusTarefaEnum.ATRASADA && tarefa.getDtPrevisao().after(DataUtils.getNow())) {
+                tarefa.setStatus(StatusTarefaEnum.ABERTA);
+            }
+        }
+    }
+
 }

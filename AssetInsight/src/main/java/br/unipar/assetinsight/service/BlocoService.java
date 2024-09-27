@@ -26,11 +26,15 @@ public class BlocoService implements IService<BlocoEntity>{
     public BlocoEntity getById(long id) {
         Optional<BlocoEntity> bloco = blocoRepository.findById(id);
 
-        if (bloco.isEmpty()) {
+        if (bloco.isPresent()) {
+            BlocoEntity retorno = bloco.get();
+            retorno.setQtdAmbientes(ambienteRepository.countByBlocoEntityId(id));
+
+            return retorno;
+        }
+        else {
             throw new NotFoundException("Nenhum bloco foi encontrado com o id: " + id);
         }
-
-        return bloco.get();
     }
 
     @Override

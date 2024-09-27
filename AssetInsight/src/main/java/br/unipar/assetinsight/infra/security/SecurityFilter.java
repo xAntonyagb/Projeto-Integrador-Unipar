@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Filtro de segurança que intercepta todas as requisições para resgatar o usuario autenticado e colocar no contexto do spring security.
@@ -22,9 +23,9 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private TokenService tokenService;
-
     @Autowired
     private UsuarioRepository userRepository;
+    private static final Logger LOGGER = Logger.getLogger(SecurityFilter.class.getName());
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -33,7 +34,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             var subject = tokenService.getSubjectByToken(token); // Decodifica o token utilizando a secret para pegar o username
 
             if (subject == null) {
-                throw new SecurityException("Token inválido.");
+                LOGGER.warning("Usuario null ao gerar o Token.");
             }
 
             //Atualizar data de login
@@ -48,7 +49,9 @@ public class SecurityFilter extends OncePerRequestFilter {
             // Guardando o usuário autenticado no contexto do Spring Security - utilizado para validações de autorização
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        catch (Exception e) { }
+        catch (Exception e) {
+            LOGGER.warning(e.getMessage());
+        }
 
         filterChain.doFilter(request, response); // Vai pro prox filtro
     }
@@ -60,10 +63,11 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         //Validações da requisição
         if (token == null || token.isEmpty()) {
-            throw new Exception("Token não informado.");
+            LOGGER.warning("Token não informado.");
+            return null;
         }
         else if(!token.startsWith("Bearer ")) {
-            throw new Exception("O token informado é do tipo inválido.");
+            LOGGER.warning("O token informado é do tipo inválido.");
         }
 
         //Retorna o token convertido da request

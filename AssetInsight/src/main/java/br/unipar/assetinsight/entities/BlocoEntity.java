@@ -31,4 +31,7 @@ public class BlocoEntity {
     @JoinColumn(name = "ID_USUARIO_CRIADOR")
     private UsuarioEntity usuarioEntityCriador;
 
+    @Transient
+    private long qtdAmbientes;
+
 }
