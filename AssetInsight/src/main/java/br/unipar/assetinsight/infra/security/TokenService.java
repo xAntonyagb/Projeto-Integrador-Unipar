@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.logging.Logger;
 
 @Service
 public class TokenService {
@@ -25,6 +26,7 @@ public class TokenService {
 
     public Instant expirationDate;
     public Instant IssuedAt;
+    public static final Logger LOGGER = Logger.getLogger(TokenService.class.getName());
 
 
     public String generateToken(UserDetails usuario){
@@ -68,18 +70,19 @@ public class TokenService {
                     .build()
                     .verify(token).getSubject();
         } catch (Exception e) {
+            LOGGER.warning("Erro ao retornar o usuario do token: " + e.getMessage());
             return null; //Retorna vazio caso o token seja inválido (não lançar exceção pois será tratada pelo Repository)
         }
     }
 
 
     private Instant getExpirationDate(long horas){
-        expirationDate = LocalDateTime.now().plusHours(horas).toInstant(ZoneOffset.of("-03:00"));
+        expirationDate = Instant.now().plusSeconds(horas * 3600);
         return expirationDate;
     }
 
     private Instant getIssuedAt(){
-        IssuedAt = LocalDateTime.now().toInstant(ZoneOffset.of("-03:00"));
+        IssuedAt = Instant.now();
         return IssuedAt;
     }
 }

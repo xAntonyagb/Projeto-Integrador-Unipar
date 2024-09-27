@@ -31,15 +31,16 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             var token = this.getToken(request); // Pega o token da requisição
-            var subject = tokenService.getSubjectByToken(token); // Decodifica o token utilizando a secret para pegar o username
 
-            if (subject == null) {
-                LOGGER.warning("Usuario null ao gerar o Token.");
+            if (token == null) {
+                throw new Exception("Nenhum token foi retornado da requisição. Ignorando a autenticação...");
             }
+
+            var subject = tokenService.getSubjectByToken(token); // Decodifica o token utilizando a secret para pegar o username
 
             //Atualizar data de login
             UsuarioEntity user = userRepository.findEntityByUsername(subject)
-                    .orElseThrow(() -> new SecurityException("Usuário não pode ser encontrado."));;
+                    .orElseThrow(() -> new SecurityException("Usuário ["+ subject +"] não pode ser encontrado."));;
             user.setDtLogin(DataUtils.getNow());
             userRepository.save(user);
 
@@ -63,11 +64,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         //Validações da requisição
         if (token == null || token.isEmpty()) {
-            LOGGER.warning("Token não informado.");
             return null;
         }
         else if(!token.startsWith("Bearer ")) {
-            LOGGER.warning("O token informado é do tipo inválido.");
+            LOGGER.info("O token informado não é do tipo Bearer.");
         }
 
         //Retorna o token convertido da request
