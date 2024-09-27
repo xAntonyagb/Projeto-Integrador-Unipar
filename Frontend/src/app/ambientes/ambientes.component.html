@@ -16,15 +16,16 @@
 
   <div class="conteudo">
     <div class="centro">
-      <div class="">
+      <div class="centro">
         <p class="nomePagina">{{ currentPageTitle }}</p>
       <p-tabView class="custom-tabview" (onChange)="updatePageTitle($event.index)">
         <p-tabPanel header="Ambientes" class="custom-tab" >
+          <div>
             <app-tab-ambientes></app-tab-ambientes>
-        </p-tabPanel>
-        <p-tabPanel header="Blocos" class="custom-tab" >
-          <p>
-            <app-tab-bloco></app-tab-bloco>
+          </div>
+          </p-tabPanel>
+          <p-tabPanel header="Blocos" class="custom-tab" >
+            <p><app-tab-bloco></app-tab-bloco>
           </p>
         </p-tabPanel>
         <p-tabPanel header="Lançamentos" class="custom-tab" >

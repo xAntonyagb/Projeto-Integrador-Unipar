@@ -10,15 +10,16 @@ import { Ambiente } from './ambiente';
 
 export class AmbienteService {
 
-  private apiUrl='http://localhost:8080/ambiente/all';
+  private apiUrl='http://assetinsight.awahosting.cloud:8080/ambiente/all';
 
   constructor(private http:HttpClient, private auth: AuthService){}
 
   getAmbientes(): Observable<Ambiente[]>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}` // Ajuste conforme necessário
+      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
     });
 
+    console.log(headers);
     return this.http.get<Ambiente[]>(this.apiUrl, { headers });
   }
 }

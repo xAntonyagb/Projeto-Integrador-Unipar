@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BlocoService } from './bloco-service/bloco.service';
 import { MenuItem } from 'primeng/api';
+import { MatTableDataSource } from '@angular/material/table';
 
-interface Bloco {
+export interface Bloco {
   id: number;
-  nome: string;
-  quantidadeAmbientes: number;
+  descricao: string;
+  qtdAmbientes: number;
 }
 
 @Component({
@@ -14,28 +15,19 @@ interface Bloco {
   styleUrl: './tab-bloco.component.scss'
 })
 export class TabBlocoComponent implements OnInit {
-  blocos: Bloco[] = [];
   items: MenuItem[] | undefined;
   constructor(private blocoService: BlocoService) {}
-
+  dataSource = new MatTableDataSource<Bloco>([]);
   ngOnInit() {
-    this.items = [
-      {
-          label: 'Options',
-          items: [
-              {
-                  label: 'Refresh',
-                  icon: 'pi pi-refresh'
-              },
-              {
-                  label: 'Export',
-                  icon: 'pi pi-upload'
-              }
-          ]
-      }
-  ];
-    this.blocoService.getBlocosData().subscribe(data => {
-      this.blocos = data;
+    this.getBlocosData();
+  }
+  getBlocosData() {
+    this.blocoService.getBlocosData().subscribe((response: any) => {
+      const data = this.extractContent(response);
+      this.dataSource.data = data;
     });
+  }
+  extractContent(response: any): Bloco[] {
+    return response.content || [];
   }
 }

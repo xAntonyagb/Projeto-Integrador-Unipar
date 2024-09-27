@@ -9,7 +9,7 @@ import { AuthResponse } from './auth-response.type';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth';
+  private apiUrl = 'http://assetinsight.awahosting.cloud:8080/auth';
 
   constructor(private http: HttpClient, private router: Router) {}
 

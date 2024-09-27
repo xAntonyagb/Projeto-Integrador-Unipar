@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Page Title</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
+
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
   <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
   <link href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
-</head>
-<body>
+
   <div class="py-4 parte-cima-ambiente">
 
   <div class="header-container">
     <button class="large-button">NOVO AMBIENTE</button>
-    <input label="Pesquisar" class="form-control search-bar" type="text" placeholder="Pesquisar" formControlName="btpesquisar">
+    <input label="Pesquisar" class="form-control search-bar" type="text" placeholder="Pesquisar"
+     formControlName="btpesquisar" (input)="applyFilter($event)">
     <div class="menu-container">
       <p-menu #menu [popup]="true"></p-menu>
       <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" [rounded]="true" ></p-button>
@@ -27,44 +21,34 @@
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
   class="mat-elevation-z8">
 
-<!-- Position Column -->
+<!-- ID Column -->
 <ng-container matColumnDef="id">
-<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
- Id
-</th>
-<td mat-cell *matCellDef="let element"> {{element.position}} </td>
+<th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+<td mat-cell *matCellDef="let element"> {{element.id}} </td>
 </ng-container>
 
-<!-- Name Column -->
+<!-- Nome Column -->
 <ng-container matColumnDef="nome">
-<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
- Nome
-</th>
-<td mat-cell *matCellDef="let element"> {{element.name}} </td>
+<th mat-header-cell *matHeaderCellDef mat-sort-header > Nome </th>
+<td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
 </ng-container>
 
-<!-- Weight Column -->
+<!-- Bloco Column -->
 <ng-container matColumnDef="bloco">
-<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
- Bloco
-</th>
-<td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+<th mat-header-cell *matHeaderCellDef mat-sort-header > Bloco </th>
+<td mat-cell *matCellDef="let element"> {{element.bloco.descricao}} </td>
 </ng-container>
 
-<!-- Symbol Column -->
+<!-- Patrimonio Column -->
 <ng-container matColumnDef="patrimonios">
-<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-Patrimônios
-</th>
-<td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+<th mat-header-cell *matHeaderCellDef mat-sort-header > Patrimônios </th>
+<td mat-cell *matCellDef="let element" class="patrimonio"> {{element.qtdPatrimonios}} </td>
 </ng-container>
 
 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-</body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

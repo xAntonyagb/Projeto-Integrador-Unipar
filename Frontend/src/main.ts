@@ -10,6 +10,3 @@ import { routes } from './app/app.routes';
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
 
-bootstrapApplication(AmbientesModule, {
-  providers: [provideAnimationsAsync(),provideRouter(routes)],
-}).catch((err) => console.error(err));

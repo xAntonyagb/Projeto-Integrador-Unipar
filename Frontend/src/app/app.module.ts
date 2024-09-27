@@ -1,3 +1,4 @@
+import { MatTableModule } from '@angular/material/table';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -10,7 +11,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AmbientesModule } from './ambientes/ambientes.module';
-import { BlocosComponent } from './blocos/blocos.component';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from'@angular/platform-browser/animations';
@@ -22,6 +22,8 @@ import { TabBlocoModule } from './ambientes/tab-bloco/tab-bloco.module';
 import { TabAmbientesModule } from './ambientes/tab-ambientes/tab-ambientes.module';
 import { TabLancamentosModule } from './ambientes/tab-lancamentos/tab-lancamentos.module';
 import { MenuModule } from 'primeng/menu';
+import { MatSortModule } from '@angular/material/sort';
+import { OrdemDeServicoComponent } from './ordem-de-servico/ordem-de-servico.component';
 
 
 
@@ -29,6 +31,7 @@ import { MenuModule } from 'primeng/menu';
   declarations: [
     AppComponent,
     LoginComponent,
+    OrdemDeServicoComponent,
   ],
 
   imports: [
@@ -45,6 +48,8 @@ import { MenuModule } from 'primeng/menu';
     BrowserAnimationsModule,
     MatIconModule,
     MatMenuModule,
+    MatTableModule,
+    MatSortModule,
     MatButtonModule,
     ButtonModule,
     TabBlocoModule,

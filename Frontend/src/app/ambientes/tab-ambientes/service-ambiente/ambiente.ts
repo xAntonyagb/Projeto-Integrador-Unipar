@@ -6,14 +6,13 @@ export interface Usuario {
 }
 
 export interface Bloco {
-  id: number;
   descricao: string;
-  lastChange: string;
-  lastChangedBy: Usuario;
+  qtdAmbientes:number;
 }
 
 export interface Ambiente {
   id: number;
   descricao: string;
   bloco: Bloco;
+  qtdPatrimonios:number;
 }
