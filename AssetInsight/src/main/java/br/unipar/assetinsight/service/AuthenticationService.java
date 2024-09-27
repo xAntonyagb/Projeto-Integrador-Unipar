@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,16 +41,44 @@ public class AuthenticationService {
         usuarioAutenticado.setDtLogin(DataUtils.getNow());
         usuarioRepository.save(usuarioAutenticado); //Atualizar data de login do usuario
 
-        var token = tokenService.generateToken(usuarioAutenticado); //Gera token a partir do usuario que já foi autenticado
+        var userToken = (UserDetails) usuarioAutenticado;
+        var token = tokenService.generateToken(userToken); //Gera token a partir do usuario que já foi autenticado
+        var refreshToken = tokenService.generateRefreshToken(userToken);
 
         LoginResponse loginResponse = new LoginResponse(
                 token,
                 tokenService.expirationDate,
                 tokenService.IssuedAt,
-                roleMapper.toPermissoesEnumList(usuarioAutenticado.getListRoles())
+                roleMapper.toPermissoesEnumList(usuarioAutenticado.getListRoles()),
+                refreshToken
         );
 
         return loginResponse;
+    }
+
+    public LoginResponse doLogin(String refreshToken) {
+        String username = tokenService.getSubjectByToken(refreshToken);
+
+        if (username == null) {
+            throw new SecurityException("O token informado é inválido. Por favor, realize o login novamente em auth/login.");
+        }
+
+        UsuarioEntity usuario = usuarioRepository.findEntityByUsername(username)
+                .orElseThrow(() -> new SecurityException("Usuário não encontrado."));
+
+        usuario.setDtLogin(DataUtils.getNow());
+        usuarioRepository.save(usuario);
+
+        String token = tokenService.generateToken(usuario);
+        refreshToken = tokenService.generateRefreshToken(usuario);
+
+        return new LoginResponse(
+                token,
+                tokenService.expirationDate,
+                tokenService.IssuedAt,
+                roleMapper.toPermissoesEnumList(usuario.getListRoles()),
+                refreshToken
+        );
     }
 
     public UsuarioEntity cadastrarUsuario(CadastroRequest request) throws ValidationException {

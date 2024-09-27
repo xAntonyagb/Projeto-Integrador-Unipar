@@ -32,9 +32,17 @@ public class CategoriaService implements IService<CategoriaEntity> {
     public CategoriaEntity getById(long id) {
         Optional<CategoriaEntity> categoria = categoriaRepository.findById(id);
 
-        return categoria.orElseThrow(
-                () -> new NotFoundException("Nenhuma categoria foi encontrada com o id: " + id)
-        );
+        if (categoria.isPresent()) {
+            CategoriaEntity categoriaEntity = categoria.get();
+            categoriaEntity.setQtdTarefas(tarefaRepository.countByCategoriaEntity_Id(categoriaEntity.getId()));
+            categoriaEntity.setQtdServicos(servicoRepository.countByCategoriaEntity_Id(categoriaEntity.getId()));
+            categoriaEntity.setQtdTotalTarefas(tarefaRepository.count());
+            categoriaEntity.setQtdTotalServicos(servicoRepository.count());
+            return categoriaEntity;
+        }
+        else {
+            throw new NotFoundException("Nenhuma categoria foi encontrada com o id: " + id);
+        }
     }
 
     @Override
@@ -44,6 +52,16 @@ public class CategoriaService implements IService<CategoriaEntity> {
         if (categorias.isEmpty()) {
             throw new NotFoundException("Nenhuma categoria foi encontrada");
         }
+
+        long totalServicos = servicoRepository.count();
+        long totalTarefas = tarefaRepository.count();
+
+        categorias.forEach(categoria -> {
+            categoria.setQtdTarefas(tarefaRepository.countByCategoriaEntity_Id(categoria.getId()));
+            categoria.setQtdServicos(servicoRepository.countByCategoriaEntity_Id(categoria.getId()));
+            categoria.setQtdTotalTarefas(totalTarefas);
+            categoria.setQtdTotalServicos(totalServicos);
+        });
 
         return categorias;
     }

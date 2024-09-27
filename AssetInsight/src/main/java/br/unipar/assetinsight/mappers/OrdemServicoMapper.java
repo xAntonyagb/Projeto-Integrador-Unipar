@@ -3,9 +3,8 @@ package br.unipar.assetinsight.mappers;
 import br.unipar.assetinsight.dtos.requests.OrdemServicoRequest;
 import br.unipar.assetinsight.dtos.responses.OrdemServicoResponse;
 import br.unipar.assetinsight.entities.OrdemServicoEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import br.unipar.assetinsight.entities.ServicoEntity;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,7 +33,13 @@ public interface OrdemServicoMapper {
     @Mapping(source = "listServicoEntities", target = "servicos")
     @Mapping(source = "usuarioEntityCriador", target = "lastChangedBy")
     @Mapping(source = "dtRecord", target = "lastChange")
+    @Mapping(source = "listServicoEntities", target = "qtdServicos", qualifiedByName = "countServicos")
     OrdemServicoResponse toResponse(OrdemServicoEntity entity);
+
+    @Named("countServicos")
+    default long countServicos(List<ServicoEntity> servicos) {
+        return servicos.size();
+    }
 
     OrdemServicoResponse toResponse(OrdemServicoRequest request);
 

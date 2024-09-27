@@ -15,4 +15,8 @@ public interface ServicoRepository extends JpaRepository<ServicoEntity, Long> {
 
     Page<ServicoEntity> findAll(Pageable pageable);
 
+    long countByAmbienteEntity_Id(long id);
+
+    long countByCategoriaEntity_Id(long id);
+
 }

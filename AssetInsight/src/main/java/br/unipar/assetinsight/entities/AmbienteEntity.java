@@ -3,6 +3,7 @@ package br.unipar.assetinsight.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 
@@ -34,5 +35,8 @@ public class AmbienteEntity {
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO_CRIADOR")
     private UsuarioEntity usuarioEntityCriador;
+
+    @Transient
+    private long qtdPatrimonios;
 
 }

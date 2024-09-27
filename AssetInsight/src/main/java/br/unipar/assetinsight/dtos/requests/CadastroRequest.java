@@ -16,6 +16,6 @@ public record CadastroRequest(
         @Schema(description = "Senha que o usuário utilizara para entrar no sistema.", example = "123456", required = true)
         @NotNull @NotEmpty @NotBlank String password,
 
-        @Schema(description = "Lista de permissões que o usuário terá no sistema.", example = "[\"ADMIN\", \"USER\"]", required = true)
+        @Schema(description = "Lista de permissões que o usuário terá no sistema.", example = "[\"ADMINISTRADOR\", \"OPERADOR\"]", required = true)
         @NotNull @Size(min = 1) List<PermissoesEnum> permissoes) {
 }

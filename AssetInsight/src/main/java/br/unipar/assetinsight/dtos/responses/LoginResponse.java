@@ -21,5 +21,8 @@ public record LoginResponse(
         Instant createdAt,
 
         @Schema(description = "Permissões do usuário.")
-        List<PermissoesEnum> permissoes
+        List<PermissoesEnum> permissoes,
+
+        @Schema(description = "Refresh Token para caso quando seu token expirar.")
+        String refreshToken
 ) { }

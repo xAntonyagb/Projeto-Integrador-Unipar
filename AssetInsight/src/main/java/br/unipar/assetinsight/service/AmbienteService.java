@@ -34,9 +34,18 @@ public class AmbienteService implements IService<AmbienteEntity> {
     public AmbienteEntity getById(long id) {
         Optional<AmbienteEntity> ambiente = ambienteRepository.findById(id);
 
-        return ambiente.orElseThrow(
-                () -> new NotFoundException("Nenhum ambiente foi encontrado com o id: " + id)
-        );
+        if (ambiente.isPresent()) {
+            AmbienteEntity ambienteEntity = ambiente.get();
+
+            ambienteEntity.setQtdPatrimonios(
+                    servicoRepository.countByAmbienteEntity_Id(ambienteEntity.getId())
+            );
+
+            return ambienteEntity;
+        }
+        else {
+            throw new NotFoundException("Nenhum ambiente foi encontrado com o id: " + id);
+        }
     }
 
     @Override
@@ -46,6 +55,10 @@ public class AmbienteService implements IService<AmbienteEntity> {
         if (ambientes.isEmpty()) {
             throw new NotFoundException("Nenhum ambiente foi encontrado");
         }
+
+        ambientes.forEach(ambiente -> {
+            ambiente.setQtdPatrimonios(servicoRepository.countByAmbienteEntity_Id(ambiente.getId()));
+        });
 
         return ambientes;
     }
