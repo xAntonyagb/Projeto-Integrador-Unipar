@@ -1,0 +1,63 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #f4f4f4;
+  overflow-x: hidden;
+  font-family: Inter;
+}
+
+.main-content {
+  margin-top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f4f4f4;
+  max-width: 1601px;
+  margin-left: 16.1%;
+}
+
+.card{
+  border-radius: 15px;
+}
+
+.status-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-card {
+  background-color: white;
+  border-radius: 20px;
+
+  padding: 20px;
+  text-align: center;
+}
+
+.status-card h5 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.month-font{
+font-weight: 900;
+}
+.month-selector{
+  padding-left: 320px;
+}
+.form-control{
+  border-radius: 10px;
+
+}
+
+.card-container{
+padding-top: 120px;
+padding-left: 320px;
+}
+
+.charts-container{
+  padding-left: 320px;
+}
+hr{
+  width: 100%;
+  padding-left: 100px;
+}

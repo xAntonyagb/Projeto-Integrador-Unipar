@@ -1,0 +1,50 @@
+.notification-bar {
+  position: fixed;
+  top: 80px;
+  right: 85px;
+  width: 400px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 30px;
+}
+.notification{
+color: black;
+text-decoration: none;
+font-weight: 700;
+font-family: Arial;
+}
+
+.subtitle{
+  color: black;
+  font-size: 11px;
+  font-weight: 900;
+  font-family: Arial;
+}
+
+.title{
+  padding-left: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.notification-1{
+padding-bottom: 19px;
+display: flex;
+background-color: #F7F9FB;
+border-radius: 15px;
+}
+.notification-2{
+display: flex;
+padding-top: 20px;
+background-color: #F7F9FB;
+border-radius: 15px;
+}
+.notification-icon{
+padding-top: 15px;
+height: 50px;
+
+}
+

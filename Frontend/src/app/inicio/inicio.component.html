@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AssetInsight</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+
+  <app-sidebar></app-sidebar>
+
+  <app-header></app-header>
+  <div class="container-fluid">
+
+        <div class="row card-container ">
+          <div class="col-md-3 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="card-title">OS Preenchidas</h3>
+                <p class="card-text">Conteúdo do Card 1</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="card-title">Tarefas Concluídas</h3>
+                <p class="card-text">Conteúdo do Card 2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="card-title">Média de Gastos</h3>
+                <p class="card-text">Conteúdo do Card 3</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="card-title">Gastos desse mês (OS)</h3>
+                <p class="card-text">Conteúdo do Card 4</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row month-selector mb-3  rounded-4 ">
+          <div class="col-md-3 ">
+            <label for="month" class="month-font">Selecione um mês:</label>
+            <select id="month" name="month" class="form-control">
+              <option value="january">Janeiro</option>
+              <option value="february">Fevereiro</option>
+              <option value="march">Março</option>
+              <option value="april">Abril</option>
+              <option value="may">Maio</option>
+              <option value="june">Junho</option>
+              <option value="july">Julho</option>
+              <option value="august">Agosto</option>
+              <option value="september">Setembro</option>
+              <option value="october">Outubro</option>
+              <option value="november">Novembro</option>
+              <option value="december">Dezembro</option>
+            </select>
+          </div>
+        </div>
+
+                        <!-- Gráfico de Donut 1 -->
+        <div class="row charts-container ">
+          <div class="col mb-3 ">
+            <div class="card h-100">
+              <div class="card-body ">
+                <p class="card-text">Gráfico de Donut 1</p>
+              </div>
+            </div>
+          </div>
+
+                        <!-- Gráfico de Donut 2 -->
+          <div class="col mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <p class="card-text">Gráfico de Donut 2</p>
+              </div>
+            </div>
+          </div>
+
+                        <!-- Gráfico de Donut 3 -->
+          <div class="col-3 mb-3">
+            <div class="card h-100 w-100" >
+              <div class="card-body">
+                <p class="card-text">Gráfico de Donut 3</p>
+              </div>
+            </div>
+          </div>
+
+                      <!-- Textos ao lado dos gráficos -->
+          <div class="col-3">
+                      <!-- Card de texto 1 -->
+            <div class="col card h-50 mb-3">
+              <div >
+                <p class="card-text">Patrimônio com maior número de serviços do mês</p>
+                <h4 class="card-text">Informação do Card 1</h4>
+              </div>
+            </div>
+
+                      <!-- Card de texto 2 -->
+            <div class="col card h-40 mb-2">
+              <div >
+                <p class="card-text">Bloco com maior número de serviços do mês</p>
+                <h4 class="card-text">Informação do Card 2</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row charts-container">
+                      <!-- Gráfico de Donut 1 -->
+          <div class="col mb-3 ">
+            <div class="card h-100">
+              <div class="card-body ">
+                <p class="card-text">Gráfico de Donut 1</p>
+              </div>
+            </div>
+          </div>
+
+                       <!-- Gráfico de Donut 2 -->
+          <div class="col mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <p class="card-text">Gráfico de Donut 2</p>
+              </div>
+            </div>
+          </div>
+
+                        <!-- Gráfico de Donut 3 -->
+          <div class="col-3 mb-3">
+            <div class="card h-100 w-100" >
+              <div class="card-body">
+                <p class="card-text">Gráfico de Donut 3</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna de textos ao lado dos gráficos -->
+          <div class="col-3">
+            <!-- Card de texto 1 -->
+            <div class="col card h-50 mb-3 py-3">
+              <div >
+                <p class="card-text">Patrimônio com maior número de serviços do mês</p>
+                <h4 class="card-text">Informação do Card 1</h4>
+              </div>
+            </div>
+
+            <!-- Card de texto 2 -->
+            <div class="col card h-40 ">
+              <div >
+                <p class="card-text">Bloco com maior número de serviços do mês</p>
+                <h4 class="card-text">Informação do Card 2</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row charts-container py-3 px-3">
+
+
+
+                              <!-- Gráfico de Barra maior -->
+          <div class="col-9 mb-3 charts-container">
+            <div class="card h-100" style="min-height: 500px;">
+              <div class="card-body">
+                <p class="card-text">Gráfico de Barra 1</p>
+              </div>
+            </div>
+          </div>
+
+                                <!-- Coluna vazia -->
+          <div class="col-3">
+            <div class="mb-3" style="min-height: 200px;"></div>
+
+                        <!-- Texto 2 ao lado, abaixo da coluna vazio -->
+            <div class="card h-40 mb-3">
+              <div class="card-body">
+                <p class="card-text">Patrimônio com maior número de serviços do mês</p>
+                <h4 class="card-text">Informação do Card 1</h4>
+              </div>
+            </div>
+
+                          <!-- Texto 3 ao lado -->
+            <div class="card h-40">
+              <div class="card-body">
+                <p class="card-text">Bloco com maior número de serviços do mês</p>
+                <h4 class="card-text">Informação do Card 2</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+    </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
