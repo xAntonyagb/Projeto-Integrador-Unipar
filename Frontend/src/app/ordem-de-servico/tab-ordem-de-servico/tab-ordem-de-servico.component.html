@@ -1,0 +1,31 @@
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
+  <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+  <link href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
+
+  <div class="py-4 parte-cima-ambiente">
+
+  <div class="header-container">
+    <button class="large-button">NOVO AMBIENTE</button>
+    <input label="Pesquisar" class="form-control search-bar" type="text" placeholder="Pesquisar"
+     formControlName="btpesquisar" >
+    <div class="menu-container">
+      <p-menu #menu [popup]="true"></p-menu>
+      <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" [rounded]="true" ></p-button>
+    </div>
+  </div>
+    <p class="cinza ">Mostrando todos os registros</p>
+    <hr>
+  </div>
+  <div *ngFor="let ordem of ordensServico" class="ordem-card">
+    <p>ID: {{ ordem.id }}</p>
+    <p>Nome: {{ ordem.descricao }}</p>
+    <p>Quantidade de Serviços: {{ ordem.qtdServicos }}</p>
+    <p>Valor Total: {{ ordem.valorTotal }}</p>
+    <p>Data: {{ ordem.data }}</p>
+    <p>Status: {{ ordem.status }}</p>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

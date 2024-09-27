@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { TabAmbientesComponent } from "./tab-ambientes.component";
+
 import { TabViewModule } from "primeng/tabview";
 import { NgModule } from "@angular/core";
 import { ButtonModule } from 'primeng/button';
@@ -10,9 +10,10 @@ import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
+import { TabOrdemDeServicoComponent } from "./tab-ordem-de-servico.component";
 
 @NgModule({
-  declarations:[TabAmbientesComponent],
+  declarations:[TabOrdemDeServicoComponent],
   imports:[
     BrowserAnimationsModule,
     TabViewModule,
@@ -25,6 +26,6 @@ import {MatTableModule} from '@angular/material/table';
     MenuModule,
     TableModule
   ],
-  exports:[TabAmbientesComponent]
+  exports:[TabOrdemDeServicoComponent]
   })
-  export class TabAmbientesModule{}
+  export class TabOrdemDeServicoModule{}

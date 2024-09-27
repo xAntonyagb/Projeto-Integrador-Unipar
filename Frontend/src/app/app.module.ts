@@ -24,6 +24,9 @@ import { TabLancamentosModule } from './ambientes/tab-lancamentos/tab-lancamento
 import { MenuModule } from 'primeng/menu';
 import { MatSortModule } from '@angular/material/sort';
 import { OrdemDeServicoComponent } from './ordem-de-servico/ordem-de-servico.component';
+import { OrdemDeServicoModule } from './ordem-de-servico/ordem-de-servico-module';
+import { TabTodosOsServicosComponent } from './ordem-de-servico/tab-todos-os-servicos/tab-todos-os-servicos.component';
+import { TabOrdemDeServicoComponent } from './ordem-de-servico/tab-ordem-de-servico/tab-ordem-de-servico.component';
 
 
 
@@ -31,7 +34,7 @@ import { OrdemDeServicoComponent } from './ordem-de-servico/ordem-de-servico.com
   declarations: [
     AppComponent,
     LoginComponent,
-    OrdemDeServicoComponent,
+    TabTodosOsServicosComponent,
   ],
 
   imports: [
@@ -56,6 +59,7 @@ import { OrdemDeServicoComponent } from './ordem-de-servico/ordem-de-servico.com
     TabAmbientesModule,
     TabLancamentosModule,
     MenuModule,
+    OrdemDeServicoModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true

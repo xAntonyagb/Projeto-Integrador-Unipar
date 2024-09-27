@@ -1,1 +1,44 @@
-<p>ordem-de-servico works!</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
+  <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+  <link href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
+</head>
+<body>
+
+  <app-sidebar></app-sidebar>
+  <app-header></app-header>
+
+  <div class="conteudo">
+    <div class="centro">
+      <div class="centro">
+        <p class="nomePagina">{{ currentPageTitle }}</p>
+      <p-tabView class="custom-tabview" (onChange)="updatePageTitle($event.index)">
+        <p-tabPanel header="Ordem de Serviço" class="custom-tab" >
+          <div>
+            <app-tab-ordem-de-servico></app-tab-ordem-de-servico>
+          </div>
+          </p-tabPanel>
+          <p-tabPanel header="Todos os Serviços" class="custom-tab" >
+
+        </p-tabPanel>
+
+      </p-tabView>
+      </div>
+    </div>
+</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</html>
+
+
+
+
