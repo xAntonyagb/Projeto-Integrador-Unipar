@@ -8,6 +8,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
+import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations:[TabAmbientesComponent],
@@ -18,6 +20,8 @@ import { TableModule } from 'primeng/table';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
+    MatTableModule,
+    MatSortModule,
     MenuModule,
     TableModule
   ],
