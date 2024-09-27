@@ -27,7 +27,7 @@ public class RSAKeys {
 
 
     public String getPublicKey() {
-        if (publicKey == null) {
+        if (publicKey == null || publicKey.isEmpty() || publicKey.equals("null")) {
             gerarChavesRSA();
             return publicKey;
         }
@@ -35,7 +35,7 @@ public class RSAKeys {
     }
 
     public String getPrivateKey() {
-        if (privateKey == null) {
+        if (privateKey == null || privateKey.isEmpty() || privateKey.equals("null")) {
             gerarChavesRSA();
             return privateKey;
         }

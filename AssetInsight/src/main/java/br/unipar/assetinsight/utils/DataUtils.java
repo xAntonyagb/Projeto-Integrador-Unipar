@@ -12,7 +12,7 @@ public class DataUtils {
     public static Timestamp getNow() {
         return Timestamp.from(
                 LocalDateTime.now()
-                        .atOffset(ZoneOffset.of("-03:00"))
+                        .atOffset(ZoneOffset.UTC)
                         .toInstant()
         );
     }
@@ -20,7 +20,7 @@ public class DataUtils {
     public static String getFormatedNow() {
         Timestamp timestamp = Timestamp.from(
                 LocalDateTime.now()
-                        .atOffset(ZoneOffset.of("-03:00"))
+                        .atOffset(ZoneOffset.UTC)
                         .toInstant()
         );
 
@@ -31,12 +31,12 @@ public class DataUtils {
     // --------------------------------------- Métodos de manipulação de mes ---------------------------------------
     public static Month getMonth() {
         return LocalDateTime.now()
-                .atOffset(ZoneOffset.of("-03:00"))
+                .atOffset(ZoneOffset.UTC)
                 .getMonth();
     }
 
     public static Month getMonth(LocalDateTime data) {
-        return data.atOffset(ZoneOffset.of("-03:00")).getMonth();
+        return data.atOffset(ZoneOffset.UTC).getMonth();
     }
 
 
