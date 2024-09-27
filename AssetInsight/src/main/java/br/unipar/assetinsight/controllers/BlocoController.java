@@ -3,8 +3,15 @@ package br.unipar.assetinsight.controllers;
 import br.unipar.assetinsight.dtos.requests.BlocoRequest;
 import br.unipar.assetinsight.dtos.responses.BlocoResponse;
 import br.unipar.assetinsight.entities.BlocoEntity;
+import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.BlocoMapper;
 import br.unipar.assetinsight.service.BlocoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,10 +27,20 @@ import java.net.URI;
 @AllArgsConstructor
 @RestController
 @RequestMapping("bloco")
+@Tag(name = "Blocos", description = "Endpoints para operações relacionadas a blocos.")
 public class BlocoController {
     private final BlocoService service;
 
 
+    @Operation(summary = "Retorna todos os blocos cadastrados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BlocoResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
+    })
     @GetMapping("/all")
     public ResponseEntity<Page<BlocoResponse>> getAll(Pageable pageable) {
         Page<BlocoEntity> retorno = service.getAll(pageable);
@@ -32,26 +49,66 @@ public class BlocoController {
         return ResponseEntity.ok(response);
     }
 
+
+    @Operation(summary = "Retorna um bloco específico pelo ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BlocoResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
+    })
     @GetMapping
-    public ResponseEntity<BlocoResponse> getById(@RequestParam long id) {
+    public ResponseEntity<BlocoResponse> getById(@Valid @RequestParam long id) {
         BlocoEntity retorno = service.getById(id);
         BlocoResponse response = BlocoMapper.INSTANCE.toResponse(retorno);
 
         return ResponseEntity.ok(response);
     }
 
+
+    @Operation(summary = "Deleta um bloco específico pelo ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Bloco excluído com sucesso.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json, schema = @Schema(implementation = ApiExceptionDTO.class)") }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json, schema = @Schema(implementation = ApiExceptionDTO.class)") }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
+    })
     @DeleteMapping
-    public ResponseEntity<Void> deleteById(@RequestParam long id) {
+    public ResponseEntity<Void> deleteById(@Valid @RequestParam long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
+
+    @Operation(summary = "Transfere todos os registros vinculados a um bloco para outro informado.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
+    })
     @PutMapping("/transferir")
-    public ResponseEntity<Void> transferirAmbientes(@RequestParam long blocoId, @RequestParam long blocoDestinoId) {
-        service.transferirAmbientes(blocoId, blocoDestinoId);
+    public ResponseEntity<Void> transferirBloco(@Valid @RequestParam long blocoId, @Valid @RequestParam long blocoDestinoId) {
+        service.transferirBloco(blocoId, blocoDestinoId);
         return ResponseEntity.ok().build();
     }
 
+
+    @Operation(summary = "Cadastra ou atualiza um bloco")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BlocoResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
+    })
     @PostMapping
     public ResponseEntity<BlocoResponse> save(@RequestBody @Valid BlocoRequest request) {
         BlocoEntity retorno = service.save(

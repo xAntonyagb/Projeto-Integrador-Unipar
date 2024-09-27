@@ -57,6 +57,7 @@ public class AmbienteService implements IService<AmbienteEntity> {
             throw new ValidationException("Nenhum bloco foi encontrado com o id: " + ambiente.getBlocoEntity().getId());
         }
 
+        ambiente.setBlocoEntity(bloco.get());
         ambiente.setUsuarioEntityCriador(securityService.getUsuario());
         ambiente.setDtRecord(DataUtils.getNow());
 

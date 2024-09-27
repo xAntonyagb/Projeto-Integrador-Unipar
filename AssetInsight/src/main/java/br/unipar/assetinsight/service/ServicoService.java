@@ -101,6 +101,8 @@ public class ServicoService implements IService<ServicoEntity> {
         if(!errorList.isEmpty()){
             throw new ValidationException(errorList);
         }
+
+        servicoEntity.setValorTotal(servicoEntity.getValorUnit() * servicoEntity.getQuantidade());
         servicoEntity.setCategoriaEntity(servicoEntity.getCategoriaEntity());
         servicoEntity.setAmbienteEntity(servicoEntity.getAmbienteEntity());
         servicoEntity.setUsuarioEntityCriador(securityService.getUsuario());

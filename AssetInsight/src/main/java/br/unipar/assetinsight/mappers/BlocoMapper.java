@@ -46,4 +46,20 @@ public interface BlocoMapper {
         List<BlocoResponse> responses = toResponseList(entities);
         return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
     }
+
+    default BlocoEntity mapLongToEntity(Long id) {
+        if (id == null) {
+            return null;
+        }
+        BlocoEntity entity = new BlocoEntity();
+        entity.setId(id);
+        return entity;
+    }
+
+    default Long mapEntityToLong(BlocoEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        return entity.getId();
+    }
 }

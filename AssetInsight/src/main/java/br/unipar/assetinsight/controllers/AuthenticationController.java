@@ -5,6 +5,7 @@ import br.unipar.assetinsight.dtos.requests.LoginRequest;
 import br.unipar.assetinsight.dtos.responses.CadastroResponse;
 import br.unipar.assetinsight.dtos.responses.LoginResponse;
 import br.unipar.assetinsight.entities.UsuarioEntity;
+import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.AuthenticationMapper;
 import br.unipar.assetinsight.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,29 +22,35 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@Tag(name = "Token", description = "Operações relacionadas a autentificação para utilização da API.")
+@Tag(name = "Login", description = "Operações relacionadas a autentificação para utilização da API.")
 @RequestMapping("auth")
 public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Operation(summary = "Utilizado para receber o Token de acesso.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ok", content =
-                    { @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = LoginResponse.class)) }),
-            @ApiResponse(responseCode = "401", description = "Usuário não autorizado / Credenciais inválidas.",
-                    content = { @Content(mediaType = "application/json") }),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.",
-                    content = { @Content(mediaType = "application/json") })
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
-    @Operation(summary = "Gera um token de autenticação a partir dos dados de login.")
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
         LoginResponse response = authenticationService.doLogin(request);
         return ResponseEntity.ok(response);
     }
 
+
+    @Operation(summary = "Utilizado para cadastrar um novo usuário. Necessário permissões de administrador para realizar a operação")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CadastroResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
+    })
     @PostMapping("/cadastrar")
     public ResponseEntity<CadastroResponse> cadastrarUsuario(@RequestBody @Valid CadastroRequest request) {
         UsuarioEntity retorno = authenticationService.cadastrarUsuario(request);

@@ -1,5 +1,6 @@
 package br.unipar.assetinsight.exceptions.handler;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +13,10 @@ import java.util.List;
  */
 @Getter
 @Setter
+@Schema(description = "DTO para retorno de exceções.")
 public class ApiExceptionDTO {
 
+    @Schema(description = "Lista de mensagens de erro.")
     private List<String> errorList;
 
     /* Construtores */

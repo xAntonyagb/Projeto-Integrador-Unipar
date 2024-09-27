@@ -53,7 +53,7 @@ public class BlocoService implements IService<BlocoEntity>{
         return bloco;
     }
 
-    public void transferirAmbientes(long blocoId, long blocoDestinoId) {
+    public void transferirBloco(long blocoId, long blocoDestinoId) {
         Optional<List<AmbienteEntity>> ambientesOpt = ambienteRepository.findByBlocoEntityId(blocoId);
         Optional<BlocoEntity> blocoDestinoOpt = blocoRepository.findById(blocoDestinoId);
         Optional<BlocoEntity> blocoOrigemOpt = blocoRepository.findById(blocoId);

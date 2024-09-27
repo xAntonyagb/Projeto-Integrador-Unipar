@@ -36,7 +36,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         Optional<ArquivadoEntity> arquivado = arquivadoRepository.findById(id);
 
         return arquivado.orElseThrow(
-                () -> new NotFoundException("Nenhum arquivado foi encontrado com o id: " + id)
+                () -> new NotFoundException("Nenhum arquivada foi encontrado com o id: " + id)
         );
     }
 
@@ -45,7 +45,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         Page<ArquivadoEntity> arquivados = arquivadoRepository.findAll(pageable);
 
         if (arquivados.isEmpty()) {
-            throw new NotFoundException("Nenhum arquivado foi encontrado.");
+            throw new NotFoundException("Nenhum arquivada foi encontrado.");
         }
 
         return arquivados;
@@ -95,7 +95,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         ArquivadoEntity arquivado;
 
         if (retorno.isEmpty()) {
-            throw new NotFoundException("Nenhum arquivado foi encontrado com o id: " + id);
+            throw new NotFoundException("Nenhum arquivada foi encontrado com o id: " + id);
         } else {
             arquivado = retorno.get();
         }
@@ -115,7 +115,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         ArquivadoEntity arquivado;
 
         if (retorno.isEmpty()) {
-            throw new NotFoundException("Nenhum arquivado foi encontrado com o id: " + id);
+            throw new NotFoundException("Nenhum arquivada foi encontrado com o id: " + id);
         } else {
             arquivado = retorno.get();
         }

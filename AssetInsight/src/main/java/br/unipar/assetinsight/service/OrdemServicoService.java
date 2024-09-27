@@ -59,10 +59,15 @@ public class OrdemServicoService implements IService<OrdemServicoEntity> {
             ordemServico.setDescricao("Sem descrição");
         }
 
+        double valorTotal = 0;
+
         for (int i = 0; i < ordemServico.getListServicoEntities().size(); i++) {
             servicoService.validateServico(ordemServico.getListServicoEntities().get(i)); // Throws ValidationException
             servicoService.save(ordemServico.getListServicoEntities().get(i));
+            valorTotal += ordemServico.getListServicoEntities().get(i).getValorTotal();
         }
+
+        ordemServico.setValorTotal(valorTotal);
         ordemServico.setUsuarioEntityCriador(securityService.getUsuario());
         ordemServico.setDtRecord(DataUtils.getNow());
 

@@ -5,6 +5,12 @@ import br.unipar.assetinsight.dtos.responses.AmbienteResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.mappers.AmbienteMapper;
 import br.unipar.assetinsight.service.AmbienteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,9 +23,20 @@ import java.net.URI;
 @AllArgsConstructor
 @RestController
 @RequestMapping("ambiente")
+@Tag(name = "Ambientes", description = "Endpoints para manipulação de ambientes.")
 public class AmbienteController {
     private final AmbienteService service;
 
+
+    @Operation(summary = "Retorna todos os ambientes cadastrados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AmbienteResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json") })
+    })
     @GetMapping("/all")
     public ResponseEntity<Page<AmbienteResponse>> getAll(Pageable pageable) {
         Page<AmbienteEntity> retorno = service.getAll(pageable);
@@ -29,26 +46,66 @@ public class AmbienteController {
         return ResponseEntity.ok(response);
     }
 
+
+    @Operation(summary = "Retorna um ambiente específico pelo ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AmbienteResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json") })
+    })
     @GetMapping
-    public ResponseEntity<AmbienteResponse> getById(@RequestParam long id) {
+    public ResponseEntity<AmbienteResponse> getById(@Valid @RequestParam long id) {
         AmbienteEntity retorno = service.getById(id);
         AmbienteResponse response = AmbienteMapper.INSTANCE.toResponse(retorno);
 
         return ResponseEntity.ok(response);
     }
 
+
+    @Operation(summary = "Deleta um ambiente específico pelo ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Ambiente excluído com sucesso.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AmbienteResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json") })
+    })
     @DeleteMapping
-    public ResponseEntity<Void> deleteById(@RequestParam long id) {
+    public ResponseEntity<Void> deleteById(@Valid @RequestParam long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
+
+    @Operation(summary = "Transfere todos os registros vinculados a um ambiente para outro informado.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Requisição aceita e processada.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json") })
+    })
     @PutMapping("/transferir")
-    public ResponseEntity<Void> transferirAmbientes(@RequestParam long ambienteId, @RequestParam long ambienteDestinoId) {
+    public ResponseEntity<Void> transferirAmbientes(@Valid @RequestParam long ambienteId, @Valid @RequestParam long ambienteDestinoId) {
         service.transferirAmbientes(ambienteId, ambienteDestinoId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.accepted().build();
     }
 
+
+    @Operation(summary = "Cadastra ou atualiza um ambiente.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AmbienteResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json") })
+    })
     @PostMapping
     public ResponseEntity<AmbienteResponse> save(@RequestBody @Valid AmbienteRequest request) {
         AmbienteEntity retorno = service.save(
