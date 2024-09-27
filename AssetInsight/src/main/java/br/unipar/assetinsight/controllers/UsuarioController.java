@@ -6,6 +6,9 @@ import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.UsuarioMapper;
 import br.unipar.assetinsight.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,8 +40,13 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
+    @Parameters({
+            @Parameter(name = "page", description = "Número da página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "0", example = "0")),
+            @Parameter(name = "size", description = "Quantidade de registros por página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "10", example = "1")),
+            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc"))
+    })
     @GetMapping("/all")
-    public ResponseEntity<Page<UsuarioResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
+    public ResponseEntity<Page<UsuarioResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
         Page<UsuarioEntity> retorno = service.getAll(pageable);
         Page<UsuarioResponse> response = UsuarioMapper.INSTANCE.toResponsePage(retorno);
 

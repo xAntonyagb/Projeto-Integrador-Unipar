@@ -9,6 +9,9 @@ import br.unipar.assetinsight.mappers.OrdemServicoMapper;
 import br.unipar.assetinsight.service.ArquivadoService;
 import br.unipar.assetinsight.service.interfaces.IService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -44,8 +47,13 @@ public class OrdemServicoController {
             @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
+    @Parameters({
+            @Parameter(name = "page", description = "Número da página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "0", example = "0")),
+            @Parameter(name = "size", description = "Quantidade de registros por página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "10", example = "1")),
+            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc"))
+    })
     @GetMapping("/all")
-    public ResponseEntity<Page<OrdemServicoResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
+    public ResponseEntity<Page<OrdemServicoResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
         Page<OrdemServicoEntity> retorno = ordemServicoService.getAll(pageable);
         Page<OrdemServicoResponse> response = OrdemServicoMapper.INSTANCE.toResponsePage(retorno);
 
