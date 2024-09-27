@@ -1,43 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { AmbienteService } from './service-ambiente/ambiente-service';
+import { AfterViewInit, Component, inject, OnInit, ViewChild, viewChild } from '@angular/core';
 import { Ambiente } from './service-ambiente/ambiente';
+import {LiveAnnouncer} from '@angular/cdk/a11y';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, Sort } from '@angular/material/sort';
 
+const AMBIENTE_DATA: Ambiente[] = [
+]
+export interface Element {
+  id: number;
+  nome: string;
+  bloco: string;
+}
 @Component({
   selector: 'app-tab-ambientes',
   templateUrl: './tab-ambientes.component.html',
-  styleUrl: './tab-ambientes.component.scss'
+  styleUrls: ['./tab-ambientes.component.scss']
 })
-export class TabAmbientesComponent  implements OnInit{
-  items: MenuItem[] | undefined;
-  ambientes : Ambiente[] = []
+export class TabAmbientesComponent  implements AfterViewInit{
 
-  constructor(private ambienteService: AmbienteService) {}
-  ngOnInit() {
-      this.items = [
-          {
-              label: 'Options',
-              items: [
-                  {
-                      label: 'Refresh',
-                      icon: 'pi pi-refresh'
-                  },
-                  {
-                      label: 'Export',
-                      icon: 'pi pi-upload'
-                  }
-              ]
-          }
-      ];
-      this.ambienteService.getAmbientes().subscribe(
-        data => {
-          this.ambientes = data;
-      },
-      error => {
-          console.log('Erro ao consultar Ambientes'
-            ,error);
-      }
+  private _liveAnnouncer = inject(LiveAnnouncer);
 
-    );
+  displayedColumns: string[] = ['id', 'nome', 'bloco', 'patrimonios'];
+  dataSource = new MatTableDataSource(AMBIENTE_DATA);
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 }
