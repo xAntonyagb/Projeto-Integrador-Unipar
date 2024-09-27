@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,13 +43,18 @@ public class AuthenticationService {
         usuarioRepository.save(usuarioAutenticado); //Atualizar data de login do usuario
 
         var userToken = (UserDetails) usuarioAutenticado;
+
+
         var token = tokenService.generateToken(userToken); //Gera token a partir do usuario que já foi autenticado
+        Instant expirationDate = tokenService.expirationDate;
+        Instant IssuedAt = tokenService.IssuedAt;
+
         var refreshToken = tokenService.generateRefreshToken(userToken);
 
         LoginResponse loginResponse = new LoginResponse(
                 token,
-                tokenService.expirationDate,
-                tokenService.IssuedAt,
+                expirationDate,
+                IssuedAt,
                 roleMapper.toPermissoesEnumList(usuarioAutenticado.getListRoles()),
                 refreshToken
         );

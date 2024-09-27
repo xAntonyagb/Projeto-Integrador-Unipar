@@ -6,6 +6,9 @@ import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.mappers.AmbienteMapper;
 import br.unipar.assetinsight.service.AmbienteService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,8 +40,13 @@ public class AmbienteController {
             @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json") }),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json") })
     })
+    @Parameters({
+            @Parameter(name = "page", description = "Número da página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", example = "0")),
+            @Parameter(name = "size", description = "Quantidade de registros por página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", example = "1")),
+            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "atributo,asc"))
+    })
     @GetMapping("/all")
-    public ResponseEntity<Page<AmbienteResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<AmbienteResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
         Page<AmbienteEntity> retorno = service.getAll(pageable);
         Page<AmbienteResponse> response = AmbienteMapper.INSTANCE.toResponsePage(retorno);
 

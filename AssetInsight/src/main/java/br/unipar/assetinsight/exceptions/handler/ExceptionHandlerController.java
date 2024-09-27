@@ -3,6 +3,7 @@ package br.unipar.assetinsight.exceptions.handler;
 import br.unipar.assetinsight.exceptions.NotFoundException;
 import br.unipar.assetinsight.exceptions.SecurityException;
 import br.unipar.assetinsight.exceptions.ValidationException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
@@ -54,9 +55,17 @@ public class ExceptionHandlerController {
         return new ApiExceptionDTO(e.getMessage());
     }
 
+    //Exeção de MissingRequestHeader
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptionDTO handleApiException(MissingRequestHeaderException e) {
+        return new ApiExceptionDTO(e.getMessage());
+    }
+
+    //Exeção de PropertyReference
+    @ExceptionHandler(PropertyReferenceException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiExceptionDTO handleApiException(PropertyReferenceException e) {
         return new ApiExceptionDTO(e.getMessage());
     }
 
