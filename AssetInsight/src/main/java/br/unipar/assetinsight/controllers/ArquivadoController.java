@@ -41,7 +41,7 @@ public class ArquivadoController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<ArquivadoResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<ArquivadoResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
         Page<ArquivadoEntity> retorno = arquivadoService.getAll(pageable);
         Page<ArquivadoResponse> response = ArquivadosMapper.INSTANCE.toResponsePage(retorno);
 

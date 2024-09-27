@@ -45,7 +45,7 @@ public class OrdemServicoController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<OrdemServicoResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<OrdemServicoResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
         Page<OrdemServicoEntity> retorno = ordemServicoService.getAll(pageable);
         Page<OrdemServicoResponse> response = OrdemServicoMapper.INSTANCE.toResponsePage(retorno);
 

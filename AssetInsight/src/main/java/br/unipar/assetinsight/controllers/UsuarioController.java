@@ -16,10 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -41,7 +38,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<UsuarioResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<UsuarioResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
         Page<UsuarioEntity> retorno = service.getAll(pageable);
         Page<UsuarioResponse> response = UsuarioMapper.INSTANCE.toResponsePage(retorno);
 
@@ -59,7 +56,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping
-    public ResponseEntity<UsuarioResponse> getById(@Valid UUID id) {
+    public ResponseEntity<UsuarioResponse> getById(@Valid @RequestParam UUID id) {
         UsuarioEntity retorno = service.getById(id);
         UsuarioResponse response = UsuarioMapper.INSTANCE.toResponse(retorno);
 
@@ -77,7 +74,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @DeleteMapping
-    public ResponseEntity<Void> deleteById(@Valid UUID id) {
+    public ResponseEntity<Void> deleteById(@Valid @RequestParam UUID id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }

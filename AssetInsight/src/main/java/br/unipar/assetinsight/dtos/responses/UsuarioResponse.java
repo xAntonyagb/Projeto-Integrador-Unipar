@@ -12,6 +12,9 @@ import java.util.UUID;
  * DTO for {@link br.unipar.assetinsight.entities.UsuarioEntity}
  */
 public record UsuarioResponse(
+        @Schema(description = "ID do usuário", example = "123e4567-e89b-12d3-a456-426614174000")
+        UUID id,
+
         @Schema(description = "Nome do usuário", example = "Usuário Exemplo")
         String username,
 

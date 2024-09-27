@@ -37,7 +37,7 @@ public class NotificacaoController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<NotificacaoResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<NotificacaoResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
         Page<NotificacaoEntity> retorno = notificacaoService.getAll(pageable);
         Page<NotificacaoResponse> response = NotificacaoMapper.INSTANCE.toResponsePage(retorno);
 

@@ -38,7 +38,7 @@ public class AmbienteController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json") })
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<AmbienteResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<AmbienteResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
         Page<AmbienteEntity> retorno = service.getAll(pageable);
         Page<AmbienteResponse> response = AmbienteMapper.INSTANCE.toResponsePage(retorno);
 

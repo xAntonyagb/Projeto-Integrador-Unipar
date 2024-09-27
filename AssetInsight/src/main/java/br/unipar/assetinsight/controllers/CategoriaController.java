@@ -42,7 +42,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<CategoriaResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<CategoriaResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
         Page<CategoriaEntity> retorno = service.getAll(pageable);
         Page<CategoriaResponse> response = CategoriaMapper.INSTANCE.toResponsePage(retorno);
 

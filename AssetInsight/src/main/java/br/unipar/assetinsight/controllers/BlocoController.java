@@ -42,7 +42,7 @@ public class BlocoController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<BlocoResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<BlocoResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
         Page<BlocoEntity> retorno = service.getAll(pageable);
         Page<BlocoResponse> response = BlocoMapper.INSTANCE.toResponsePage(retorno);
 

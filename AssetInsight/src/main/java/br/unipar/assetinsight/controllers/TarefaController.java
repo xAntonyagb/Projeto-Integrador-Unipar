@@ -44,7 +44,7 @@ public class TarefaController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<TarefaResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<TarefaResponse>> getAll(@RequestParam(required = false) Pageable pageable) {
         Page<TarefaEntity> retorno = tarefaService.getAll(pageable);
         Page<TarefaResponse> response = TarefaMapper.INSTANCE.toResponsePage(retorno);
 
