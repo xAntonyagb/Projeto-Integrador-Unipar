@@ -86,6 +86,7 @@ export class AuthService {
     date.setTime(date.getTime() + (expiresInHours *60 * 60 * 1000));
     const expires = "expires=" + date.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    
   }
 
   getCookie(name: string): string | null {
