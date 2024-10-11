@@ -1,18 +1,18 @@
 services:
-  app:
+  backend:
     image: spring-backend:AssetInsight
     container_name: backend
     build:
-      context: ./AssetInsight/
+      context: ./BackEnd/
       dockerfile: Dockerfile
     ports:
       - '8080:8080'
     env_file:
-      - ./AssetInsight/variables.env
+      - ./BackEnd/variables.env
     depends_on:
       - db
     volumes:
-      - ./AssetInsight/:/app  # Monta o código local como volume
+      - ./BackEnd/:/backend  # Monta o código local como volume
     networks:
       - app-network
     restart: always
@@ -26,7 +26,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts:/docker-entrypoint-initdb.d
     env_file:
-      - ./AssetInsight/variables.env
+      - ./BackEnd/variables.env
     networks:
       - app-network
     restart: always
@@ -35,16 +35,14 @@ services:
     image: angular-frontend:AssetInsight
     container_name: frontend
     build:
-      context: ./Frontend/
+      context: ./FrontEnd/
       dockerfile: Dockerfile
     ports:
       - '4200:4200'
     networks:
       - app-network
     depends_on:
-      - app
-    volumes:
-      - ./Frontend/:/app  # Monta o código local como volume
+      - backend
     restart: always
 
 networks:
