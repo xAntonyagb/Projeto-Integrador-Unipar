@@ -3,14 +3,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { AuthResponse } from './auth-response.type';
-import { ApiConfig } from './api-response';
+import { ApiResponse } from '../responses/api.response';
+import { AuthResponse } from '../responses/auth.response.type';
+
+
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  private apiUrl = ApiConfig.DESENVOLVIMENTO;
+export class AuthRequest {
+  private apiUrl = ApiResponse.DESENVOLVIMENTO;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -27,7 +29,7 @@ export class AuthService {
 
     console.log("login: " + username + " senha: " + password);
 
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, body, { headers })
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, body, { headers })
       .pipe(
         tap((response) =>{
           this.extractToken(response)

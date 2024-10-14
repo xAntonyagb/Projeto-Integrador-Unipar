@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, inject, OnInit, ViewChild, viewChild } from '@angular/core';
-import { Ambiente, Bloco } from './service-ambiente/ambiente';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
-import { AmbienteService } from './service-ambiente/ambiente-service';
+import { AmbienteResponse } from '../../dtos/responses/ambiente.response';
+import { AmbienteRequest } from '../../dtos/requests/ambiente.request';
+
 
 
 export interface Element {
@@ -21,9 +22,9 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit{
 
   private _liveAnnouncer = inject(LiveAnnouncer);
 
-  constructor(private ambienteService: AmbienteService) { }
+  constructor(private ambiente: AmbienteRequest) { }
   displayedColumns: string[] = ['id', 'nome', 'bloco', 'patrimonios'];
-  dataSource = new MatTableDataSource<Ambiente>([]);
+  dataSource = new MatTableDataSource<AmbienteResponse>([]);
   @ViewChild(MatSort) sort!: MatSort;
   ngOnInit() {
     this.getAmbientes();
@@ -39,13 +40,13 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit{
     }
   }
   getAmbientes() {
-    this.ambienteService.getAmbientes().subscribe((response: any) => {
+    this.ambiente.getAmbientes().subscribe((response: any) => {
       const data = this.extractContent(response);
       this.dataSource.data = data;
     });
   }
 
-  extractContent(response: any): Ambiente[] {
+  extractContent(response: any): AmbienteResponse[] {
     return response.content || [];
   }
   applyFilter(event: Event) {

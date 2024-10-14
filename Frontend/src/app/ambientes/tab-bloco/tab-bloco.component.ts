@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BlocoService } from './bloco-service/bloco.service';
 import { MenuItem } from 'primeng/api';
 import { MatTableDataSource } from '@angular/material/table';
+import { BlocoRequest } from '../../dtos/requests/bloco.request';
 
 export interface Bloco {
   id: number;
@@ -16,13 +16,13 @@ export interface Bloco {
 })
 export class TabBlocoComponent implements OnInit {
   items: MenuItem[] | undefined;
-  constructor(private blocoService: BlocoService) {}
+  constructor(private bloco: BlocoRequest) {}
   dataSource = new MatTableDataSource<Bloco>([]);
   ngOnInit() {
     this.getBlocosData();
   }
   getBlocosData() {
-    this.blocoService.getBlocosData().subscribe((response: any) => {
+    this.bloco.getBlocosData().subscribe((response: any) => {
       const data = this.extractContent(response);
       this.dataSource.data = data;
     });

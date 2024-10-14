@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { AuthRequest } from '../dtos/requests/auth.request';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  constructor(private auth:  AuthService , private router: Router) { }
+  constructor(private auth:  AuthRequest , private router: Router) { }
 
   Logout(event: Event){
     this.auth.deleteCookie('accessToken');

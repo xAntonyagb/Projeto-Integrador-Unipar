@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { OrdemServicoService } from '../service-ordem/ordem.service';
 import { DatePipe } from '@angular/common';
+import { OrdemRequest } from '../../dtos/requests/ordem.request';
 
 @Component({
   selector: 'app-tab-ordem-de-servico',
@@ -11,14 +11,14 @@ import { DatePipe } from '@angular/common';
 export class TabOrdemDeServicoComponent {
   ordensServico: any[] = [];
 
-  constructor(private ordemServicoService: OrdemServicoService, private datePipe: DatePipe) {}
+  constructor(private ordem: OrdemRequest, private datePipe: DatePipe) {}
 
   ngOnInit() {
     this.getOrdensServico();
   }
 
   getOrdensServico() {
-    this.ordemServicoService.getOrdensServico().subscribe(response => {
+    this.ordem.getOrdensServico().subscribe(response => {
       this.ordensServico = response.content.map((ordem: any) => ({
         id: ordem.id,
         descricao: ordem.descricao,

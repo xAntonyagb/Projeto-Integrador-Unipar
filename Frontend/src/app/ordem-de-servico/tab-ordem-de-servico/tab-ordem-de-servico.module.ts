@@ -1,5 +1,4 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
 import { TabViewModule } from "primeng/tabview";
 import { NgModule } from "@angular/core";
 import { ButtonModule } from 'primeng/button';

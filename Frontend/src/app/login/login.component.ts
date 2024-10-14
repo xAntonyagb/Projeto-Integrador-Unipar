@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
-import { AuthService } from './../auth/auth.service';
 import { Component } from '@angular/core';
+import { AuthRequest } from '../dtos/requests/auth.request';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ export class LoginComponent {
   errorMessage: string = '';
   cookieConsent: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private auth: AuthRequest, private router: Router) {
     this.cookieConsent = this.checkCookieConsent();
   }
 
@@ -22,7 +22,7 @@ export class LoginComponent {
     event.preventDefault();
     if(this.cookieConsent) {
 
-    this.authService.login(this.username, this.password).subscribe({
+    this.auth.login(this.username, this.password).subscribe({
       next: (response: any) => {
         console.log('Resposta da API de login:', response);
       },
@@ -40,11 +40,11 @@ export class LoginComponent {
 }
 acceptCookies() {
   this.cookieConsent = true;
-  this.authService.setCookie('cookieConsent', 'true', 365);
+  this.auth.setCookie('cookieConsent', 'true', 365);
 }
 
 checkCookieConsent(): boolean {
-  return this.authService.getCookie('cookieConsent') === 'true';
+  return this.auth.getCookie('cookieConsent') === 'true';
 }
 
 }
