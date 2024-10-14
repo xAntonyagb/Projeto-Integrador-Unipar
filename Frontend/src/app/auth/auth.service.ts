@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { AuthResponse } from './auth-response.type';
+import { ApiConfig } from './api-response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://assetinsight.awahosting.cloud:8080/auth';
+  private apiUrl = ApiConfig.DESENVOLVIMENTO;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -86,7 +87,6 @@ export class AuthService {
     date.setTime(date.getTime() + (expiresInHours *60 * 60 * 1000));
     const expires = "expires=" + date.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
-    
   }
 
   getCookie(name: string): string | null {
