@@ -7,7 +7,7 @@
   <div class="py-4 parte-cima-ambiente">
 
   <div class="header-container">
-    <button class="large-button">NOVO AMBIENTE</button>
+    <button class="large-button" (click)="openModal()">NOVO AMBIENTE</button>
     <input label="Pesquisar" class="form-control search-bar" type="text" placeholder="Pesquisar"
      formControlName="btpesquisar" >
     <div class="menu-container">
@@ -26,6 +26,7 @@
     Data: {{ ordem.data }}  |
     Status: {{ ordem.status }} |
   </div>
+  <app-cadastrar-ordem *ngIf="isModalOpen" (close)="closeModal()"></app-cadastrar-ordem>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

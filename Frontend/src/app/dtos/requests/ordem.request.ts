@@ -15,4 +15,7 @@ export class OrdemRequest {
   getOrdensServico(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/ordem-servico/all`);
   }
+  setOrdensServico(ordemData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/ordem-servico`, ordemData);
+  }
 }

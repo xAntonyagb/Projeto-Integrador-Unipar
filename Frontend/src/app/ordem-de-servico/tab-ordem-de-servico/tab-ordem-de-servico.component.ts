@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { OrdemRequest } from '../../dtos/requests/ordem.request';
+import { CadastrarOrdemModule } from '../../modals/cadastrar-ordem/cadastrar-ordem.module';
+import { CadastrarOrdemComponent } from '../../modals/cadastrar-ordem/cadastrar-ordem.component';
+import { ModalRequest } from '../../dtos/requests/modal.request';
 
 @Component({
   selector: 'app-tab-ordem-de-servico',
@@ -9,9 +12,20 @@ import { OrdemRequest } from '../../dtos/requests/ordem.request';
   providers:[DatePipe]
 })
 export class TabOrdemDeServicoComponent {
+  isModalOpen = false;
   ordensServico: any[] = [];
 
-  constructor(private ordem: OrdemRequest, private datePipe: DatePipe) {}
+  constructor(
+    private ordem: OrdemRequest,
+    private datePipe: DatePipe,
+    private modalRequest: ModalRequest
+  ) {}
+openModal(){
+  this.isModalOpen = true;
+}
+closeModal(){
+  this.isModalOpen = false;
+}
 
   ngOnInit() {
     this.getOrdensServico();

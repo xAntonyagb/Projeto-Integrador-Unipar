@@ -27,6 +27,7 @@ import { OrdemDeServicoComponent } from './ordem-de-servico/ordem-de-servico.com
 import { OrdemDeServicoModule } from './ordem-de-servico/ordem-de-servico-module';
 import { TabTodosOsServicosComponent } from './ordem-de-servico/tab-todos-os-servicos/tab-todos-os-servicos.component';
 import { TabOrdemDeServicoComponent } from './ordem-de-servico/tab-ordem-de-servico/tab-ordem-de-servico.component';
+import { CadastrarOrdemModule } from './modals/cadastrar-ordem/cadastrar-ordem.module';
 
 
 
@@ -59,7 +60,8 @@ import { TabOrdemDeServicoComponent } from './ordem-de-servico/tab-ordem-de-serv
     TabAmbientesModule,
     TabLancamentosModule,
     MenuModule,
-    OrdemDeServicoModule
+    OrdemDeServicoModule,
+    CadastrarOrdemModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true

@@ -19,7 +19,6 @@ export interface Element {
   styleUrls: ['./tab-ambientes.component.scss']
 })
 export class TabAmbientesComponent  implements AfterViewInit, OnInit{
-
   private _liveAnnouncer = inject(LiveAnnouncer);
 
   constructor(private ambiente: AmbienteRequest) { }
@@ -28,6 +27,7 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit{
   @ViewChild(MatSort) sort!: MatSort;
   ngOnInit() {
     this.getAmbientes();
+    
   }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -53,4 +53,5 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit{
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+ 
 }

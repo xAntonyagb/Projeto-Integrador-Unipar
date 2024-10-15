@@ -14,6 +14,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { MenuModule } from "primeng/menu";
 import { TabOrdemDeServicoModule } from "./tab-ordem-de-servico/tab-ordem-de-servico.module";
+import { CadastrarOrdemModule } from "../modals/cadastrar-ordem/cadastrar-ordem.module";
 
 @NgModule({
   declarations: [OrdemDeServicoComponent],
@@ -23,7 +24,6 @@ import { TabOrdemDeServicoModule } from "./tab-ordem-de-servico/tab-ordem-de-ser
   MatTabsModule,
   BrowserAnimationsModule,
   TabViewModule,
-  TabAmbientesModule,
   TabBlocoModule,
   TabLancamentosModule,
   ButtonModule,
@@ -31,7 +31,8 @@ import { TabOrdemDeServicoModule } from "./tab-ordem-de-servico/tab-ordem-de-ser
   MatMenuModule,
   MatButtonModule,
   MenuModule,
-  TabOrdemDeServicoModule
+  TabOrdemDeServicoModule, 
+  CadastrarOrdemModule
 ],
   exports: [OrdemDeServicoComponent]
 })
