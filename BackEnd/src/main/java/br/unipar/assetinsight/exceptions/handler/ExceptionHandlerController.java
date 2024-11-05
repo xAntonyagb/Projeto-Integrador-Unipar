@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
@@ -24,42 +26,42 @@ public class ExceptionHandlerController {
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptionDTO handleIllegalArgumentException(ValidationException e) {
-        return new ApiExceptionDTO(e.getErrorList());
+        return new ApiExceptionDTO(e.getListErros());
     }
 
     //Exeção de No Data Found
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiExceptionDTO handleApiException(NotFoundException e) {
-        return new ApiExceptionDTO(e.getErrorList());
+        return new ApiExceptionDTO(e.getListErros());
     }
 
     //Exeção de unauthorized
     @ExceptionHandler(SecurityException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiExceptionDTO handleApiException(SecurityException e) {
-        return new ApiExceptionDTO(e.getMessage());
+        return new ApiExceptionDTO("credenciais", e.getMessage());
     }
 
     //Exeção de credenciais erradas
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiExceptionDTO handleApiException(BadCredentialsException e) {
-        return new ApiExceptionDTO(e.getMessage());
+        return new ApiExceptionDTO("credenciais", e.getMessage());
     }
 
     //Exeção de NoResourceFound
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptionDTO handleApiException(NoResourceFoundException e) {
-        return new ApiExceptionDTO(e.getMessage());
+        return new ApiExceptionDTO("endPoints", e.getMessage());
     }
 
     //Exeção de MissingRequestHeader
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptionDTO handleApiException(MissingRequestHeaderException e) {
-        return new ApiExceptionDTO(e.getMessage());
+        return new ApiExceptionDTO("header", e.getMessage());
     }
 
     //Exeção de PropertyReference
@@ -74,22 +76,20 @@ public class ExceptionHandlerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptionDTO handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
-
-        List<String> errors = new ArrayList<>();
+        Map<String, String> listErros = new HashMap<>();
 
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-            errors.add(fieldError.getField() + ": " +
-                    fieldError.getDefaultMessage());
+            listErros.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
 
-        return new ApiExceptionDTO(errors);
+        return new ApiExceptionDTO(listErros);
     }
 
     //Outras exceções
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiExceptionDTO handleException(Exception e) {
-        return new ApiExceptionDTO(e.getMessage());
+        return new ApiExceptionDTO("Exception", e.getMessage());
     }
 }
 

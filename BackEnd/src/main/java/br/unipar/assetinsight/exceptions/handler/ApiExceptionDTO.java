@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Classe que vai servir de retorno quando ocorrer uma exessão na aplicação.
@@ -17,17 +19,20 @@ import java.util.List;
 public class ApiExceptionDTO {
 
     @Schema(description = "Lista de mensagens de erro.")
-    private List<String> errorList;
+    private Map<String, String> listErros;
 
-    /* Construtores */
-
-    //Contrutor pra passar só uma mensagem
     public ApiExceptionDTO(String message) {
-        errorList = Arrays.asList(message);
+        this.listErros = new HashMap<>();
+        listErros.put("Erro Geral", message);
     }
 
-    //Construtor pra passar mais de uma mensagem de uma vez
-    public ApiExceptionDTO(List<String> errorList) {
-        this.errorList = errorList;
+    public ApiExceptionDTO(String field, String message) {
+        this.listErros = new HashMap<>();
+        listErros.put(field, message);
     }
+
+    public ApiExceptionDTO(Map<String, String> listErros) {
+        this.listErros = listErros;
+    }
+
 }

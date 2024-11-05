@@ -17,14 +17,14 @@ public class UsuarioService {
 
     public UsuarioEntity getById(UUID id) {
         return usuarioRepository.findById(id)
-                .orElseThrow( () -> new NotFoundException("Usuário não encontrado"));
+                .orElseThrow( () -> new NotFoundException("username", "Usuário não encontrado"));
     }
 
     public Page<UsuarioEntity> getAll(Pageable pageable) {
         Page<UsuarioEntity> usuarios = usuarioRepository.findAll(pageable);
 
         if (usuarios.isEmpty()) {
-            throw new NotFoundException("Nenhum usuário encontrado");
+            throw new NotFoundException("username", "Nenhum usuário encontrado");
         }
 
         return usuarios;
@@ -32,6 +32,6 @@ public class UsuarioService {
 
     public void deleteById(UUID id) {
         UsuarioEntity usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
+                .orElseThrow(() -> new NotFoundException("username", "Usuário não encontrado"));
     }
 }

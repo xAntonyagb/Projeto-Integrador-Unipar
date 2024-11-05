@@ -33,7 +33,7 @@ public class BlocoService implements IService<BlocoEntity>{
             return retorno;
         }
         else {
-            throw new NotFoundException("Nenhum bloco foi encontrado com o id: " + id);
+            throw new NotFoundException("bloco", "Nenhum bloco foi encontrado com o id: " + id);
         }
     }
 
@@ -41,8 +41,12 @@ public class BlocoService implements IService<BlocoEntity>{
     public Page<BlocoEntity> getAll(Pageable pagable) throws NotFoundException {
         Page<BlocoEntity> blocos = blocoRepository.findAll(pagable);
 
+        for (BlocoEntity bloco : blocos) {
+            bloco.setQtdAmbientes(ambienteRepository.countByBlocoEntityId(bloco.getId()));
+        }
+
         if (blocos.isEmpty()) {
-            throw new NotFoundException("Nenhum bloco foi encontrado");
+            throw new NotFoundException("bloco", "Nenhum bloco foi encontrado");
         }
 
         return blocos;
@@ -58,24 +62,24 @@ public class BlocoService implements IService<BlocoEntity>{
     }
 
     public void transferirBloco(long blocoId, long blocoDestinoId) {
-        Optional<List<AmbienteEntity>> ambientesOpt = ambienteRepository.findByBlocoEntityId(blocoId);
-        Optional<BlocoEntity> blocoDestinoOpt = blocoRepository.findById(blocoDestinoId);
-        Optional<BlocoEntity> blocoOrigemOpt = blocoRepository.findById(blocoId);
+        Optional<List<AmbienteEntity>> ambientes = ambienteRepository.findByBlocoEntityId(blocoId);
+        Optional<BlocoEntity> blocoDestino = blocoRepository.findById(blocoDestinoId);
+        Optional<BlocoEntity> blocoOrigem = blocoRepository.findById(blocoId);
 
-        if (ambientesOpt.isEmpty()) {
-            throw new NotFoundException("Não existem ambientes associados ao bloco.");
+        if (ambientes.isEmpty()) {
+            throw new NotFoundException("ambiente", "Não existem ambientes associados ao bloco.");
         }
-        if (blocoDestinoOpt.isEmpty()) {
-            throw new NotFoundException("Bloco de destino não encontrado.");
+        if (blocoDestino.isEmpty()) {
+            throw new NotFoundException("blocoDestino", "Bloco de destino não encontrado.");
         }
-        if (blocoOrigemOpt.isEmpty()) {
-            throw new NotFoundException("Bloco de origem não encontrado.");
+        if (blocoOrigem.isEmpty()) {
+            throw new NotFoundException("blocoOrigem", "Bloco de origem não encontrado.");
         }
 
-        List<AmbienteEntity> ambientes = ambientesOpt.get();
-        BlocoEntity blocoOrigem = blocoOrigemOpt.get();
-        for (AmbienteEntity ambiente : ambientes) {
-            ambiente.setBlocoEntity(blocoOrigem);
+        List<AmbienteEntity> listAmbientes = ambientes.get();
+        BlocoEntity bloco = blocoOrigem.get();
+        for (AmbienteEntity ambiente : listAmbientes) {
+            ambiente.setBlocoEntity(bloco);
             ambiente.setUsuarioEntityCriador(securityService.getUsuario());
             ambienteRepository.save(ambiente);
         }
@@ -85,12 +89,12 @@ public class BlocoService implements IService<BlocoEntity>{
     public void deleteById(long id) {
         Optional<BlocoEntity> bloco = blocoRepository.findById(id);
         if (bloco.isEmpty()) {
-            throw new NotFoundException("O bloco informado não existe.");
+            throw new NotFoundException("bloco", "O bloco informado não existe.");
         }
 
         Optional<List<AmbienteEntity>> ambientes = ambienteRepository.findByBlocoEntityId(id);
         if (ambientes.isPresent()) {
-            throw new ValidationException("Não é possível deletar o bloco pois existem ambientes associados a ele.");
+            throw new ValidationException("bloco", "Não é possível deletar o bloco pois existem ambientes associados a ele.");
         }
 
         blocoRepository.deleteById(id);

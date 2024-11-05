@@ -15,9 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -41,7 +39,7 @@ public class CategoriaService implements IService<CategoriaEntity> {
             return categoriaEntity;
         }
         else {
-            throw new NotFoundException("Nenhuma categoria foi encontrada com o id: " + id);
+            throw new NotFoundException("categoria", "Nenhuma categoria foi encontrada com o id: " + id);
         }
     }
 
@@ -50,7 +48,7 @@ public class CategoriaService implements IService<CategoriaEntity> {
         Page<CategoriaEntity> categorias = categoriaRepository.findAll(pageable);
 
         if (categorias.isEmpty()) {
-            throw new NotFoundException("Nenhuma categoria foi encontrada");
+            throw new NotFoundException("categoria", "Nenhuma categoria foi encontrada");
         }
 
         long totalServicos = servicoRepository.count();
@@ -70,7 +68,7 @@ public class CategoriaService implements IService<CategoriaEntity> {
     public CategoriaEntity save(CategoriaEntity entity) {
         boolean exists = categoriaRepository.existsByDescricaoIgnoreCase(entity.getDescricao());
         if (exists) {
-            throw new ValidationException("Já existe uma categoria com a descrição: " + entity.getDescricao());
+            throw new ValidationException("descricao", "Já existe uma categoria com a descrição: " + entity.getDescricao());
         }
 
         entity.setDtRecord(DataUtils.getNow());
@@ -83,16 +81,19 @@ public class CategoriaService implements IService<CategoriaEntity> {
         Optional<CategoriaEntity> categoriaOrigem = categoriaRepository.findById(idCategoriaOrigem);
         Optional<CategoriaEntity> categoriaDestino = categoriaRepository.findById(idCategoriaDestino);
 
-        List<String> errorList = new ArrayList<>();
-
+        Map<String, String> listErros = new HashMap<>();
         if (!categoriaOrigem.isPresent()) {
-            errorList.add("Nenhuma categoria de origem foi encontrada com o id: " + idCategoriaOrigem);
+            listErros.put("categoriaOrigem", "Nenhuma categoria de origem foi encontrada com o id: " + idCategoriaOrigem);
         }
         if (!categoriaDestino.isPresent()) {
-            errorList.add("Nenhuma categoria de destino foi encontrada com o id: " + idCategoriaDestino);
+            listErros.put("categoriaDestino", "Nenhuma categoria de destino foi encontrada com o id: " + idCategoriaDestino);
         }
         if (categoriaOrigem.get().getId() == categoriaDestino.get().getId()) {
-            errorList.add("A categoria de origem e a categoria de destino não podem ser iguais.");
+            listErros.put("categorias", "A categoria de origem e a categoria de destino não podem ser iguais.");
+        }
+
+        if (!listErros.isEmpty()) {
+            throw new ValidationException(listErros);
         }
 
         List<TarefaEntity> tarefas = tarefaRepository.findAllByCategoriaEntity_Id(idCategoriaOrigem).orElse(new ArrayList<>());
@@ -113,23 +114,23 @@ public class CategoriaService implements IService<CategoriaEntity> {
     public void deleteById(long id) {
         Optional<CategoriaEntity> categoria = categoriaRepository.findById(id);
         if (categoria.isEmpty()) {
-            throw new NotFoundException("Nenhuma categoria foi encontrada com o id: " + id);
+            throw new NotFoundException("categoria", "Nenhuma categoria foi encontrada com o id: " + id);
         }
 
-        List<String> errorList = new ArrayList<>();
+        Map<String, String> listErros = new HashMap<>();
 
         Optional<List<TarefaEntity>> tarefas = tarefaRepository.findAllByCategoriaEntity_Id(id);
         if (tarefas.isPresent()) {
-            errorList.add("Existem tarefas associadas a esta categoria.");
+            listErros.put("tarefa", "Existem tarefas associadas a esta categoria.");
         }
 
         Optional<List<ServicoEntity>> servicos = servicoRepository.findAllByCategoriaEntity_Id(id);
         if (servicos.isPresent()) {
-            errorList.add("Existem serviços associados a esta categoria.");
+            listErros.put("servico", "Existem serviços associados a esta categoria.");
         }
 
-        if (!errorList.isEmpty()) {
-            throw new ValidationException(errorList);
+        if (!listErros.isEmpty()) {
+            throw new ValidationException(listErros);
         }
 
         categoriaRepository.deleteById(id);

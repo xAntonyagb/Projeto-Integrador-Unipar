@@ -17,9 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -34,7 +32,7 @@ public class TarefaService implements IService<TarefaEntity> {
         Optional<TarefaEntity> tarefa = tarefaRepository.findById(id);
 
         return tarefa.orElseThrow(
-                () -> new NotFoundException("Nenhuma tarefa foi encontrada com o id: " + id)
+                () -> new NotFoundException("tarefa", "Nenhuma tarefa foi encontrada com o id: " + id)
         );
     }
 
@@ -43,7 +41,7 @@ public class TarefaService implements IService<TarefaEntity> {
         Page<TarefaEntity> tarefas = tarefaRepository.findAll(pageable);
 
         if (tarefas.isEmpty()) {
-            throw new NotFoundException("Nenhuma tarefa foi encontrada.");
+            throw new NotFoundException("tarefa", "Nenhuma tarefa foi encontrada.");
         }
 
         return tarefas;
@@ -71,7 +69,7 @@ public class TarefaService implements IService<TarefaEntity> {
         Optional<TarefaEntity> tarefa = tarefaRepository.findById(id);
 
         if (tarefa.isEmpty()) {
-            throw new NotFoundException("Nenhuma tarefa foi encontrada com o id: " + id);
+            throw new NotFoundException("tarefa", "Nenhuma tarefa foi encontrada com o id: " + id);
         }
 
         tarefaRepository.deleteById(id);
@@ -80,21 +78,21 @@ public class TarefaService implements IService<TarefaEntity> {
 
 
     public TarefaEntity validateTarefa(TarefaEntity tarefaEntity) {
-        List<String> errorList = new ArrayList<>();
+        Map<String, String> listErros = new HashMap<>();
 
         Optional<AmbienteEntity> ambiente = ambienteRepository.findById(tarefaEntity.getAmbienteEntity().getId());
         if (ambiente.isEmpty()) {
-            errorList.add("Nenhum ambiente foi encontrado com o id: " + tarefaEntity.getAmbienteEntity().getId());
+            listErros.put("ambiente", "Nenhum ambiente foi encontrado com o id: " + tarefaEntity.getAmbienteEntity().getId());
         }
 
 
         Optional<CategoriaEntity> categoria = categoriaRepository.findById(tarefaEntity.getCategoriaEntity().getId());
         if (categoria.isEmpty()) {
-            errorList.add("Nenhuma categoria foi encontrada com o id: " + tarefaEntity.getCategoriaEntity().getId());
+            listErros.put("categoria", "Nenhuma categoria foi encontrada com o id: " + tarefaEntity.getCategoriaEntity().getId()+ ".");
         }
 
-        if (!errorList.isEmpty()) {
-            throw new ValidationException(errorList);
+        if (!listErros.isEmpty()) {
+            throw new ValidationException(listErros);
         }
 
         tarefaEntity.setCategoriaEntity(categoria.get());

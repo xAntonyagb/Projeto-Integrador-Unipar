@@ -33,7 +33,7 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
         Optional<NotificacaoEntity> notificacao = notificacaoRepository.findById(id);
 
         return notificacao.orElseThrow(
-                () -> new NotFoundException("Nenhuma notificação foi encontrada com o id: " + id)
+                () -> new NotFoundException("notificacao", "Nenhuma notificação foi encontrada com o id: " + id)
         );
     }
 
@@ -43,7 +43,7 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
         Page<NotificacaoEntity> notificacoes = notificacaoUsuarioRepository.findAllByUsuario(userId, pageable);
 
         if (notificacoes.isEmpty()) {
-            throw new NotFoundException("Nenhuma notificação foi encontrada");
+            throw new NotFoundException("notificacao", "Nenhuma notificação foi encontrada");
         }
 
         return notificacoes;
@@ -61,7 +61,7 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
         Optional<NotificacaoEntity> notificacao = notificacaoRepository.findById(id);
 
         if (notificacao.isEmpty()) {
-            throw new NotFoundException("Nenhuma notificação foi encontrada com o id: " + id);
+            throw new NotFoundException("notificacao", "Nenhuma notificação foi encontrada com o id: " + id);
         }
 
         notificacaoUsuarioRepository.deleteByIdNotificacao(id);

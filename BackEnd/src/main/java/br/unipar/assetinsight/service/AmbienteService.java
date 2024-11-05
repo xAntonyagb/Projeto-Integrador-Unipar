@@ -17,9 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -44,7 +42,7 @@ public class AmbienteService implements IService<AmbienteEntity> {
             return ambienteEntity;
         }
         else {
-            throw new NotFoundException("Nenhum ambiente foi encontrado com o id: " + id);
+            throw new NotFoundException("ambiente","Nenhum ambiente foi encontrado com o id: " + id);
         }
     }
 
@@ -53,7 +51,7 @@ public class AmbienteService implements IService<AmbienteEntity> {
         Page<AmbienteEntity> ambientes = ambienteRepository.findAll(pagable);
 
         if (ambientes.isEmpty()) {
-            throw new NotFoundException("Nenhum ambiente foi encontrado");
+            throw new NotFoundException("ambiente","Nenhum ambiente foi encontrado");
         }
 
         ambientes.forEach(ambiente -> {
@@ -67,7 +65,7 @@ public class AmbienteService implements IService<AmbienteEntity> {
     public AmbienteEntity save(AmbienteEntity ambiente) {
         Optional<BlocoEntity> bloco = blocoRepository.findById(ambiente.getBlocoEntity().getId());
         if (bloco.isEmpty()) {
-            throw new ValidationException("Nenhum bloco foi encontrado com o id: " + ambiente.getBlocoEntity().getId());
+            throw new ValidationException("bloco","Nenhum bloco foi encontrado com o id: " + ambiente.getBlocoEntity().getId());
         }
 
         ambiente.setBlocoEntity(bloco.get());
@@ -82,20 +80,22 @@ public class AmbienteService implements IService<AmbienteEntity> {
         Optional<AmbienteEntity> ambienteOrigem = ambienteRepository.findById(ambienteOrigemId);
         Optional<AmbienteEntity> ambienteDestino = ambienteRepository.findById(ambienteDestinoId);
 
-        List<String> errorList = new ArrayList<>();
+        Map<String, String> listErros = new HashMap<>();
+
         if (!ambienteOrigem.isPresent()) {
-            errorList.add("Nenhum ambiente de origem foi encontrado com o id: "+ ambienteOrigemId +".");
+            listErros.put("ambienteOrigem", "Nenhum ambiente de origem foi encontrado com o id: "+ ambienteOrigemId +".");
         }
         if (!ambienteDestino.isPresent()) {
-            errorList.add("Nenhum ambiente de destino foi encontrado com o id: "+ ambienteDestinoId +".");
+            listErros.put("ambienteDestino", "Nenhum ambiente de destino foi encontrado com o id: "+ ambienteDestinoId +".");
+        }
+        if(!listErros.isEmpty()) {
+            throw new ValidationException(listErros);
         }
         if (ambienteOrigem.get().getId() == ambienteDestino.get().getId()) {
-            errorList.add("O ambiente de origem e de destino não podem ser o mesmo.");
+            throw new ValidationException("ambientes","O ambiente de origem e de destino não podem ser o mesmo.");
         }
 
-        if(!errorList.isEmpty()) {
-            throw new ValidationException(errorList);
-        }
+
 
         List<TarefaEntity> tarefas = tarefaRepository.findAllByAmbienteEntity_Id(ambienteOrigemId).orElse(new ArrayList<>());
         for (TarefaEntity tarefa : tarefas) {
@@ -111,19 +111,19 @@ public class AmbienteService implements IService<AmbienteEntity> {
             throw new NotFoundException("Nenhum ambiente foi encontrado.");
         }
 
-        List<String> errorList = new ArrayList<>();
+        Map<String, String> listErros = new HashMap<>();
         Optional<List<ServicoEntity>> servicos = servicoRepository.findAllByAmbienteEntity_Id(id);
         if (servicos.isPresent()) {
-            errorList.add("Não é possível deletar o ambiente pois existem serviços associados a ele.");
+            listErros.put("servicos", "Não é possível deletar o ambiente pois existem serviços associados a ele.");
         }
 
         Optional<List<TarefaEntity>> tarefas = tarefaRepository.findAllByAmbienteEntity_Id(id);
         if (tarefas.isPresent()) {
-            errorList.add("Não é possível deletar o ambiente pois existem tarefas associadas a ele.");
+            listErros.put("tarefas", "Não é possível deletar o ambiente pois existem tarefas associadas a ele.");
         }
 
-        if(!errorList.isEmpty()) {
-            throw new ValidationException(errorList);
+        if(!listErros.isEmpty()) {
+            throw new ValidationException(listErros);
         }
     }
 

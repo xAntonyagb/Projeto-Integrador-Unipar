@@ -16,9 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -33,7 +31,7 @@ public class ServicoService implements IService<ServicoEntity> {
     public ServicoEntity getById(long id) {
         Optional<ServicoEntity> servico = servicoRepository.findById(id);
         return servico.orElseThrow(
-                () -> new NotFoundException("Nenhum serviço foi encontrado com o id: " + id)
+                () -> new NotFoundException("servico", "Nenhum serviço foi encontrado com o id: " + id)
         );
     }
 
@@ -42,7 +40,7 @@ public class ServicoService implements IService<ServicoEntity> {
         Page<ServicoEntity> servicos = servicoRepository.findAll(pageable);
 
         if (servicos.isEmpty()) {
-            throw new NotFoundException("Nenhum serviço foi encontrado.");
+            throw new NotFoundException("servico", "Nenhum serviço foi encontrado.");
         }
 
         return servicos;
@@ -52,7 +50,7 @@ public class ServicoService implements IService<ServicoEntity> {
         Page<ServicoEntity> servicos = ordemServicoRepository.findAllById(id, pageable);
 
         if (servicos.isEmpty()) {
-            throw new NotFoundException("Nenhum serviço foi encontrado.");
+            throw new NotFoundException("servico", "Nenhum serviço foi encontrado.");
         }
 
         return servicos;
@@ -71,7 +69,7 @@ public class ServicoService implements IService<ServicoEntity> {
     @Override
     public void deleteById(long id) {
         if (!servicoRepository.existsById(id)) {
-            throw new NotFoundException("Nenhum serviço foi encontrado com o id: " + id);
+            throw new NotFoundException("servico", "Nenhum serviço foi encontrado com o id: " + id);
         }
         servicoRepository.deleteById(id);
     }
@@ -82,24 +80,24 @@ public class ServicoService implements IService<ServicoEntity> {
     public ServicoEntity validateServico(ServicoEntity servicoEntity) {
         boolean isCategoriaPreenchida = servicoEntity.getCategoriaEntity() != null;
         boolean isAmbientePreenchido = servicoEntity.getAmbienteEntity() != null;
-        List<String> errorList = new ArrayList<>();
 
+        Map<String, String> listErros = new HashMap<>();
         if (isCategoriaPreenchida) {
             Optional<CategoriaEntity> categoria = categoriaRepository.findById(servicoEntity.getCategoriaEntity().getId());
             if (categoria.isEmpty()) {
-                errorList.add("Nenhuma categoria foi encontrada com o id: " + servicoEntity.getCategoriaEntity().getId());
+                listErros.put("categoria", "Nenhuma categoria foi encontrada com o id: " + servicoEntity.getCategoriaEntity().getId());
             }
         }
 
         if (isAmbientePreenchido) {
             Optional<AmbienteEntity> ambiente = ambienteRepository.findById(servicoEntity.getAmbienteEntity().getId());
             if (ambiente.isEmpty()) {
-                errorList.add("Nenhum ambiente foi encontrado com o id: " + servicoEntity.getAmbienteEntity().getId());
+                listErros.put("ambiente", "Nenhum ambiente foi encontrado com o id: " + servicoEntity.getAmbienteEntity().getId());
             }
         }
 
-        if(!errorList.isEmpty()){
-            throw new ValidationException(errorList);
+        if(!listErros.isEmpty()){
+            throw new ValidationException(listErros);
         }
 
         servicoEntity.setValorTotal(servicoEntity.getValorUnit() * servicoEntity.getQuantidade());

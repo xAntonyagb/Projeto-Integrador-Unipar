@@ -27,7 +27,7 @@ public class OrdemServicoService implements IService<OrdemServicoEntity> {
         Optional<OrdemServicoEntity> ordemServico = ordemServicoRepository.findById(id);
 
         return ordemServico.orElseThrow(
-                () -> new NotFoundException("Nenhuma ordem de serviço foi encontrada com o id: " + id)
+                () -> new NotFoundException("ordemServico","Nenhuma ordem de serviço foi encontrada com o id: " + id)
         );
     }
 
@@ -36,7 +36,7 @@ public class OrdemServicoService implements IService<OrdemServicoEntity> {
         Page<OrdemServicoEntity> ordensServico = ordemServicoRepository.findAll(pageable);
 
         if (ordensServico.isEmpty()) {
-            throw new NotFoundException("Nenhuma ordem de serviço foi encontrada.");
+            throw new NotFoundException("ordemServico","Nenhuma ordem de serviço foi encontrada.");
         }
 
         return ordensServico;

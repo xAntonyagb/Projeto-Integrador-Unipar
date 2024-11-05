@@ -16,9 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -36,7 +34,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         Optional<ArquivadoEntity> arquivado = arquivadoRepository.findById(id);
 
         return arquivado.orElseThrow(
-                () -> new NotFoundException("Nenhum arquivada foi encontrado com o id: " + id)
+                () -> new NotFoundException("arquivado","Nenhum arquivadao foi encontrado com o id: " + id)
         );
     }
 
@@ -45,7 +43,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         Page<ArquivadoEntity> arquivados = arquivadoRepository.findAll(pageable);
 
         if (arquivados.isEmpty()) {
-            throw new NotFoundException("Nenhum arquivada foi encontrado.");
+            throw new NotFoundException("arquivado", "Nenhum arquivado foi encontrado.");
         }
 
         return arquivados;
@@ -53,15 +51,15 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
 
     @Override
     public ArquivadoEntity save(ArquivadoEntity entity) {
-        List<String> errorList = new ArrayList<>();
+        Map<String, String> listErros = new HashMap<>();
         OrdemServicoEntity ordemServico = null;
         TarefaEntity tarefa = null;
 
         if (entity.getOrdemServicoEntity() == null && entity.getTarefaEntity() == null) {
-            errorList.add("Ao menos uma ordem de serviço ou tarefa deve ser informada.");
+            listErros.put("ordemServico/tarefa", "Ao menos uma ordem de serviço ou tarefa deve ser informada.");
         }
         else if (entity.getOrdemServicoEntity() != null && entity.getTarefaEntity() != null) {
-            errorList.add("Apenas uma ordem de serviço ou tarefa deve ser informada.");
+            listErros.put("ordemServico/tarefa", "Apenas uma ordem de serviço ou tarefa deve ser informada.");
         }
         else {
             if (entity.getOrdemServicoEntity() != null) {
@@ -73,14 +71,14 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         }
 
         if(entity.getTipo() == TipoArquivadoEnum.ORDEM_SERVICO && (ordemServico == null || tarefa != null)) {
-            errorList.add("Tipo Ordem de serviço mas o conteúdo foi informado indevidamente.");
+            listErros.put("tipo", "Tipo Ordem de serviço mas o conteúdo foi informado indevidamente.");
         }
         else if(entity.getTipo() == TipoArquivadoEnum.TAREFA && (tarefa == null || ordemServico != null)) {
-            errorList.add("Tipo Tarefa mas o conteúdo foi informado indevidamente.");
+            listErros.put("tipo", "Tipo Tarefa mas o conteúdo foi informado indevidamente.");
         }
 
-        if (!errorList.isEmpty()) {
-            throw new ValidationException(errorList);
+        if (!listErros.isEmpty()) {
+            throw new ValidationException(listErros);
         }
 
         entity.setTarefaEntity(tarefa);
@@ -95,7 +93,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         ArquivadoEntity arquivado;
 
         if (retorno.isEmpty()) {
-            throw new NotFoundException("Nenhum arquivada foi encontrado com o id: " + id);
+            throw new NotFoundException("arquivado", "Nenhum arquivado foi encontrado com o id: " + id);
         } else {
             arquivado = retorno.get();
         }
@@ -115,7 +113,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         ArquivadoEntity arquivado;
 
         if (retorno.isEmpty()) {
-            throw new NotFoundException("Nenhum arquivada foi encontrado com o id: " + id);
+            throw new NotFoundException("arquivado", "Nenhum arquivado foi encontrado com o id: " + id);
         } else {
             arquivado = retorno.get();
         }
@@ -134,7 +132,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
 
     public void arquivarTarefa(long id) {
         TarefaEntity arquivar = tarefaRepository.findById(id).orElseThrow(
-                () -> new NotFoundException("Nenhuma tarefa foi encontrada com o id: " + id)
+                () -> new NotFoundException("tarefa", "Nenhuma tarefa foi encontrada com o id: " + id)
         );
 
         arquivar.setUsuarioEntityCriador(securityService.getUsuario());
@@ -153,7 +151,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
 
     public void arquivarOS(long id) {
         OrdemServicoEntity arquivar = ordemServicoRepository.findById(id).orElseThrow(
-                () -> new NotFoundException("Nenhuma ordem de serviço foi encontrada com o id: " + id)
+                () -> new NotFoundException("ordemServico", "Nenhuma ordem de serviço foi encontrada com o id: " + id)
         );
 
         arquivar.setUsuarioEntityCriador(securityService.getUsuario());
@@ -174,7 +172,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         Optional<TarefaEntity> tarefa = tarefaRepository.findById(id);
 
         if (tarefa.isEmpty()) {
-            throw new NotFoundException("Nenhuma tarefa foi encontrada com o id: " + id);
+            throw new NotFoundException("tarefa", "Nenhuma tarefa foi encontrada com o id: " + id);
         }
         TarefaEntity restaurar = tarefa.get();
 
@@ -189,7 +187,7 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
         Optional<OrdemServicoEntity> ordemServico = ordemServicoRepository.findById(id);
 
         if (ordemServico.isEmpty()) {
-            throw new NotFoundException("Nenhuma ordem de serviço foi encontrada com o id: " + id);
+            throw new NotFoundException("ordemServico","Nenhuma ordem de serviço foi encontrada com o id: " + id);
         }
         OrdemServicoEntity restaurar = ordemServicoRepository.findById(id).get();
 
