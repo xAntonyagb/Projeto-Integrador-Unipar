@@ -13,7 +13,7 @@
 <body>
   <div class="py-4 parte-cima-ambiente">
   <div class="header-container">
-    <button class="large-button">NOVO AMBIENTE</button>
+    <button class="large-button" (click)="openModal()">NOVO BLOCO</button>
     <input label="Pesquisar" class="form-control search-bar" type="text" placeholder="Pesquisar" formControlName="btpesquisar">
     <div class="menu-container">
       <p-menu #menu [model]="items" [popup]="true"></p-menu>
@@ -35,7 +35,7 @@
     </div>
   </div>
 </div>
-
+<app-cadastrar-bloco *ngIf="isModalOpen" (close)="closeModal()" (blocoAdicionado)="atualizarLista()"> </app-cadastrar-bloco>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

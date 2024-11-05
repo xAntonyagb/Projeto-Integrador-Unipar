@@ -13,14 +13,24 @@ export class TabBlocoComponent implements OnInit {
   items: MenuItem[] | undefined;
   constructor(private bloco: BlocoRequest) {}
   dataSource = new MatTableDataSource<BlocoResponse>([]);
+  isModalOpen = false;
   ngOnInit() {
-    this.getBlocosData();
+    this.loadBlocos();
   }
-  getBlocosData() {
+  openModal(){
+    this.isModalOpen = true;
+  }
+  closeModal(){
+    this.isModalOpen = false;
+  }
+  loadBlocos() {
     this.bloco.getBlocosData().subscribe((response: any) => {
       const data = this.extractContent(response);
       this.dataSource.data = data;
     });
+  }
+  atualizarLista() {
+    this.loadBlocos();
   }
   extractContent(response: any): BlocoResponse[] {
     return response.content || [];

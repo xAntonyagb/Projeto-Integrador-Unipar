@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../responses/api.response';
-import { CategoriaResponse } from '../responses/categoria.response';
+import { AddCategoria, CategoriaResponse } from '../responses/categoria.response';
 import { AuthRequest } from './auth.request';
 
 @Injectable({
@@ -19,5 +19,20 @@ export class CategoriaRequest {
     });
 
     return this.http.get<CategoriaResponse[]>(`${this.apiUrl}/categoria/all`, { headers });
+  }
+  setCategoria(categoria: AddCategoria): Observable<AddCategoria> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`,
+      'Content-Type': 'application/json'
+    });
+  
+    return this.http.post<AddCategoria>(`${this.apiUrl}/categoria/add`, categoria, { headers });
+  }
+  deleteCategoria(id: number): Observable<void> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
+    });
+  
+    return this.http.delete<void>(`${this.apiUrl}/categoria/delete/${id}`, { headers });
   }
 }

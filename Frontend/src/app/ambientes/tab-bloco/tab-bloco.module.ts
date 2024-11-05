@@ -8,10 +8,11 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { MenuModule } from "primeng/menu";
 import { TableModule } from "primeng/table";
+import { CadastrarBlocoModule } from "../../modals/cadastrar-bloco/cadastrar-bloco.module";
 
 @NgModule({
   declarations:[TabBlocoComponent],
-  imports:[
+  imports: [
     BrowserAnimationsModule,
     TabViewModule,
     ButtonModule,
@@ -19,8 +20,9 @@ import { TableModule } from "primeng/table";
     MatMenuModule,
     MatButtonModule,
     MenuModule,
-    TableModule
-  ],
+    TableModule,
+    CadastrarBlocoModule
+],
   exports:[TabBlocoComponent]
   })
   export class TabBlocoModule{}

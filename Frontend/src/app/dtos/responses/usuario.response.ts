@@ -1,7 +1,18 @@
 export interface UsuarioResponse {
     id: number;
-    username: string;
+    username: AddUsuario;
+    password: AddUsuario;
     dtCriacao: Date;
     lastLogin: Date;
-    permissoes: string[]; // Ajuste conforme a estrutura de permissoes que tiver
+    permissoes: AddUsuario; 
+  }
+  export enum UsuarioPermissoes{
+    SUPER=1,
+    ADMINISTRADOR=2,
+    OPERADOR=3
+  }
+  export interface AddUsuario{
+    username: string;
+    password : string;
+    permissoes: UsuarioPermissoes[];
   }

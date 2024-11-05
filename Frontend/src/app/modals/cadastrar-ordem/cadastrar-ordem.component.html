@@ -1,96 +1,100 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
-  <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
-  <link href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
+<link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
+<link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+<link href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
 
 <div class="overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <button (click)="closeModal()" class="back-button">⬅</button>
-        <h2>Cadastro De Ordem De Serviço</h2>
-      </div>
-      <div class="modal-body">
-        <img src="../../../assets/HEADDER1.png" alt="Header Image" class="header-image" />
-  
+  <div class="modal-container">
+    <div class="modal-header">
+      <button (click)="closeModal()" class="back-button" aria-label="Close Modal">⬅</button>
+      <h2>Cadastro De Ordem De Serviço</h2>
+    </div>
+
+    <div class="modal-body">
+      <fieldset>
         <div class="form-row">
-          <label>Descrição:</label>
-          <input type="text" class="form-control" [(ngModel)]="descricao">
-        </div>
-        <div class="form-row">
-          <label>Data:</label>
-          <input type="date" class="form-control" [(ngModel)]="data">
-        </div>
-  
-        <hr>
-  
-        
-        <div class="form-row">
-          <label>Ambiente:</label>
-          <select class="form-control" [(ngModel)]="ambienteSelecionado">
-            <option *ngFor="let ambiente of ambientes" [value]="ambiente.id">{{ ambiente.descricao }}</option>
-          </select>
-        </div>
-  
-        <div class="form-row">
-          <label>Qtd.</label>
-          <input type="number" class="form-control" [(ngModel)]="quantidade" min="0">
-        </div>
-  
-        <div class="form-row">
-          <label>Serviço:</label>
-          <input type="text" class="form-control" [(ngModel)]="servicoDescricao" (input)="onQuantidadeChange($event)">
-        </div>
-  
-        <div class="form-row">
-          <label>Patrimônio:</label>
-          <input type="text" class="form-control" [(ngModel)]="patrimonio">
-        </div>
-  
-        <div class="form-row">
-          <label>Valor:</label>
-          <input type="number" class="form-control" [(ngModel)]="valor" min="0"(input)="onValorChange($event)">
-        </div>
-  
-        <div class="form-row">
-          <label>Categoria:</label>
-          <select class="form-control" [(ngModel)]="categoriaSelecionada">
-            <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</option>
-          </select>
-        </div>
-  
-        <div class="form-row">
-          <label>Subtotal:</label>
-          <input type="number" class="form-control" [(ngModel)]="subtotal" readonly>
-        </div>
-  
-        <!-- Adicionar Novo Serviço -->
-        <div class="form-row">
-          <button class="btn btn-success" (click)="adicionarServico()">Adicionar Novo Serviço</button>
-        </div>
-  
-        <div *ngFor="let servico of servicosAdicionados; let i = index">
-          <div class="form-row">
-            <span>{{ servico.nome }}</span>
-            <button class="btn btn-danger" (click)="removerServico(i)">🗑️</button>
+          <div class="desc-part">
+            <label for="descricao">Descrição:</label>
+            <input id="descricao" type="text" class="form-control" [(ngModel)]="descricaoOrdem" required>
+          </div>
+          <div class="data-part">
+            <label for="data">Data:</label>
+            <input id="data" type="date" class="form-control" [(ngModel)]="data" required>
           </div>
         </div>
-  
-        <hr>
+      </fieldset>
+    </div>
 
-        <div *ngIf="ambientes.length === 1" class="form-row">
-          <button class="btn btn-danger small-button" (click)="removerUltimoAmbiente()">Remover</button>
-        </div>
-  
 
-        <div class="form-row">
-          <button class="btn btn-primary" (click)="adicionarNovoAmbiente()">Adicionar Novo Ambiente</button>
+      <div class="modal-body">
+        <fieldset *ngFor="let servico of servicosAdicionados; let i = index" >
+          <div class="ambiente-entry" *ngFor="let ambiente of ambientesSelecionados; let j =index">
+            <hr class="divider">
+            
+          <div class="remove-section" *ngIf="ambientesSelecionados.length > 0">
+            <a id="ambiente-{{j}}" (click)="removerUltimoAmbiente()">
+              <img src="../../../assets/Minus.svg">Remover</a>
+            </div>
+            
+            <div class="form-row">
+              <label for="ambiente-{{j}}">Ambiente:</label>
+              <select id="ambiente-{{j}}" class="form-control" [(ngModel)]="ambientesSelecionados[j]" required>
+                <option *ngFor="let optAmbiente of ambientesSelecionados" [value]="optAmbiente.id">
+                  {{ optAmbiente.descricao }}
+                </option>
+        </select>
+      </div>
+    </div>
+
+        <div class="service-entry" >
+          <div class="data-part">
+            <label for="quantidade-{{i}}">Qtd.</label>
+            <input id="quantidade-{{i}}" type="number" class="form-control" [(ngModel)]="servico.quantidade" min="0" (change)="onQuantidadeChange($event, i)">
+          </div>
+          <div class="data-part">
+            <label for="servicoDescricao-{{i}}">Serviço:</label>
+            <input id="servicoDescricao-{{i}}" type="text" class="form-control" [(ngModel)]="servico.descricao">
+          </div>
+          <div class="data-part">
+            <label for="patrimonio-{{i}}">Patrimônio:</label>
+            <input id="patrimonio-{{i}}" type="text" class="form-control" [(ngModel)]="servico.patrimonio">
+          </div>
+          <div class="data-part">
+            <label for="categoria-{{i}}">Categoria:</label>
+            <select id="Categoria-{{i}}" class="form-control" [(ngModel)]="servico.categoria" required>
+              <option *ngFor="let optCategoria of categoriasSelecionadas" [value]="optCategoria.id">
+                {{ optCategoria.descricao }}
+              </option>
+            </select>
+          </div>
+          <div class="data-part">
+            <label for="valor-{{i}}">Valor:</label>
+            <input id="valor-{{i}}" type="number" class="form-control" [(ngModel)]="servico.valorUnit" min="0" (input)="onValorChange($event, i)">
+          </div>
+          <div class="data-part">
+            <label>Subtotal:</label>
+            <input type="number" class="form-control" [value]="servico.valorTotal" readonly>
+          </div>
+          <img src="../../../assets/Vector.svg" class="removerServico" *ngIf="servicosAdicionados.length" (click)="removerServico(i)"/>
         </div>
-  
-        <div class="form-row total-section">
-          <button class="btn btn-primary" (click)="guardarAmbiente()">Guardar</button>
-          <div>Total: {{ total }}</div>
+        
+        <div class="btnAddServico">
+          <a  (click)="adicionarServico()">
+            <img src="../../../assets/Add (1).svg" alt=""> Adicionar Novo Serviço
+          </a>
         </div>
+        
+        <div class="btnAdd">
+          <a  (click)="adicionarNovoAmbiente()">
+            <img src="../../../assets/Add.svg" alt=""> Adicionar Novo Ambiente
+          </a>
+        </div>
+      </fieldset>
+    </div>
+        
+      <div class="total-section">
+        <button class="btn btn-primary btnSalvar" (click)="guardarAmbiente()">Cadastrar</button>
+        <div class="total-value">Total: {{ total }}</div>
       </div>
     </div>
   </div>
-  
