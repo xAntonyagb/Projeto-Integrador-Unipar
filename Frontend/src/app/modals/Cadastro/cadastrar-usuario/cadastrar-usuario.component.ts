@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { UsuarioRequest } from '../../dtos/requests/usuario.request';
-import { AddUsuario, UsuarioPermissoes, UsuarioResponse } from '../../dtos/responses/usuario.response';
+import { UsuarioRequest } from '../../../dtos/requests/usuario.request';
+import { AddUsuario, UsuarioPermissoes, UsuarioResponse } from '../../../dtos/responses/usuario.response';
 
 @Component({
   selector: 'app-cadastrar-usuario',

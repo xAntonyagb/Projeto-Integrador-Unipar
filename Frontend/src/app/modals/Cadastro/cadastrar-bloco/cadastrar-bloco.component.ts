@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { BlocoRequest } from '../../dtos/requests/bloco.request';
-import { AddBloco, BlocoResponse } from '../../dtos/responses/bloco.response';
+import { BlocoRequest } from '../../../dtos/requests/bloco.request';
+import { AddBloco, BlocoResponse } from '../../../dtos/responses/bloco.response';
 
 @Component({
   selector: 'app-cadastrar-bloco',

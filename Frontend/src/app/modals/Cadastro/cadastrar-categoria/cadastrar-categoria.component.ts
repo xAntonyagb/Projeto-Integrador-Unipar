@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CategoriaRequest } from '../../dtos/requests/categoria.request';
-import { AddCategoria } from '../../dtos/responses/categoria.response';
+import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
+import { AddCategoria } from '../../../dtos/responses/categoria.response';
 
 @Component({
   selector: 'app-cadastrar-categoria',

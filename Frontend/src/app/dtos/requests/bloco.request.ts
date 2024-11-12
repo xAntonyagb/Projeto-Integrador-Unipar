@@ -37,6 +37,6 @@ export class BlocoRequest {
       'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
     });
   
-    return this.http.delete<void>(`${this.apiUrl}/categoria/${id}`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/bloco/${id}`, { headers });
   }
 }

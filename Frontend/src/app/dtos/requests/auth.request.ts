@@ -37,7 +37,7 @@ export class AuthRequest {
     }),
     catchError((error) => {
       this.toastr.error('Erro de login. Verifique suas credenciais.', 'Login Inválido');
-      return throwError(() => error); 
+      return throwError(() => error);
       }));
     }
   private extractToken(response: AuthResponse): void {
@@ -49,7 +49,11 @@ export class AuthRequest {
       console.log('Token recebido: ', response.acessToken
       + ' Expira em: ' + expiresInHours + ' horas'
       );
-      this.router.navigate(['/inicio']);
+      this.toastr.success('Login bem-sucedido!', 'Sucesso');
+
+      setTimeout(() => {
+        this.router.navigate(['/inicio']);
+      }, 2000);
     } else {
       console.log('Token não recebido, verifique a resposta do servidor.');
       alert('Token não recebido, verifique a resposta do servidor.');

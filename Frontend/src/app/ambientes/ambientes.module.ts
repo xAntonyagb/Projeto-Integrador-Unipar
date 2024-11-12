@@ -13,7 +13,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { MenuModule } from "primeng/menu";
-import { CadastrarOrdemModule } from "../modals/cadastrar-ordem/cadastrar-ordem.module";
+import { CadastrarOrdemModule } from "../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.module";
 @NgModule({
 declarations:[AmbientesComponent],
 imports:[

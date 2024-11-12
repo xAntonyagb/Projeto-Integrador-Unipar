@@ -1,16 +1,16 @@
 import { Component, EventEmitter, inject, Inject, OnInit, Output } from '@angular/core';
-import { AmbienteRequest } from '../../dtos/requests/ambiente.request';
-import { CategoriaRequest } from '../../dtos/requests/categoria.request';
-import { ServicoRequest } from '../../dtos/requests/servico.request';
-import { CategoriaResponse } from '../../dtos/responses/categoria.response';
-import { ServicoResponse } from '../../dtos/responses/servico.response';
-import { OrdemRequest } from '../../dtos/requests/ordem.request';
-import { OrdemResponse } from '../../dtos/responses/ordem.response';
-import { ModalRequest } from '../../dtos/requests/modal.request';
-import { AmbienteResponse } from '../../dtos/responses/ambiente.response';
-import { BlocoRequest } from '../../dtos/requests/bloco.request';
+import { AmbienteRequest } from '../../../dtos/requests/ambiente.request';
+import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
+import { ServicoRequest } from '../../../dtos/requests/servico.request';
+import { CategoriaResponse } from '../../../dtos/responses/categoria.response';
+import { ServicoResponse } from '../../../dtos/responses/servico.response';
+import { OrdemRequest } from '../../../dtos/requests/ordem.request';
+import { OrdemResponse } from '../../../dtos/responses/ordem.response';
+import { ModalRequest } from '../../../dtos/requests/modal.request';
+import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
+import { BlocoRequest } from '../../../dtos/requests/bloco.request';
 import { ToastrService } from 'ngx-toastr';
-import { BlocoResponse } from '../../dtos/responses/bloco.response';
+import { BlocoResponse } from '../../../dtos/responses/bloco.response';
 
 @Component({
   selector: 'app-cadastrar-ordem',

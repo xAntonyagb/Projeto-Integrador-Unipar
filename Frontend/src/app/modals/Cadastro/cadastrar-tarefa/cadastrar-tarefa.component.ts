@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AddTarefas, StatusTarefa, TarefaResponse } from '../../dtos/responses/tarefa.response';
-import { AmbienteResponse } from '../../dtos/responses/ambiente.response';
-import { CategoriaResponse } from '../../dtos/responses/categoria.response';
-import { AmbienteRequest } from '../../dtos/requests/ambiente.request';
-import { CategoriaRequest } from '../../dtos/requests/categoria.request';
-import { ModalRequest } from '../../dtos/requests/modal.request';
-import { TarefaRequest } from '../../dtos/requests/tarefa.request';
+import { AddTarefas, StatusTarefa, TarefaResponse } from '../../../dtos/responses/tarefa.response';
+import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
+import { CategoriaResponse } from '../../../dtos/responses/categoria.response';
+import { AmbienteRequest } from '../../../dtos/requests/ambiente.request';
+import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
+import { ModalRequest } from '../../../dtos/requests/modal.request';
+import { TarefaRequest } from '../../../dtos/requests/tarefa.request';
 
 @Component({
   selector: 'app-cadastrar-tarefa',

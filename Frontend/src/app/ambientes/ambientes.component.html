@@ -18,21 +18,13 @@
     <div class="centro">
       <div class="centro">
         <p class="nomePagina">{{ currentPageTitle }}</p>
-      <p-tabView class="custom-tabview" (onChange)="updatePageTitle($event.index)">
-        <p-tabPanel header="Ambientes" class="custom-tab" >
-          <div>
-            <app-tab-ambientes></app-tab-ambientes>
-          </div>
-          </p-tabPanel>
-          <p-tabPanel header="Blocos" class="custom-tab" >
-            <app-tab-bloco></app-tab-bloco>
 
-        </p-tabPanel>
-        <p-tabPanel header="Lançamentos" class="custom-tab" >
-          <p>
-          </p>
-        </p-tabPanel>
-      </p-tabView>
+        <nav class="nav nav-tabs">
+          <a class="nav-item nav-link" [routerLink]="['/ambientes']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="updatePageTitle(0)">Ambientes</a>
+          <a class="nav-item nav-link" [routerLink]="['/ambientes/blocos']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="updatePageTitle(1)">Blocos</a>
+          <a class="nav-item nav-link" [routerLink]="['/ambientes/lancamentos']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="updatePageTitle(2)">Lançamentos</a>
+        </nav>
+        <router-outlet></router-outlet>
       </div>
     </div>
 
