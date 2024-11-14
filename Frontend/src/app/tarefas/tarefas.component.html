@@ -16,7 +16,6 @@
 <app-header></app-header>
 
 <div class="conteudo">
-  <div class="centro">
     <div class="centro">
       <p class="nomePagina">TAREFAS</p>
 
@@ -26,12 +25,11 @@
       <div class="tab-content">
         <div class="header-container">
           <button class="large-button" (click)="openModal()">NOVA TAREFA</button>
-          <input label="Pesquisar" class="form-control search-bar" type="text" placeholder="Pesquisar"
-                 formControlName="btpesquisar" >
-          <div class="menu-container">
-            <p-menu #menu [popup]="true"></p-menu>
-            <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" [rounded]="true" ></p-button>
-          </div>
+          <input label="Pesquisar" class="form-control search-bar" type="text" placeholder="Pesquisar">
+            <div class="menu-container">
+              <p-menu #menu [popup]="true"></p-menu>
+              <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" [rounded]="true" ></p-button>
+            </div>
         </div>
         <p class="cinza ">Mostrando todos os registros</p>
         <hr>
@@ -39,10 +37,8 @@
 
 
       </div>
-    </div>
+    <app-cadastrar-tarefa *ngIf="isModalOpen" (close)="closeModal()"></app-cadastrar-tarefa>
   </div>
-<app-cadastrar-tarefa *ngIf="isModalOpen" (close)="closeModal()"></app-cadastrar-tarefa>
-
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

@@ -1,18 +1,20 @@
+import {List} from "@material/web/list/internal/list";
+
 export interface UsuarioResponse {
     id: number;
     username: AddUsuario;
     password: AddUsuario;
     dtCriacao: Date;
     lastLogin: Date;
-    permissoes: AddUsuario; 
+    permissoes: AddUsuario;
   }
-  export enum UsuarioPermissoes{
-    SUPER=1,
-    ADMINISTRADOR=2,
-    OPERADOR=3
-  }
+export interface UsuarioPermissoes {
+  ADMINISTRADOR: 'ADMINISTRADOR';
+  SUPER: 'SUPER';
+  OPERADOR: 'OPERADOR';
+}
   export interface AddUsuario{
     username: string;
     password : string;
-    permissoes: UsuarioPermissoes[];
+    permissoes: Array<string>;
   }

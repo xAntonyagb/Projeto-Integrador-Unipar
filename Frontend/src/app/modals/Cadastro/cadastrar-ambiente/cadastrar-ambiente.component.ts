@@ -12,9 +12,14 @@ export class CadastrarAmbienteComponent {
   blocosSelecionados: any[] = [];
 
   @Output() close = new EventEmitter<void>();
+  isModalOpen = false;
+
+  openModal() {
+    this.isModalOpen = true;
+  }
 
   closeModal() {
-    this.close.emit();
+    this.isModalOpen = false;
   }
 
   removerServico(index: number) {

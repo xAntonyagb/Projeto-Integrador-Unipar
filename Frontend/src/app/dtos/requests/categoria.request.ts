@@ -25,14 +25,14 @@ export class CategoriaRequest {
       'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`,
       'Content-Type': 'application/json'
     });
-  
-    return this.http.post<AddCategoria>(`${this.apiUrl}/categoria/add`, categoria, { headers });
+
+    return this.http.post<AddCategoria>(`${this.apiUrl}/categoria`, categoria, { headers });
   }
   deleteCategoria(id: number): Observable<void> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
     });
-  
+
     return this.http.delete<void>(`${this.apiUrl}/categoria/delete/${id}`, { headers });
   }
 }

@@ -31,6 +31,9 @@ import { CadastrarAmbienteModule } from './modals/Cadastro/cadastrar-ambiente/ca
 import { CategoriaModule } from './categoria/categoria.module';
 import {LoginModule} from "./login/login.module";
 import {TarefasModule} from "./tarefas/tarefa.module";
+import {UsuariosModule} from "./usuarios/usuarios.module";
+import {ArquivadosModule} from "./arquivados/arquivados.module";
+import {PatrimonioModule} from "./patrimonio/patrimonio.module";
 
 const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
   timeOut: 2100,
@@ -71,8 +74,11 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
         CadastrarAmbienteModule,
         CategoriaModule,
         LoginModule,
-        toastrModule,
         TarefasModule,
+        UsuariosModule,
+        ArquivadosModule,
+        PatrimonioModule,
+        toastrModule,
       ],
     exports: [
       RouterOutlet,
@@ -107,5 +113,8 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
       CategoriaModule,
       LoginModule,
       TarefasModule,
+      UsuariosModule,
+      ArquivadosModule,
+      PatrimonioModule,
     ],
 }) export class FeatureImportsModule {}

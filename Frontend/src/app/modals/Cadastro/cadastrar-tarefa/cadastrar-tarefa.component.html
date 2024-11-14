@@ -41,7 +41,7 @@
               <div class="data-part">
                 <label>Status:</label>
                 <select class="form-control" [(ngModel)]="statusSelecionado">
-                  <option *ngFor="let tarefa of tarefasAdicionadas" [value]="tarefa.id">{{ tarefa.status }}</option>
+                  <option *ngFor="let status of statusOptions" [value]="status">{{ getStatusDescricao(status) }}</option>
                 </select>
               </div>
               <div class="desc-part">
@@ -50,7 +50,9 @@
               </div>
         </div>
         <div class="button-part">
-          <button type="submit" class="btn btn-success">Cadastrar</button>
+          <button type="submit" class="btn btn-success" (click)="adicionarTarefa()">Cadastrar</button>
 
     </div>
+  </div>
 </div>
+

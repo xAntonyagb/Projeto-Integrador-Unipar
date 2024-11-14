@@ -8,11 +8,10 @@ import { MenuModule } from 'primeng/menu';
 import {SidebarModule} from "../sidebar/sidebar.module";
 import {HeaderModule} from "../header/header.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {UsuariosComponent} from "./usuarios.component";
-import {CadastrarUsuarioModule} from "../modals/Cadastro/cadastrar-usuario/cadastrar-usuário.module";
+import {ArquivadosComponent} from "./arquivados.component";
 
 @NgModule({
-  declarations: [UsuariosComponent],
+  declarations: [ArquivadosComponent],
   imports: [
     FormsModule,
     BrowserAnimationsModule,
@@ -24,7 +23,6 @@ import {CadastrarUsuarioModule} from "../modals/Cadastro/cadastrar-usuario/cadas
     MenuModule,
     SidebarModule,
     HeaderModule,
-    CadastrarUsuarioModule,
   ],
-  exports: [UsuariosComponent]
-}) export class UsuariosModule {}
+  exports: [ArquivadosComponent]
+}) export class ArquivadosModule {}

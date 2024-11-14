@@ -8,18 +8,19 @@ import { AddUsuario, UsuarioPermissoes, UsuarioResponse } from '../../../dtos/re
   styleUrls: ['./cadastrar-usuario.component.scss']
 })
 export class CadastrarUsuarioComponent {
-
+  isModalOpen = false;
   username: string = '';
-  senha :string = ''
-  permissoes :UsuarioPermissoes[] = [];
-  usuarioResponse : UsuarioResponse[] = [];;          
+  senha :string = '';
+  permissoes: string[] = [];
+  usuarioResponse : UsuarioResponse[] = [];
+  permissoesDisponiveis = ['ADMINISTRADOR', 'SUPER', 'OPERADOR'];
 
-  constructor(private usuario: UsuarioRequest) { 
+  constructor(private usuario: UsuarioRequest) {
     this.loadUsuarios();
   }
   @Output() usuarioAdicionado = new EventEmitter<void>();
   onSubmit( event: Event): void {
-    
+
   }
   loadUsuarios() {
     this.usuario.getUsuario().subscribe((data: any[]) => {
@@ -28,11 +29,13 @@ export class CadastrarUsuarioComponent {
   }
 
   adicionarUsuario() {
-    const usuario: AddUsuario = { 
+    const permissoesArray = Array.isArray(this.permissoes) ? this.permissoes : [this.permissoes];
+    const usuario: AddUsuario = {
       username: this.username,
       password:  this.senha,
-      permissoes: this.permissoes
+      permissoes: permissoesArray
     };
+
     this.usuario.setUsuario(usuario).subscribe(() => {
       this.usuarioAdicionado.emit();
     });

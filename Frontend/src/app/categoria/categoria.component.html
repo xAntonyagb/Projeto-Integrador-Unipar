@@ -34,8 +34,42 @@
         <p class="cinza ">Mostrando todos os registros</p>
         <hr>
       </div>
+      <div>
+        <div class="card-container">
+          <div *ngFor="let categoria of dataSource.filteredData" class="card">
+            <div class="card-header">
+              <h3>{{ categoria.descricao }}</h3>
+            </div>
+            <div class="card-body">
+              <p class="progress-p">Tarefas:</p>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar"
+                     [style.width]="calcularProgressoTarefas(categoria) + '%'"
+                     [attr.aria-valuenow]="calcularProgressoTarefas(categoria)"
+                     aria-valuemin="0" aria-valuemax="100">
+
+                </div>
+              </div>
+              <span class="progress-text-tar">
+                  {{ categoria.qtdTarefas }} de {{ categoria.qtdTotalTarefas }}
+               </span>
+              <p class="progress-p">Serviços:</p>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar"
+                     [style.width]="calcularProgressoServicos(categoria) + '%'"
+                     [attr.aria-valuenow]="calcularProgressoServicos(categoria)"
+                     aria-valuemin="0" aria-valuemax="100">
+                </div>
+              </div>
+              <span class="progress-text-serv">
+                  {{ categoria.qtdServicos }} de {{ categoria.qtdTotalServicos }}
+               </span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
 <app-cadastrar-categoria *ngIf="isModalOpen" (close)="closeModal()"></app-cadastrar-categoria>
 </div>
