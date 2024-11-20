@@ -1,9 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.ServicoRequest;
-import br.unipar.assetinsight.dtos.responses.ServicoRespose;
-import br.unipar.assetinsight.entities.AmbienteEntity;
-import br.unipar.assetinsight.entities.CategoriaEntity;
+import br.unipar.assetinsight.dtos.responses.main.ServicoRespose;
 import br.unipar.assetinsight.entities.ServicoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,7 +12,7 @@ import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
-@Mapper(uses = {CategoriaMapper.class, AmbienteMapper.class, UsuarioMapper.class})
+@Mapper(uses = {CategoriaMapper.class, AmbienteMapper.class, UsuarioMapper.class, PatrimonioMapper.class})
 public interface ServicoMapper {
     ServicoMapper INSTANCE = Mappers.getMapper(ServicoMapper.class);
 
@@ -25,16 +23,16 @@ public interface ServicoMapper {
     @Mapping(source = "categoria", target = "categoriaEntity")
     @Mapping(source = "ambiente", target = "ambienteEntity")
     @Mapping(source = "id", target = "idServico")
-    @Mapping(source = "descricao", target = "dsPatrimonio")
+    @Mapping(source = "patrimonio", target = "patrimonioEntity")
     ServicoEntity toEntity(ServicoRespose response);
 
 
     @Mapping(source = "categoriaEntity", target = "categoria")
     @Mapping(source = "ambienteEntity", target = "ambiente")
-    @Mapping(source = "dsPatrimonio", target = "descricao")
+    @Mapping(source = "patrimonioEntity", target = "patrimonio")
     ServicoRequest toRequest(ServicoEntity entity);
 
-    ServicoRequest toRequest(ServicoRespose request);
+    //ServicoRequest toRequest(ServicoRespose request);
 
 
     @Mapping(source = "dtRecord", target = "lastChange")
@@ -42,7 +40,7 @@ public interface ServicoMapper {
     @Mapping(source = "categoriaEntity", target = "categoria")
     @Mapping(source = "ambienteEntity", target = "ambiente")
     @Mapping(source = "idServico", target = "id")
-    @Mapping(source = "dsPatrimonio", target = "descricao")
+    @Mapping(source = "patrimonioEntity", target = "patrimonio")
     ServicoRespose toResponse(ServicoEntity entity);
 
     ServicoRespose toResponse(ServicoRequest request);

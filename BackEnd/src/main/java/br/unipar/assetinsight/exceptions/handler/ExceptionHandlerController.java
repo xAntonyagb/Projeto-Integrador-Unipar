@@ -40,28 +40,28 @@ public class ExceptionHandlerController {
     @ExceptionHandler(SecurityException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiExceptionDTO handleApiException(SecurityException e) {
-        return new ApiExceptionDTO("credenciais", e.getMessage());
+        return new ApiExceptionDTO("Credenciais", e.getMessage());
     }
 
     //Exeção de credenciais erradas
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiExceptionDTO handleApiException(BadCredentialsException e) {
-        return new ApiExceptionDTO("credenciais", e.getMessage());
+        return new ApiExceptionDTO("Credenciais", e.getMessage());
     }
 
     //Exeção de NoResourceFound
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptionDTO handleApiException(NoResourceFoundException e) {
-        return new ApiExceptionDTO("endPoints", e.getMessage());
+        return new ApiExceptionDTO("End Point não existente", e.getMessage());
     }
 
     //Exeção de MissingRequestHeader
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptionDTO handleApiException(MissingRequestHeaderException e) {
-        return new ApiExceptionDTO("header", e.getMessage());
+        return new ApiExceptionDTO("Header da requisição é inválido", e.getMessage());
     }
 
     //Exeção de PropertyReference
@@ -85,11 +85,18 @@ public class ExceptionHandlerController {
         return new ApiExceptionDTO(listErros);
     }
 
+    //Excetion de erro de cast
+    @ExceptionHandler(ClassCastException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiExceptionDTO handleApiException(ClassCastException e) {
+        return new ApiExceptionDTO("Erro ao processar requisição", e.getMessage());
+    }
+
     //Outras exceções
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiExceptionDTO handleException(Exception e) {
-        return new ApiExceptionDTO("Exception", e.getMessage());
+        return new ApiExceptionDTO("Erro interno", e.getMessage());
     }
 }
 

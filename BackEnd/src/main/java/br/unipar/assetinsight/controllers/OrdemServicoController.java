@@ -1,8 +1,7 @@
 package br.unipar.assetinsight.controllers;
 
 import br.unipar.assetinsight.dtos.requests.OrdemServicoRequest;
-import br.unipar.assetinsight.dtos.responses.ArquivadoResponse;
-import br.unipar.assetinsight.dtos.responses.OrdemServicoResponse;
+import br.unipar.assetinsight.dtos.responses.main.OrdemServicoResponse;
 import br.unipar.assetinsight.entities.OrdemServicoEntity;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.OrdemServicoMapper;

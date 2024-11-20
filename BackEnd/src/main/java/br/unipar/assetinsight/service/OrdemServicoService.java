@@ -87,8 +87,12 @@ public class OrdemServicoService implements IService<OrdemServicoEntity> {
 
 
     private boolean isServicosValidos(List<ServicoEntity> listServicoEntities) {
+        if (listServicoEntities == null || listServicoEntities.isEmpty()) {
+            return false;
+        }
+
         for (ServicoEntity servico : listServicoEntities) {
-            boolean isPatrimonioValido = servico.getPatrimonio() != null && !servico.getPatrimonio().isEmpty() && !servico.getPatrimonio().isBlank();
+            boolean isPatrimonioValido = servico.getPatrimonioEntity().getId() > 0 && servico.getPatrimonioEntity().getDescricao() != null;
             boolean isValorValido = servico.getValorTotal() > 0;
             boolean isCategoriaValida = servico.getCategoriaEntity() != null;
             boolean isAmbienteValido = servico.getAmbienteEntity() != null;

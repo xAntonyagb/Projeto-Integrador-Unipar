@@ -20,11 +20,9 @@ public class ServicoEntity {
     @Column(name = "ID_SERVICO")
     private long idServico;
 
-    @Column(name = "CD_PATRIMONIO")
-    private String patrimonio;
-
-    @Column(name = "DS_PATRIMONIO")
-    private String dsPatrimonio;
+    @ManyToOne
+    @JoinColumn(name = "ID_PATRIMONIO")
+    private PatrimonioEntity patrimonioEntity;
 
     @Column(name = "NR_QUANTIDADE")
     private long quantidade;

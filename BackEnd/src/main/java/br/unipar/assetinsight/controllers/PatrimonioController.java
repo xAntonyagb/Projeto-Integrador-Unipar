@@ -1,11 +1,16 @@
 package br.unipar.assetinsight.controllers;
 
-import br.unipar.assetinsight.dtos.responses.main.ArquivadoResponse;
-import br.unipar.assetinsight.entities.ArquivadoEntity;
-import br.unipar.assetinsight.enums.TipoArquivadoEnum;
+import br.unipar.assetinsight.dtos.requests.BlocoRequest;
+import br.unipar.assetinsight.dtos.requests.PatrimonioRequest;
+import br.unipar.assetinsight.dtos.responses.main.BlocoResponse;
+import br.unipar.assetinsight.dtos.responses.main.PatrimonioResponse;
+import br.unipar.assetinsight.entities.BlocoEntity;
+import br.unipar.assetinsight.entities.PatrimonioEntity;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
-import br.unipar.assetinsight.mappers.ArquivadosMapper;
-import br.unipar.assetinsight.service.ArquivadoService;
+import br.unipar.assetinsight.mappers.BlocoMapper;
+import br.unipar.assetinsight.mappers.PatrimonioMapper;
+import br.unipar.assetinsight.service.BlocoService;
+import br.unipar.assetinsight.service.PatrimonioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -23,20 +28,21 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
-@RequestMapping("arquivados")
-@RestController
 @AllArgsConstructor
-@Tag(name = "Arquivados", description = "Operações relacionadas a registros que foram arquivados.")
-public class ArquivadoController {
-    private final ArquivadoService arquivadoService;
+@RestController
+@RequestMapping("patrimonio")
+@Tag(name = "Patrimonios", description = "Endpoints para operações relacionadas a patrimonios.")
+public class PatrimonioController {
+    private final PatrimonioService service;
 
 
-    @Operation(summary = "Retorna todos os arquivados cadastrados.")
+    @Operation(summary = "Retorna todos os patrimonios cadastrados.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArquivadoResponse.class)) }),
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BlocoResponse.class)) }),
             @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
@@ -49,17 +55,17 @@ public class ArquivadoController {
             @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc"))
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<ArquivadoResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
-        Page<ArquivadoEntity> retorno = arquivadoService.getAll(pageable);
-        Page<ArquivadoResponse> response = ArquivadosMapper.INSTANCE.toResponsePage(retorno);
+    public ResponseEntity<Page<PatrimonioResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
+        Page<PatrimonioEntity> retorno = service.getAll(pageable);
+        Page<PatrimonioResponse> response = PatrimonioMapper.INSTANCE.toResponsePage(retorno);
 
         return ResponseEntity.ok(response);
     }
 
 
-    @Operation(summary = "Retorna um arquivada específico pelo ID.")
+    @Operation(summary = "Retorna um patrimonio específico pelo ID.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArquivadoResponse.class)) }),
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BlocoResponse.class)) }),
             @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
@@ -67,35 +73,49 @@ public class ArquivadoController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
     @GetMapping
-    public ResponseEntity<ArquivadoResponse> getById(@Valid @RequestParam long id) {
-        ArquivadoEntity retorno = arquivadoService.getById(id);
-        ArquivadoResponse response = ArquivadosMapper.INSTANCE.toResponse(retorno);
+    public ResponseEntity<PatrimonioResponse> getById(@Valid @RequestParam long id) {
+        PatrimonioEntity retorno = service.getById(id);
+        PatrimonioResponse response = PatrimonioMapper.INSTANCE.toResponse(retorno);
 
         return ResponseEntity.ok(response);
     }
 
 
-    @Operation(summary = "Restaura um arquivada pelo ID.")
+    @Operation(summary = "Deleta um patrimonio específico pelo ID.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArquivadoResponse.class)) }),
+            @ApiResponse(responseCode = "204", description = "Patrimonio excluído com sucesso.", content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json, schema = @Schema(implementation = ApiExceptionDTO.class)") }),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json, schema = @Schema(implementation = ApiExceptionDTO.class)") }),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
+    })
+    @DeleteMapping
+    public ResponseEntity<Void> deleteById(@Valid @RequestParam long id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @Operation(summary = "Cadastra ou atualiza um patrimonio")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BlocoResponse.class)) }),
             @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
     })
-    @PostMapping("/restaurar")
-    public ResponseEntity<ArquivadoResponse> restaurar(@Valid @RequestParam long id) {
-        ArquivadoEntity arquivado = arquivadoService.restaurarById(id);
-        ArquivadoResponse response = ArquivadosMapper.INSTANCE.toResponse(arquivado);
+    @PostMapping
+    public ResponseEntity<PatrimonioResponse> save(@RequestBody @Valid PatrimonioRequest request) {
+        PatrimonioEntity retorno = service.save(
+                PatrimonioMapper.INSTANCE.toEntity(request)
+        );
 
-        URI uri;
-        if (arquivado.getTipo() == TipoArquivadoEnum.TAREFA) {
-            uri = URI.create("/tarefa/" + arquivado.getTarefaEntity().getId());
-        }
-        else {
-            uri = URI.create("/ordem-servico/" + arquivado.getOrdemServicoEntity().getId());
-        }
+        PatrimonioResponse response = PatrimonioMapper.INSTANCE.toResponse(retorno);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(retorno.getId()).toUri();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uri);
@@ -103,19 +123,4 @@ public class ArquivadoController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
-
-    @Operation(summary = "Excluí por definitivo de um arquivada pelo ID.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Deletado com sucesso.", content = { @Content(mediaType = "application/json") }),
-            @ApiResponse(responseCode = "400", description = "Requisição inválida.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
-            @ApiResponse(responseCode = "403", description = "Acesso negado - Permissões insuficientes.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
-            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
-            @ApiResponse(responseCode = "404", description = "O registro não pôde ser encontrado.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) }),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor.", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiExceptionDTO.class)) })
-    })
-    @DeleteMapping
-    public ResponseEntity<Void> deleteById(@Valid @RequestParam long id) {
-        arquivadoService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
 }

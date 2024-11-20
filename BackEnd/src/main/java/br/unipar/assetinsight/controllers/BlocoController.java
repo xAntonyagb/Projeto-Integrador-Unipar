@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.controllers;
 
 import br.unipar.assetinsight.dtos.requests.BlocoRequest;
-import br.unipar.assetinsight.dtos.responses.BlocoResponse;
+import br.unipar.assetinsight.dtos.responses.main.BlocoResponse;
 import br.unipar.assetinsight.entities.BlocoEntity;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.BlocoMapper;

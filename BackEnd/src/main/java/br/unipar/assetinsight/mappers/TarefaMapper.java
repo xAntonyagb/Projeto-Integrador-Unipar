@@ -1,9 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.TarefaRequest;
-import br.unipar.assetinsight.dtos.responses.TarefaResponse;
-import br.unipar.assetinsight.entities.AmbienteEntity;
-import br.unipar.assetinsight.entities.CategoriaEntity;
+import br.unipar.assetinsight.dtos.responses.main.TarefaResponse;
 import br.unipar.assetinsight.entities.TarefaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

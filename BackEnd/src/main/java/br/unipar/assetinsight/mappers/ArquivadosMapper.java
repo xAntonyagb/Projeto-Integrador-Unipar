@@ -1,12 +1,8 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.ArquivadoRequest;
-import br.unipar.assetinsight.dtos.responses.ArquivadoResponse;
-import br.unipar.assetinsight.dtos.responses.OrdemServicoResponse;
-import br.unipar.assetinsight.dtos.responses.TarefaResponse;
+import br.unipar.assetinsight.dtos.responses.main.ArquivadoResponse;
 import br.unipar.assetinsight.entities.ArquivadoEntity;
-import br.unipar.assetinsight.entities.OrdemServicoEntity;
-import br.unipar.assetinsight.entities.TarefaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

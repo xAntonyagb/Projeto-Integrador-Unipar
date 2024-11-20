@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
 import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.enums.TipoArquivadoEnum;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * DTO for {@link br.unipar.assetinsight.entities.ArquivadoEntity}
+ * DTO de {@link br.unipar.assetinsight.entities.ArquivadoEntity}
  */
 public record ArquivadoResponse(
         @Schema(description = "Id do arquivamento.", example = "1")
@@ -30,5 +30,5 @@ public record ArquivadoResponse(
         Timestamp dtArquivado,
 
         @Schema(description = "Usuário que arquivou.")
-        UsuarioEntity arquivadoBy
+        UsuarioResponse arquivadoBy
 ) implements Serializable { }

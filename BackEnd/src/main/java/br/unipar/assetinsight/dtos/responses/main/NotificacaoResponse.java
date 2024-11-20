@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
 import br.unipar.assetinsight.enums.NotificacaoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * DTO for {@link br.unipar.assetinsight.entities.NotificacaoEntity}
+ * DTO de {@link br.unipar.assetinsight.entities.NotificacaoEntity}
  */
 public record NotificacaoResponse(
         @Schema(description = "Id da notificação.", example = "1")

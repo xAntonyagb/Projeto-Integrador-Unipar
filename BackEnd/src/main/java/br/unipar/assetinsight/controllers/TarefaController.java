@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.controllers;
 
 import br.unipar.assetinsight.dtos.requests.TarefaRequest;
-import br.unipar.assetinsight.dtos.responses.TarefaResponse;
+import br.unipar.assetinsight.dtos.responses.main.TarefaResponse;
 import br.unipar.assetinsight.entities.TarefaEntity;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.TarefaMapper;

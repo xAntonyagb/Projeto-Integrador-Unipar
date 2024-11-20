@@ -1,7 +1,8 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.AmbienteRequest;
-import br.unipar.assetinsight.dtos.responses.AmbienteResponse;
+import br.unipar.assetinsight.dtos.responses.main.AmbienteResponse;
+import br.unipar.assetinsight.dtos.responses.simple.AmbienteSimpleResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,34 +11,43 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
+import java.util.Collections;
 import java.util.List;
 
-@Mapper(uses = {BlocoMapper.class, UsuarioMapper.class})
+@Mapper(uses = {BlocoMapper.class, UsuarioMapper.class, PatrimonioMapper.class})
 public interface AmbienteMapper {
     AmbienteMapper INSTANCE = Mappers.getMapper(AmbienteMapper.class);
 
     @Mapping(source = "bloco", target = "blocoEntity")
+    @Mapping(source = "patrimonios", target = "listPatrimonioEntities")
     AmbienteEntity toEntity(AmbienteRequest request);
 
     @Mapping(source = "bloco", target = "blocoEntity")
+    @Mapping(source = "patrimonios", target = "listPatrimonioEntities", qualifiedByName = "toEntityFromSimpleResponse")
     @Mapping(source = "lastChange", target = "dtRecord")
     @Mapping(source = "lastChangedBy", target = "usuarioEntityCriador")
     AmbienteEntity toEntity(AmbienteResponse response);
 
 
     @Mapping(source = "blocoEntity", target = "bloco")
+    @Mapping(source = "listPatrimonioEntities", target = "patrimonios")
     AmbienteRequest toRequest(AmbienteEntity entity);
 
     AmbienteRequest toRequest(AmbienteResponse response);
 
 
     @Mapping(source = "blocoEntity", target = "bloco")
+    @Mapping(source = "listPatrimonioEntities", target = "patrimonios")
     @Mapping(source = "dtRecord", target = "lastChange")
     @Mapping(source = "usuarioEntityCriador", target = "lastChangedBy")
     AmbienteResponse toResponse(AmbienteEntity entity);
 
     AmbienteResponse toResponse(AmbienteRequest request);
 
+    AmbienteSimpleResponse toSimpleResponse(AmbienteEntity entity);
+    AmbienteSimpleResponse toSimpleResponse(AmbienteRequest request);
+    AmbienteSimpleResponse toSimpleResponse(AmbienteResponse response);
+    AmbienteEntity simpleResponseToEntity(AmbienteSimpleResponse response);
 
     AmbienteEntity updateEntity(AmbienteRequest request, @MappingTarget AmbienteEntity entity);
 

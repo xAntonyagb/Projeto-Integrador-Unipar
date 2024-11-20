@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
 import br.unipar.assetinsight.enums.PrioridadeEnum;
 import br.unipar.assetinsight.enums.StatusTarefaEnum;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * DTO for {@link br.unipar.assetinsight.entities.TarefaEntity}
+ * DTO de {@link br.unipar.assetinsight.entities.TarefaEntity}
  */
 public record TarefaResponse(
         @Schema(description = "Id da tarefa.", example = "1")

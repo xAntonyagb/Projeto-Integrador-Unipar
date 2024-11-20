@@ -80,6 +80,7 @@ public class ServicoService implements IService<ServicoEntity> {
     public ServicoEntity validateServico(ServicoEntity servicoEntity) {
         boolean isCategoriaPreenchida = servicoEntity.getCategoriaEntity() != null;
         boolean isAmbientePreenchido = servicoEntity.getAmbienteEntity() != null;
+        boolean isPatrimonioPreenchido = servicoEntity.getPatrimonioEntity() != null;
 
         Map<String, String> listErros = new HashMap<>();
         if (isCategoriaPreenchida) {
@@ -93,6 +94,13 @@ public class ServicoService implements IService<ServicoEntity> {
             Optional<AmbienteEntity> ambiente = ambienteRepository.findById(servicoEntity.getAmbienteEntity().getId());
             if (ambiente.isEmpty()) {
                 listErros.put("ambiente", "Nenhum ambiente foi encontrado com o id: " + servicoEntity.getAmbienteEntity().getId());
+            }
+        }
+
+        if (isPatrimonioPreenchido) {
+            if (servicoEntity.getPatrimonioEntity().getId() <= 0) {
+                long id = servicoEntity.getPatrimonioEntity().getId();
+                listErros.put("patrimonio"+id, "Nenhum patrimônio foi encontrado com o id: " + id);
             }
         }
 
