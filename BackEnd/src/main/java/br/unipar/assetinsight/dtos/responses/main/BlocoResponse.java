@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * DTO for {@link br.unipar.assetinsight.entities.BlocoEntity}
+ * DTO de {@link br.unipar.assetinsight.entities.BlocoEntity}
  */
 public record BlocoResponse(
         @Schema(description = "Id do bloco.", example = "1")

@@ -2,8 +2,8 @@ package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.CadastroRequest;
 import br.unipar.assetinsight.dtos.requests.LoginRequest;
-import br.unipar.assetinsight.dtos.responses.CadastroResponse;
-import br.unipar.assetinsight.dtos.responses.LoginResponse;
+import br.unipar.assetinsight.dtos.responses.main.CadastroResponse;
+import br.unipar.assetinsight.dtos.responses.main.LoginResponse;
 import br.unipar.assetinsight.entities.UsuarioEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-@Mapper(uses = {RoleMapper.class})
+@Mapper(uses = RoleMapper.class)
 public interface AuthenticationMapper {
     AuthenticationMapper INSTANCE = Mappers.getMapper(AuthenticationMapper.class);
 

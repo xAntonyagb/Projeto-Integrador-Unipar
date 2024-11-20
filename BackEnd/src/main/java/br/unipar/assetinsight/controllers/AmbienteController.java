@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.controllers;
 
 import br.unipar.assetinsight.dtos.requests.AmbienteRequest;
-import br.unipar.assetinsight.dtos.responses.AmbienteResponse;
+import br.unipar.assetinsight.dtos.responses.main.AmbienteResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.mappers.AmbienteMapper;
 import br.unipar.assetinsight.service.AmbienteService;

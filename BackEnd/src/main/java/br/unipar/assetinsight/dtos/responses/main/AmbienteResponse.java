@@ -1,16 +1,15 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
+import br.unipar.assetinsight.dtos.responses.simple.PatrimonioSimpleResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.With;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
- * DTO for {@link br.unipar.assetinsight.entities.AmbienteEntity}
+ * DTO de {@link br.unipar.assetinsight.entities.AmbienteEntity}
  */
 @Builder
 public record AmbienteResponse(
@@ -22,6 +21,9 @@ public record AmbienteResponse(
 
         @Schema(description = "Bloco ao qual o ambiente pertence.")
         BlocoResponse bloco,
+
+        @Schema(description = "Lista de patrimonios que pertencem a este ambiente", example = "[{\"id\": 1, \"descricao\": \"Patrimonio Exemplo\"}]")
+        List<PatrimonioSimpleResponse> patrimonios,
 
         @Schema(description = "Quantidade de patrimônios cadastrados nesse ambiente.", example = "10")
         long qtdPatrimonios,

@@ -2,8 +2,8 @@ package br.unipar.assetinsight.controllers;
 
 import br.unipar.assetinsight.dtos.requests.CadastroRequest;
 import br.unipar.assetinsight.dtos.requests.LoginRequest;
-import br.unipar.assetinsight.dtos.responses.CadastroResponse;
-import br.unipar.assetinsight.dtos.responses.LoginResponse;
+import br.unipar.assetinsight.dtos.responses.main.CadastroResponse;
+import br.unipar.assetinsight.dtos.responses.main.LoginResponse;
 import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.AuthenticationMapper;

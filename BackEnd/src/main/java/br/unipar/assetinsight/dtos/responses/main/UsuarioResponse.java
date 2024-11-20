@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
 import br.unipar.assetinsight.enums.PermissoesEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * DTO for {@link br.unipar.assetinsight.entities.UsuarioEntity}
+ * DTO de {@link br.unipar.assetinsight.entities.UsuarioEntity}
  */
 public record UsuarioResponse(
         @Schema(description = "ID do usuário", example = "123e4567-e89b-12d3-a456-426614174000")

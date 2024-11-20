@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.controllers;
 
 import br.unipar.assetinsight.dtos.requests.CategoriaRequest;
-import br.unipar.assetinsight.dtos.responses.CategoriaResponse;
+import br.unipar.assetinsight.dtos.responses.main.CategoriaResponse;
 import br.unipar.assetinsight.entities.CategoriaEntity;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.CategoriaMapper;

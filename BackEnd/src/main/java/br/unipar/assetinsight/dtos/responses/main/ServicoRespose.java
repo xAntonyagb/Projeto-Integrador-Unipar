@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -6,17 +6,14 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * DTO for {@link br.unipar.assetinsight.entities.ServicoEntity}
+ * DTO de {@link br.unipar.assetinsight.entities.ServicoEntity}
  */
 public record ServicoRespose(
         @Schema(description = "Id do serviço.", example = "1")
         long id,
 
-        @Schema(description = "Patrimonio em que foi prestada manutenção.", example = "123456")
-        String patrimonio,
-
-        @Schema(description = "Descrição do patrimonio.", example = "Ar-Condicionado.")
-        String descricao,
+        @Schema(description = "Patrimonio em que foi prestada manutenção.", example = "{\"id\": 1, \"descricao\": \"Patrimonio Exemplo\"}")
+        PatrimonioResponse patrimonio,
 
         @Schema(description = "Quantidade de vezes que este serviço foi prestado.", example = "1")
         long quantidade,

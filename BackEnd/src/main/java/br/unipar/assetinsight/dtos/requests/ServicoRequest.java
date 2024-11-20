@@ -12,11 +12,8 @@ public record ServicoRequest(
         @Schema(description = "Id do serviço.", example = "1", required = false)
         Long id,
 
-        @Schema(description = "Patrimonio em que foi prestada manutenção.", example = "123456", required = false)
-        String patrimonio,
-
-        @Schema(description = "Descrição do patrimonio.", example = "Ar-Condicionado", required = false)
-        String descricao,
+        @Schema(description = "Patrimonio em que foi prestada manutenção.", example = "{\"id\": 1, \"descricao\": \"Patrimonio Exemplo\"}", required = false)
+        PatrimonioRequest patrimonio,
 
         @Schema(description = "Quantidade de vezes que este serviço foi prestado.", example = "1", required = false)
         long quantidade,

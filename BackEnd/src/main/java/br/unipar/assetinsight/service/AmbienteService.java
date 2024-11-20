@@ -1,15 +1,9 @@
 package br.unipar.assetinsight.service;
 
-import br.unipar.assetinsight.entities.AmbienteEntity;
-import br.unipar.assetinsight.entities.BlocoEntity;
-import br.unipar.assetinsight.entities.ServicoEntity;
-import br.unipar.assetinsight.entities.TarefaEntity;
+import br.unipar.assetinsight.entities.*;
 import br.unipar.assetinsight.exceptions.NotFoundException;
 import br.unipar.assetinsight.exceptions.ValidationException;
-import br.unipar.assetinsight.repositories.AmbienteRepository;
-import br.unipar.assetinsight.repositories.BlocoRepository;
-import br.unipar.assetinsight.repositories.ServicoRepository;
-import br.unipar.assetinsight.repositories.TarefaRepository;
+import br.unipar.assetinsight.repositories.*;
 import br.unipar.assetinsight.service.interfaces.IService;
 import br.unipar.assetinsight.utils.DataUtils;
 import lombok.AllArgsConstructor;
@@ -24,6 +18,8 @@ import java.util.*;
 public class AmbienteService implements IService<AmbienteEntity> {
     private final TarefaRepository tarefaRepository;
     private final BlocoRepository blocoRepository;
+    private final PatrimonioRepository patrimonioRepository;
+    private final PatrimonioService patrimonioService;
     private AmbienteRepository ambienteRepository;
     private SecurityService securityService;
     private ServicoRepository servicoRepository;
@@ -35,9 +31,9 @@ public class AmbienteService implements IService<AmbienteEntity> {
         if (ambiente.isPresent()) {
             AmbienteEntity ambienteEntity = ambiente.get();
 
-            ambienteEntity.setQtdPatrimonios(
-                    servicoRepository.countByAmbienteEntity_Id(ambienteEntity.getId())
-            );
+            List<PatrimonioEntity> patrimonios = patrimonioRepository.findAllByAmbienteEntity_Id(ambienteEntity.getId()).orElse(new ArrayList<>());
+            ambienteEntity.setQtdPatrimonios(patrimonios.size());
+            ambienteEntity.setListPatrimonioEntities(patrimonios);
 
             return ambienteEntity;
         }
@@ -55,7 +51,9 @@ public class AmbienteService implements IService<AmbienteEntity> {
         }
 
         ambientes.forEach(ambiente -> {
-            ambiente.setQtdPatrimonios(servicoRepository.countByAmbienteEntity_Id(ambiente.getId()));
+            List<PatrimonioEntity> patrimonios = patrimonioRepository.findAllByAmbienteEntity_Id(ambiente.getId()).orElse(new ArrayList<>());
+            ambiente.setQtdPatrimonios(patrimonios.size());
+            ambiente.setListPatrimonioEntities(patrimonios);
         });
 
         return ambientes;
@@ -63,9 +61,39 @@ public class AmbienteService implements IService<AmbienteEntity> {
 
     @Override
     public AmbienteEntity save(AmbienteEntity ambiente) {
+        Map<String, String> listErros = new HashMap<>();
+
         Optional<BlocoEntity> bloco = blocoRepository.findById(ambiente.getBlocoEntity().getId());
         if (bloco.isEmpty()) {
-            throw new ValidationException("bloco","Nenhum bloco foi encontrado com o id: " + ambiente.getBlocoEntity().getId());
+            listErros.put("bloco","Nenhum bloco foi encontrado com o id: " + ambiente.getBlocoEntity().getId());
+        }
+
+        List<PatrimonioEntity> patrimoniosToSave = new ArrayList<>();
+        if (ambiente.getListPatrimonioEntities() != null) {
+            for (PatrimonioEntity patrimonio : ambiente.getListPatrimonioEntities()) {
+                Optional<PatrimonioEntity> patrimonioEntity = patrimonioRepository.findById(patrimonio.getId());
+
+                if (patrimonioEntity.isEmpty()) {
+                    listErros.put("patrimonio/"+patrimonio.getId(),"Nenhum patrimônio foi encontrado com o id: " + patrimonio.getId());
+                }
+                if (patrimonioEntity.isPresent()
+                        && patrimonioEntity.get().getAmbienteEntity() != null
+                        && patrimonioEntity.get().getAmbienteEntity().getId() != 0
+                        && patrimonioEntity.get().getAmbienteEntity().getId() != ambiente.getId())
+                {
+                    listErros.put("patrimonio/"+patrimonio.getId(),"Este patrimônio já está associado ao ambiente:" + patrimonioEntity.get().getAmbienteEntity().getDescricao());
+                }
+
+                if (!listErros.isEmpty()) {
+                    throw new ValidationException(listErros);
+                } else {
+                    patrimoniosToSave.add(patrimonioEntity.get());
+                }
+            }
+        }
+
+        if (!listErros.isEmpty()) {
+            throw new ValidationException(listErros);
         }
 
         ambiente.setBlocoEntity(bloco.get());
@@ -73,6 +101,15 @@ public class AmbienteService implements IService<AmbienteEntity> {
         ambiente.setDtRecord(DataUtils.getNow());
 
         ambiente = ambienteRepository.save(ambiente);
+        for (PatrimonioEntity patrimonio : patrimoniosToSave) {
+            patrimonio.setAmbienteEntity(ambiente);
+            patrimonioService.save(patrimonio);
+        }
+
+        List<PatrimonioEntity> patrimonios = patrimonioRepository.findAllByAmbienteEntity_Id(ambiente.getId()).orElse(new ArrayList<>());
+        ambiente.setQtdPatrimonios(patrimonios.size());
+        ambiente.setListPatrimonioEntities(patrimonios);
+
         return ambiente;
     }
 
@@ -88,11 +125,11 @@ public class AmbienteService implements IService<AmbienteEntity> {
         if (!ambienteDestino.isPresent()) {
             listErros.put("ambienteDestino", "Nenhum ambiente de destino foi encontrado com o id: "+ ambienteDestinoId +".");
         }
+        if (ambienteOrigem.get().getId() == ambienteDestino.get().getId()) {
+            listErros.put("ambienteOrigem/ambienteDestino","O ambiente de origem e de destino não podem ser o mesmo.");
+        }
         if(!listErros.isEmpty()) {
             throw new ValidationException(listErros);
-        }
-        if (ambienteOrigem.get().getId() == ambienteDestino.get().getId()) {
-            throw new ValidationException("ambientes","O ambiente de origem e de destino não podem ser o mesmo.");
         }
 
 
@@ -101,6 +138,12 @@ public class AmbienteService implements IService<AmbienteEntity> {
         for (TarefaEntity tarefa : tarefas) {
             tarefa.setAmbienteEntity(ambienteDestino.get());
             tarefaRepository.save(tarefa);
+        }
+
+        List<PatrimonioEntity> patrimonios = patrimonioRepository.findAllByAmbienteEntity_Id(ambienteOrigemId).orElse(new ArrayList<>());
+        for (PatrimonioEntity patrimonio : patrimonios) {
+            patrimonio.setAmbienteEntity(ambienteDestino.get());
+            patrimonioRepository.save(patrimonio);
         }
     }
 
@@ -120,6 +163,11 @@ public class AmbienteService implements IService<AmbienteEntity> {
         Optional<List<TarefaEntity>> tarefas = tarefaRepository.findAllByAmbienteEntity_Id(id);
         if (tarefas.isPresent()) {
             listErros.put("tarefas", "Não é possível deletar o ambiente pois existem tarefas associadas a ele.");
+        }
+
+        Optional<List<PatrimonioEntity>> patrimonios = patrimonioRepository.findAllByAmbienteEntity_Id(id);
+        if (patrimonios.isPresent()) {
+            listErros.put("patrimonios", "Não é possível deletar o ambiente pois existem patrimônios associados a ele.");
         }
 
         if(!listErros.isEmpty()) {

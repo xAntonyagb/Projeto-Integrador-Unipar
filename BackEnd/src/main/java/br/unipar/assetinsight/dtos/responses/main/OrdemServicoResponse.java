@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
 import br.unipar.assetinsight.enums.StatusOrdemServicoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * DTO for {@link br.unipar.assetinsight.entities.OrdemServicoEntity}
+ * DTO de {@link br.unipar.assetinsight.entities.OrdemServicoEntity}
  */
 public record OrdemServicoResponse(
         @Schema(description = "Id da ordem de serviço.", example = "1")

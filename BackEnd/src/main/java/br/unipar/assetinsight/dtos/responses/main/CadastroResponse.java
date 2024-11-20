@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses;
+package br.unipar.assetinsight.dtos.responses.main;
 
 import br.unipar.assetinsight.enums.PermissoesEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * DTO de {@link br.unipar.assetinsight.entities.UsuarioEntity}
+ */
 public record CadastroResponse(
         @Schema(description = "Id do cadastro.", example = "1")
         String username,

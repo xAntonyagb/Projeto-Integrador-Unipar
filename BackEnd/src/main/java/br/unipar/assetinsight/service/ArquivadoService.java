@@ -12,22 +12,37 @@ import br.unipar.assetinsight.repositories.TarefaRepository;
 import br.unipar.assetinsight.service.interfaces.IService;
 import br.unipar.assetinsight.utils.DataUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-@AllArgsConstructor
 public class ArquivadoService implements IService<ArquivadoEntity> {
-    private final ArquivadoRepository arquivadoRepository;
-    private final OrdemServicoRepository ordemServicoRepository;
-    private final TarefaRepository tarefaRepository;
-    private final OrdemServicoService ordemServicoService;
-    private final TarefaService tarefaService;
-    private final SecurityService securityService;
-    private final ValidateUtilsService validateUtilsService;
+    @Autowired
+    private ArquivadoRepository arquivadoRepository;
+    @Autowired
+    private OrdemServicoRepository ordemServicoRepository;
+    @Autowired
+    private TarefaRepository tarefaRepository;
+    @Autowired
+    private OrdemServicoService ordemServicoService;
+    @Autowired
+    private TarefaService tarefaService;
+    @Autowired
+    private SecurityService securityService;
+    @Autowired
+    private ValidateUtilsService validateUtilsService;
+
+    @Value("${arquivado.qtdDiasExcuir}")
+    private int qtdDiasExcuir;
 
     @Override
     public ArquivadoEntity getById(long id) {
@@ -83,8 +98,30 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
 
         entity.setTarefaEntity(tarefa);
         entity.setOrdemServicoEntity(ordemServico);
+        entity.setDtExcluir(Timestamp.valueOf(LocalDate.now().plusDays(qtdDiasExcuir).atStartOfDay()));
 
         return arquivadoRepository.save(entity);
+    }
+
+    @Scheduled(cron = "0 0 0 * * *") // todo dia a meia noite exeucta automatico
+    public void excluirArquivados() {
+        LocalDateTime dataExcluir = LocalDateTime.now().plusDays(qtdDiasExcuir);
+        List<ArquivadoEntity> arquivados = arquivadoRepository.findAll();
+
+        arquivados.forEach(arquivado -> {
+            if (arquivado.getDtExcluir().toLocalDateTime().isAfter(dataExcluir)) {
+                return;
+            }
+
+            if(arquivado.getTipo() == TipoArquivadoEnum.ORDEM_SERVICO) {
+                ordemServicoRepository.deleteById(arquivado.getOrdemServicoEntity().getId());
+            }
+            else if(arquivado.getTipo() == TipoArquivadoEnum.TAREFA) {
+                tarefaRepository.deleteById(arquivado.getTarefaEntity().getId());
+            }
+
+            arquivadoRepository.deleteById(arquivado.getId());
+        });
     }
 
     @Override
