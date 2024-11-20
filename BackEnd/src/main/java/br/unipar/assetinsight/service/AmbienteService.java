@@ -20,6 +20,7 @@ public class AmbienteService implements IService<AmbienteEntity> {
     private final BlocoRepository blocoRepository;
     private final PatrimonioRepository patrimonioRepository;
     private final PatrimonioService patrimonioService;
+    private final BlocoService blocoService;
     private AmbienteRepository ambienteRepository;
     private SecurityService securityService;
     private ServicoRepository servicoRepository;
@@ -34,6 +35,10 @@ public class AmbienteService implements IService<AmbienteEntity> {
             List<PatrimonioEntity> patrimonios = patrimonioRepository.findAllByAmbienteEntity_Id(ambienteEntity.getId()).orElse(new ArrayList<>());
             ambienteEntity.setQtdPatrimonios(patrimonios.size());
             ambienteEntity.setListPatrimonioEntities(patrimonios);
+
+            BlocoEntity bloco = ambienteEntity.getBlocoEntity();
+            bloco.setQtdAmbientes(ambienteRepository.countByBlocoEntityId(bloco.getId()));
+            ambienteEntity.setBlocoEntity(bloco);
 
             return ambienteEntity;
         }
@@ -54,6 +59,10 @@ public class AmbienteService implements IService<AmbienteEntity> {
             List<PatrimonioEntity> patrimonios = patrimonioRepository.findAllByAmbienteEntity_Id(ambiente.getId()).orElse(new ArrayList<>());
             ambiente.setQtdPatrimonios(patrimonios.size());
             ambiente.setListPatrimonioEntities(patrimonios);
+
+            BlocoEntity bloco = ambiente.getBlocoEntity();
+            bloco.setQtdAmbientes(ambienteRepository.countByBlocoEntityId(bloco.getId()));
+            ambiente.setBlocoEntity(bloco);
         });
 
         return ambientes;
@@ -105,6 +114,10 @@ public class AmbienteService implements IService<AmbienteEntity> {
             patrimonio.setAmbienteEntity(ambiente);
             patrimonioService.save(patrimonio);
         }
+
+        BlocoEntity blocoEntity = ambiente.getBlocoEntity();
+        blocoEntity.setQtdAmbientes(ambienteRepository.countByBlocoEntityId(blocoEntity.getId()));
+        ambiente.setBlocoEntity(blocoEntity);
 
         List<PatrimonioEntity> patrimonios = patrimonioRepository.findAllByAmbienteEntity_Id(ambiente.getId()).orElse(new ArrayList<>());
         ambiente.setQtdPatrimonios(patrimonios.size());

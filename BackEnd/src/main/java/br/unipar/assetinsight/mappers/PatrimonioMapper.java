@@ -14,6 +14,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +23,11 @@ public interface PatrimonioMapper {
     PatrimonioMapper INSTANCE = Mappers.getMapper(PatrimonioMapper.class);
 
     @Mapping(source = "patrimonio", target = "id")
+    @Mapping(source = "ambiente", target = "ambienteEntity")
     PatrimonioEntity toEntity(PatrimonioRequest request);
 
     @Mapping(source = "lastChange", target = "dtRecord")
+    @Mapping(source = "ambiente", target = "ambienteEntity")
     @Mapping(source = "lastChangedBy", target = "usuarioEntityCriador")
     PatrimonioEntity toEntity(PatrimonioResponse response);
     PatrimonioRequest toRequest(PatrimonioEntity entity);
@@ -32,6 +35,7 @@ public interface PatrimonioMapper {
 
 
     @Mapping(source = "dtRecord", target = "lastChange")
+    @Mapping(source = "ambienteEntity", target = "ambiente")
     @Mapping(source = "usuarioEntityCriador", target = "lastChangedBy")
     PatrimonioResponse toResponse(PatrimonioEntity entity);
     PatrimonioResponse toResponse(PatrimonioRequest request);
@@ -48,7 +52,7 @@ public interface PatrimonioMapper {
 
     @Named("toEntityFromSimpleResponse")
     @Mapping(source = "patrimonio", target = "id")
-    PatrimonioEntity toEntityFromSimpleResponse (PatrimonioSimpleResponse response);
+    PatrimonioEntity toEntityFromSimpleResponse(PatrimonioSimpleResponse response);
 
     @Named("toEntityFromSimpleRequest")
     @Mapping(source = "patrimonio", target = "id")
@@ -87,22 +91,30 @@ public interface PatrimonioMapper {
     }
 
     default List<PatrimonioSimpleResponse> toSimpleResponseList(List<PatrimonioEntity> entity) {
-        return entity.stream().map(this::toSimpleResponse).collect(Collectors.toList());
+        return (entity == null)
+            ? new ArrayList<>()
+            : entity.stream().map(this::toSimpleResponse).collect(Collectors.toList());
     }
 
     default AmbienteSimpleResponse mapLongToSimpleAmbienteResponse(Long id) {
-        if (id == null) {
-            return null;
-        }
-        AmbienteSimpleResponse simpleResponse = new AmbienteSimpleResponse(id, null);
-        return simpleResponse;
+        return (id == null)
+            ? null
+            : new AmbienteSimpleResponse(id, null);
     }
 
     default Long mapSimpleAmbienteResponseToLong(AmbienteSimpleResponse simpleResponse) {
-        if (simpleResponse == null) {
+        return (simpleResponse == null)
+            ? null
+            : simpleResponse.id();
+    }
+
+    default AmbienteEntity mapLongToAmbienteEntity(Long value) {
+        if (value == null) {
             return null;
         }
-        return simpleResponse.id();
+        AmbienteEntity entity = new AmbienteEntity();
+        entity.setId(value);
+        return entity;
     }
 
 }

@@ -73,8 +73,8 @@ public class CategoriaService implements IService<CategoriaEntity> {
 
         entity.setDtRecord(DataUtils.getNow());
         entity.setUsuarioEntityCriador(securityService.getUsuario());
-
-        return categoriaRepository.save(entity);
+        long id = categoriaRepository.save(entity).getId();
+        return getById(id);
     }
 
     public void transferirCategoria(long idCategoriaOrigem, long idCategoriaDestino) {

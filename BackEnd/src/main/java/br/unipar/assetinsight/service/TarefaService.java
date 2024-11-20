@@ -26,14 +26,18 @@ public class TarefaService implements IService<TarefaEntity> {
     private final AmbienteRepository ambienteRepository;
     private final CategoriaRepository categoriaRepository;
     private final SecurityService securityService;
+    private final AmbienteService ambienteService;
+    private final CategoriaService categoriaService;
 
     @Override
     public TarefaEntity getById(long id) {
-        Optional<TarefaEntity> tarefa = tarefaRepository.findById(id);
+        Optional<TarefaEntity> retornoBusca = tarefaRepository.findById(id);
 
-        return tarefa.orElseThrow(
+        TarefaEntity tarefa = retornoBusca.orElseThrow(
                 () -> new NotFoundException("tarefa", "Nenhuma tarefa foi encontrada com o id: " + id)
         );
+
+        return validateTarefa(tarefa);
     }
 
     @Override
@@ -44,12 +48,18 @@ public class TarefaService implements IService<TarefaEntity> {
             throw new NotFoundException("tarefa", "Nenhuma tarefa foi encontrada.");
         }
 
+        tarefas.stream().forEach(tarefa -> {
+            TarefaEntity e = validateTarefa(tarefa);
+            tarefa.setAmbienteEntity(e.getAmbienteEntity());
+            tarefa.setCategoriaEntity(e.getCategoriaEntity());
+        });
+
         return tarefas;
     }
 
     @Override
     public TarefaEntity save(TarefaEntity entity) {
-        entity = validateTarefa(entity);
+        entity = validateTarefa(entity); //Validar
 
         if(entity.getStatus() == StatusTarefaEnum.ABERTA && entity.getDtPrevisao().before(entity.getDtRecord())) {
             entity.setStatus(StatusTarefaEnum.ATRASADA);
@@ -60,8 +70,9 @@ public class TarefaService implements IService<TarefaEntity> {
 
         entity.setDtRecord(DataUtils.getNow());
         entity.setUsuarioEntityCriador(securityService.getUsuario());
+        entity = tarefaRepository.save(entity);
 
-        return tarefaRepository.save(entity);
+        return validateTarefa(entity); //Retornar com os dados atualizados de ambiente e categoria
     }
 
     @Override
@@ -79,15 +90,18 @@ public class TarefaService implements IService<TarefaEntity> {
 
     public TarefaEntity validateTarefa(TarefaEntity tarefaEntity) {
         Map<String, String> listErros = new HashMap<>();
+        AmbienteEntity ambiente = new AmbienteEntity();
+        CategoriaEntity categoria = new CategoriaEntity();
 
-        Optional<AmbienteEntity> ambiente = ambienteRepository.findById(tarefaEntity.getAmbienteEntity().getId());
-        if (ambiente.isEmpty()) {
+        try {
+            ambiente = ambienteService.getById(tarefaEntity.getAmbienteEntity().getId());
+        } catch (Exception e) {
             listErros.put("ambiente", "Nenhum ambiente foi encontrado com o id: " + tarefaEntity.getAmbienteEntity().getId());
         }
 
-
-        Optional<CategoriaEntity> categoria = categoriaRepository.findById(tarefaEntity.getCategoriaEntity().getId());
-        if (categoria.isEmpty()) {
+        try {
+            categoria = categoriaService.getById(tarefaEntity.getCategoriaEntity().getId());
+        } catch (Exception e) {
             listErros.put("categoria", "Nenhuma categoria foi encontrada com o id: " + tarefaEntity.getCategoriaEntity().getId()+ ".");
         }
 
@@ -95,8 +109,8 @@ public class TarefaService implements IService<TarefaEntity> {
             throw new ValidationException(listErros);
         }
 
-        tarefaEntity.setCategoriaEntity(categoria.get());
-        tarefaEntity.setAmbienteEntity(ambiente.get());
+        tarefaEntity.setCategoriaEntity(categoria);
+        tarefaEntity.setAmbienteEntity(ambiente);
         return tarefaEntity;
     }
 

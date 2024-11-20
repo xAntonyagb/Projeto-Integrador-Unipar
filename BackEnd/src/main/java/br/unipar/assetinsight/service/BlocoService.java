@@ -58,6 +58,8 @@ public class BlocoService implements IService<BlocoEntity>{
         bloco.setDtRecord(DataUtils.getNow());
 
         bloco = blocoRepository.save(bloco);
+
+        bloco.setQtdAmbientes(ambienteRepository.countByBlocoEntityId(bloco.getId()));
         return bloco;
     }
 
