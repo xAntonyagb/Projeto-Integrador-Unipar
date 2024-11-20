@@ -18,17 +18,11 @@
     <div class="centro">
       <div class="centro">
         <p class="nomePagina">{{ currentPageTitle }}</p>
-      <p-tabView class="custom-tabview" (onChange)="updatePageTitle($event.index)">
-        <p-tabPanel header="Ordem de Serviço" class="custom-tab" >
-          <div>
-            <app-tab-ordem-de-servico></app-tab-ordem-de-servico>
-          </div>
-          </p-tabPanel>
-          <p-tabPanel header="Todos os Serviços" class="custom-tab" >
-
-        </p-tabPanel>
-
-      </p-tabView>
+        <nav class="nav nav-tabs">
+          <a class="nav-item nav-link" [routerLink]="['/ordem-servico']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="updatePageTitle(0)">Ordem de Serviço</a>
+          <a class="nav-item nav-link" [routerLink]="['/ordem-servico/todos-servicos']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="updatePageTitle(1)">Todos os Serviços</a>
+        </nav>
+        <router-outlet></router-outlet>
       </div>
     </div>
 </div>

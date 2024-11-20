@@ -25,9 +25,20 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit{
   displayedColumns: string[] = ['id', 'nome', 'bloco', 'patrimonios'];
   dataSource = new MatTableDataSource<AmbienteResponse>([]);
   @ViewChild(MatSort) sort!: MatSort;
+  isModalOpen = false;
+
+  openModal() {
+    console.log('Botão clicado!');
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
   ngOnInit() {
     this.getAmbientes();
-    
+
   }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -53,5 +64,5 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit{
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
- 
+
 }

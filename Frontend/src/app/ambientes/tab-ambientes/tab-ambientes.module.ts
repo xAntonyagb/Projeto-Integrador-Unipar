@@ -10,11 +10,13 @@ import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-import { CadastrarOrdemModule } from "../../modals/cadastrar-ordem/cadastrar-ordem.module";
+import { CadastrarOrdemModule } from "../../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.module";
+import {CadastrarCategoriaModule} from "../../modals/Cadastro/cadastrar-categoria/cadastrar-categoria.module";
+import {CadastrarAmbienteModule} from "../../modals/Cadastro/cadastrar-ambiente/cadastrar-ambiente.module";
 
 @NgModule({
   declarations:[TabAmbientesComponent],
-  imports:[
+  imports: [
     BrowserAnimationsModule,
     TabViewModule,
     ButtonModule,
@@ -26,6 +28,8 @@ import { CadastrarOrdemModule } from "../../modals/cadastrar-ordem/cadastrar-ord
     MenuModule,
     TableModule,
     CadastrarOrdemModule,
+    CadastrarCategoriaModule,
+    CadastrarAmbienteModule,
   ],
   exports:[TabAmbientesComponent]
   })

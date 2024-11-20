@@ -24,4 +24,13 @@ export class AmbienteRequest {
     console.log(headers);
     return this.http.get<AmbienteResponse[]>(`${this.apiUrl}/ambiente/all`, { headers });
   }
+  setAmbiente(ordemData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/ambiente`, ordemData);
+  }
+  deleteAmbiente(id : number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
+    });
+    return this.http.delete<void>(`${this.apiUrl}/ambiente/${id}`, {headers});
+  }
 }

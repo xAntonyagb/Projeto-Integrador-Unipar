@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ApiResponse } from '../responses/api.response';
 import { AuthResponse } from '../responses/auth.response.type';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -14,7 +15,7 @@ import { AuthResponse } from '../responses/auth.response.type';
 export class AuthRequest {
   private apiUrl = ApiResponse.DESENVOLVIMENTO;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private toastr : ToastrService) {}
 
   login(username: string, password: string) {
     const body = {
@@ -29,17 +30,15 @@ export class AuthRequest {
 
     console.log("login: " + username + " senha: " + password);
 
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, body, { headers })
-      .pipe(
-        tap((response) =>{
-          this.extractToken(response)
-        }),
-        catchError((error) => {
-          console.error('Erro de login', error);
-          alert('Erro de login. Verifique suas credenciais.');
-          return throwError(error);
-        })
-      );
+   return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, body, { headers })
+  .pipe(
+    tap((response) => {
+      this.extractToken(response);
+    }),
+    catchError((error) => {
+      this.toastr.error('Erro de login. Verifique suas credenciais.', 'Login Inválido');
+      return throwError(() => error);
+      }));
     }
   private extractToken(response: AuthResponse): void {
     if (response && response.acessToken) {
@@ -50,7 +49,11 @@ export class AuthRequest {
       console.log('Token recebido: ', response.acessToken
       + ' Expira em: ' + expiresInHours + ' horas'
       );
-      this.router.navigate(['/inicio']);
+      this.toastr.success('Login bem-sucedido!', 'Sucesso');
+
+      setTimeout(() => {
+        this.router.navigate(['/inicio']);
+      }, 2000);
     } else {
       console.log('Token não recebido, verifique a resposta do servidor.');
       alert('Token não recebido, verifique a resposta do servidor.');

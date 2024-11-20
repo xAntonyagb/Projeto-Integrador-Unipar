@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { OrdemRequest } from '../../dtos/requests/ordem.request';
-import { CadastrarOrdemModule } from '../../modals/cadastrar-ordem/cadastrar-ordem.module';
-import { CadastrarOrdemComponent } from '../../modals/cadastrar-ordem/cadastrar-ordem.component';
+import { CadastrarOrdemModule } from '../../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.module';
+import { CadastrarOrdemComponent } from '../../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.component';
 import { ModalRequest } from '../../dtos/requests/modal.request';
 
 @Component({

@@ -1,6 +1,8 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthRequest } from '../dtos/requests/auth.request';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,7 @@ export class LoginComponent {
   errorMessage: string = '';
   cookieConsent: boolean = false;
 
-  constructor(private auth: AuthRequest, private router: Router) {
+  constructor(private auth: AuthRequest, private router: Router, private toastr: ToastrService) {
     this.cookieConsent = this.checkCookieConsent();
   }
 
@@ -34,7 +36,7 @@ export class LoginComponent {
       }
     });
   }else{
-    alert("você precisa aceitar os cookies para continuar")
+    this.toastr.warning('Você precisa aceitar os cookies para continuar', 'Aviso');
   }
 
 }

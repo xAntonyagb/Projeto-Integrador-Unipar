@@ -1,4 +1,5 @@
 import { BlocoResponse } from "./bloco.response";
+import { ServicoResponse } from "./servico.response";
 
 
 export interface AmbienteResponse {
@@ -6,4 +7,5 @@ export interface AmbienteResponse {
   descricao: string;
   bloco: BlocoResponse;
   qtdPatrimonios:number;
+  servicos? :ServicoResponse[];
 }

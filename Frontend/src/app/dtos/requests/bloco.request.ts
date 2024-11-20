@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../responses/api.response';
-import { BlocoResponse } from '../responses/bloco.response';
+import { AddBloco, BlocoResponse } from '../responses/bloco.response';
 import { AuthRequest } from './auth.request';
 
 
@@ -22,5 +22,21 @@ export class BlocoRequest {
 
     console.log(headers);
     return this.http.get<BlocoResponse[]>(`${this.apiUrl}/bloco/all`, { headers });
+  }
+  setBloco(bloco:AddBloco): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`,
+      'Content-Type': 'application/json'
+    });
+  
+    return this.http.post<AddBloco>(`${this.apiUrl}/bloco`, bloco, { headers });
+  }
+  
+  deleteBloco(id: number): Observable<void> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
+    });
+  
+    return this.http.delete<void>(`${this.apiUrl}/bloco/${id}`, { headers });
   }
 }

@@ -12,6 +12,7 @@ import { TableModule } from "primeng/table";
 import { FormsModule } from "@angular/forms";
 import { CadastrarOrdemComponent } from "./cadastrar-ordem.component";
 
+
 @NgModule({
     declarations:[CadastrarOrdemComponent],
     imports:[

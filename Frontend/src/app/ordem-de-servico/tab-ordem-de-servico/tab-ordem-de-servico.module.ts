@@ -10,7 +10,7 @@ import { TableModule } from 'primeng/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import { TabOrdemDeServicoComponent } from "./tab-ordem-de-servico.component";
-import { CadastrarOrdemModule } from "../../modals/cadastrar-ordem/cadastrar-ordem.module";
+import { CadastrarOrdemModule } from "../../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.module";
 
 @NgModule({
   declarations:[TabOrdemDeServicoComponent],
@@ -25,7 +25,7 @@ import { CadastrarOrdemModule } from "../../modals/cadastrar-ordem/cadastrar-ord
     MatSortModule,
     MenuModule,
     TableModule,
-    CadastrarOrdemModule
+    CadastrarOrdemModule,
   ],
   exports:[TabOrdemDeServicoComponent]
   })

@@ -1,0 +1,50 @@
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
+<link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+<link href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
+
+<div *ngIf="isModalOpen" class="overlay" >
+  <div class="modal-container">
+    <div class="modal-header">
+      <button (click)="closeModal()" class="back-button" aria-label="Close Modal">⬅</button>
+      <h2>Cadastro De Ambientes</h2>
+    </div>
+
+    <div class="modal-body">
+      <fieldset *ngFor="let ambiente of ambientesAdicionados; let i = index">
+        <div class="form-row">
+          <div class="desc-part">
+            <label for="descricao">Nome do Ambiente:</label>
+            <input id="descricao" type="text" class="form-control" [(ngModel)]="ambiente.nomeAmbiente" required>
+          </div>
+          <div class="data-part">
+            <label for="bloco-{{i}}">Bloco:</label>
+            <select id="bloco-{{i}}" class="form-control" [(ngModel)]="ambiente.bloco.descricao" required>
+              <option *ngFor="let optBloco of blocosSelecionados" [value]="optBloco.id">
+                {{ optBloco.descricao }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="service-entry" >
+            <div class="data-part">
+              <label for="patrimonio-{{i}}">Patrimônio:</label>
+              <input id="patrimonio-{{i}}" type="text" class="form-control" [(ngModel)]="ambiente.patrimonio">
+            </div>
+            <div class="data-part">
+              <label for="servicoDescricao-{{i}}">Descrição:</label>
+              <input id="servicoDescricao-{{i}}" type="text" class="form-control" [(ngModel)]="ambiente.descricao">
+            </div>
+            <img src="../../../assets/Vector.svg" class="removerServico" *ngIf="ambientesAdicionados.length" (click)="removerServico(i)"/>
+        </div>
+        <div class="btnAddServico">
+            <a  (click)="adicionarServico()">
+              <img src="../../../assets/Add (1).svg" alt=""> Adicionar Novo Patrimônio
+            </a>
+          </div>
+      </fieldset>
+    </div>
+</div>
+</div>
+
+

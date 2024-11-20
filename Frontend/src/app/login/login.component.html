@@ -9,14 +9,14 @@
     <script src='main.js'></script>
 </head>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
-
+    
     <main class="w-100 m-auto form-container">
-      <img src="../../assets/unipar1.png" class="mb-4" height="57"
-      width="72">
-      <h1 class="h3 fw-normal">
-        LOGIN
-      </h1>
-      <form (ngSubmit)="onSubmit($event)">
+        <img src="../../assets/unipar1.png" class="mb-4" height="57"
+        width="72">
+        <h1 class="h3 fw-normal">
+            LOGIN
+        </h1>
+        <form (ngSubmit)="onSubmit($event)">
             <div class="form-floating">
                 <input type="text"  name="username" class="form-control" id="username" placeholder="Insira seu usuário" [(ngModel)]="username" required>
                 <label for="username">Usuário</label>
@@ -35,12 +35,14 @@
             <p class="text-body-secondary mt-5 mb-3">©2024</p>
             <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
         </form>
-        <div *ngIf="!cookieConsent" class="cookie-consent">
-          <p>Este site utiliza cookies para melhorar sua experiência. Ao continuar, você concorda com nossa política de cookies.</p>
-          <button (click)="acceptCookies()">Aceitar</button>
-        </div>
-
+        
     </main>
+
+        
+    <div *ngIf="!cookieConsent" class="cookie-consent">
+      <p>Este site utiliza cookies para melhorar sua experiência. Ao continuar, você concorda com nossa política de cookies.</p>
+      <button (click)="acceptCookies()" class="btnAccept">Aceitar Cookies</button>
+    </div>
 
 </body>
 </html>
