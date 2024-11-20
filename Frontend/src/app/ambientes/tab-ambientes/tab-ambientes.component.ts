@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { AmbienteResponse } from '../../dtos/responses/ambiente.response';
 import { AmbienteRequest } from '../../dtos/requests/ambiente.request';
+import {ToastrService} from "ngx-toastr";
+import {CategoriaRequest} from "../../dtos/requests/categoria.request";
 
 
 
@@ -21,14 +23,15 @@ export interface Element {
 export class TabAmbientesComponent  implements AfterViewInit, OnInit{
   private _liveAnnouncer = inject(LiveAnnouncer);
 
-  constructor(private ambiente: AmbienteRequest) { }
+  constructor(
+    private ambiente: AmbienteRequest,
+  ) { }
   displayedColumns: string[] = ['id', 'nome', 'bloco', 'patrimonios'];
   dataSource = new MatTableDataSource<AmbienteResponse>([]);
   @ViewChild(MatSort) sort!: MatSort;
   isModalOpen = false;
 
   openModal() {
-    console.log('Botão clicado!');
     this.isModalOpen = true;
   }
 

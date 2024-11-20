@@ -5,6 +5,7 @@ import { NotificationBarModule } from '../notification-bar/notification-bar.modu
 import { HeaderModule } from '../header/header.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { ButtonModule } from 'primeng/button';
+import {ChartModule} from "primeng/chart";
 
 @NgModule({
   declarations: [InicioComponent],
@@ -13,7 +14,8 @@ import { ButtonModule } from 'primeng/button';
     NotificationBarModule,
     HeaderModule,
     SidebarModule,
-    ButtonModule
+    ButtonModule,
+    ChartModule,
 ],
   exports: [InicioComponent]
 })

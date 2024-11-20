@@ -53,7 +53,7 @@ export class AuthRequest {
 
       setTimeout(() => {
         this.router.navigate(['/inicio']);
-      }, 2000);
+      }, 1000);
     } else {
       console.log('Token não recebido, verifique a resposta do servidor.');
       alert('Token não recebido, verifique a resposta do servidor.');

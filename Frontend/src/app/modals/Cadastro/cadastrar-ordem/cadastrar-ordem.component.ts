@@ -1,16 +1,14 @@
-import { Component, EventEmitter, inject, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AmbienteRequest } from '../../../dtos/requests/ambiente.request';
 import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
-import { ServicoRequest } from '../../../dtos/requests/servico.request';
 import { CategoriaResponse } from '../../../dtos/responses/categoria.response';
 import { ServicoResponse } from '../../../dtos/responses/servico.response';
 import { OrdemRequest } from '../../../dtos/requests/ordem.request';
-import { OrdemResponse } from '../../../dtos/responses/ordem.response';
 import { ModalRequest } from '../../../dtos/requests/modal.request';
 import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
-import { BlocoRequest } from '../../../dtos/requests/bloco.request';
 import { ToastrService } from 'ngx-toastr';
 import { BlocoResponse } from '../../../dtos/responses/bloco.response';
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-cadastrar-ordem',
@@ -24,8 +22,9 @@ export class CadastrarOrdemComponent implements OnInit {
   subtotal = 0;
   bloco: BlocoResponse[] = [];
   servicosAdicionados: ServicoResponse[] = [];
-  ambientesSelecionados: AmbienteResponse[] = [];
-  categoriasSelecionadas: CategoriaResponse[] = [];
+  ambientesSelecionados: any[] = [];
+  categoriasSelecionadas: any[] = [];
+  private destroy$ = new Subject<void>();
 
   novoServico: {
     patrimonio: string,
@@ -55,32 +54,43 @@ export class CadastrarOrdemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadAmbientes();
-    this.loadCategorias();
     this.modalRequest.isOpen$.subscribe(isOpen => {
       this.isModalOpen = isOpen;
+      this.ambientesSelecionados = [
+        { id: 1, descricao: 'Ambiente 1' },
+        { id: 2, descricao: 'Ambiente 2' },
+      ];
+    this.loadCategorias();
+    this.loadAmbientes();
     });
   }
 
   loadAmbientes() {
-    this.ambiente.getAmbientes().subscribe((data: any[]) => {
-      this.ambientesSelecionados = data || [];
-      console.log('Ambientes carregados:', this.ambientesSelecionados);
-    }, error => {
-      console.error('Erro ao carregar ambientes:', error);
-      this.toastr.error('Erro ao carregar ambientes');
+    this.ambiente.getAmbientes().subscribe({
+      next: (data: any) => {
+        console.log('Ambientes retornados:', data);
+        this.ambientesSelecionados = data.content || []; // Extraia apenas o conteúdo
+      },
+      error: (error) => {
+        console.error('Erro ao carregar ambientes:', error);
+        this.toastr.error('Erro ao carregar ambientes');
+      }
     });
   }
-  
+
   loadCategorias() {
-    this.categoria.getCategorias().subscribe((data: any[]) => {
-      this.categoriasSelecionadas = data || []; 
-      console.log('Categorias carregadas:', this.categoriasSelecionadas);
-    }, error => {
-      console.error('Erro ao carregar categorias:', error);
-      this.toastr.error('Erro ao carregar categorias');
+    this.categoria.getCategorias().subscribe({
+      next: (data: any) => {
+        console.log('Categorias retornadas:', data);
+        this.categoriasSelecionadas = data.content || []; // Extraia apenas o conteúdo
+      },
+      error: (error) => {
+        console.error('Erro ao carregar categorias:', error);
+        this.toastr.error('Erro ao carregar categorias');
+      }
     });
   }
+
 
   adicionarServico() {
     const novoServico: ServicoResponse = {
@@ -94,7 +104,7 @@ export class CadastrarOrdemComponent implements OnInit {
     };
     this.servicosAdicionados.push(novoServico);
     this.calcularTotal();
-    this.resetNovoServico(); 
+    this.resetNovoServico();
   }
 
   resetNovoServico() {
@@ -181,11 +191,15 @@ export class CadastrarOrdemComponent implements OnInit {
     let valorDigitado = event.target.value;
     valorDigitado = valorDigitado.replace(/[^\d,]/g, '').replace(',', '.');
     const valorNumerico = parseFloat(valorDigitado);
-    
+
     if (!isNaN(valorNumerico)) {
       this.servicosAdicionados[index].valorUnit = valorNumerico;
       this.servicosAdicionados[index].valorTotal = this.servicosAdicionados[index].quantidade * valorNumerico;
     }
     this.calcularTotal();
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

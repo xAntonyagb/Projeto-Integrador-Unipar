@@ -2,11 +2,11 @@ import {List} from "@material/web/list/internal/list";
 
 export interface UsuarioResponse {
     id: number;
-    username: AddUsuario;
-    password: AddUsuario;
+    username: string;
+    password : string;
     dtCriacao: Date;
     lastLogin: Date;
-    permissoes: AddUsuario;
+    permissoes: Array<string>;
   }
 export interface UsuarioPermissoes {
   ADMINISTRADOR: 'ADMINISTRADOR';

@@ -2,12 +2,14 @@
   <div class="header-container position-fixed  d-flex justify-content-between align-items-center">
     <img src="../../assets/HEADDER1.png" class=" header-image" />
     <div class="icon-container">
-      <a href="#" class="notification-link" (click)="toggleNotificationBar()">
+      <a href="#" class="notification-link" (click)="toggleNotificationBar($event)">
         <img src="assets/notificacao.svg" class="img-fluid notification-icon " />
+        <span class="notification-badge" *ngIf="notificacoes.length > 0"></span>
       </a>
       <a href="#" class="ml-3">
         <img src="assets/admin.svg" class="img-fluid user-icon" />
       </a>
+      <app-notification-bar #notificationBar></app-notification-bar>
     </div>
   </div>
-  <app-notification-bar #notificationBar></app-notification-bar>
+</div>

@@ -9,6 +9,8 @@ import {SidebarModule} from "../sidebar/sidebar.module";
 import {HeaderModule} from "../header/header.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ArquivadosComponent} from "./arquivados.component";
+import {CadastrarCategoriaModule} from "../modals/Cadastro/cadastrar-categoria/cadastrar-categoria.module";
+import {MatTable, MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [ArquivadosComponent],
@@ -23,6 +25,7 @@ import {ArquivadosComponent} from "./arquivados.component";
     MenuModule,
     SidebarModule,
     HeaderModule,
+    MatTableModule,
   ],
   exports: [ArquivadosComponent]
 }) export class ArquivadosModule {}

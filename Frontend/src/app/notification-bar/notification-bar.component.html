@@ -1,20 +1,14 @@
-<div class="notification-bar" *ngIf="isVisible">
-  <h3>Notificações</h3>
-  <a href="/inicio" class="notification">
-
-    <div class="notification-1">
-      <img src="../../assets/resumo.svg" class="notification-icon">
-      <p class="title">Resumo Mensal</p>
-      <p class="subtitle">Os gastos deste mês de agosto foram 40% maior que o mês anterior</p>
-    </div>
-
-
-
-    <div class="notification-2">
-      <img src="../../assets/lembrete.svg" class="notification-icon">
-      <p class="title">Lembrete de Tarefa</p>
-      <p class="subtitle">Sua tarefa Conserto de Projetor tem o prazo de conclusão para amanhã. Conclua a tarefa ou ela ficará em atraso.</p>
-    </div>
-
-  </a>
+<div class="notification-bar" [ngClass]="{ 'open': isOpen }">
+  <h2>Notificações</h2>
+  <div *ngIf="notificacoes.length === 0">
+    Nenhuma notificação disponível.
+  </div>
+  <div *ngIf="notificacoes.length > 0">
+    <ul>
+      <li *ngFor="let notificacao of notificacoes">
+        <strong>{{ notificacao.titulo }}</strong>: {{ notificacao.descricao }} <br>
+        <small>Enviado em: {{ notificacao.dtEnvio | date:'short' }}</small>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -10,6 +10,10 @@ export class TarefasComponent {
 
   openModal() {
     this.isModalOpen = true;
+    const modalElement = document.getElementById('myModal');
+    if (modalElement) {
+      modalElement.classList.add('show');
+    }
   }
 
   closeModal() {

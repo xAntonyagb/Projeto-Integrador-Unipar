@@ -30,12 +30,12 @@
         <fieldset *ngFor="let servico of servicosAdicionados; let i = index" >
           <div class="ambiente-entry" *ngFor="let ambiente of ambientesSelecionados; let j =index">
             <hr class="divider">
-            
+
           <div class="remove-section" *ngIf="ambientesSelecionados.length > 0">
             <a id="ambiente-{{j}}" (click)="removerUltimoAmbiente()">
               <img src="../../../assets/Minus.svg">Remover</a>
             </div>
-            
+
             <div class="form-row">
               <label for="ambiente-{{j}}">Ambiente:</label>
               <select id="ambiente-{{j}}" class="form-control" [(ngModel)]="ambientesSelecionados[j]" required>
@@ -77,13 +77,13 @@
           </div>
           <img src="../../../assets/Vector.svg" class="removerServico" *ngIf="servicosAdicionados.length" (click)="removerServico(i)"/>
         </div>
-        
+
         <div class="btnAddServico">
           <a  (click)="adicionarServico()">
             <img src="../../../assets/Add (1).svg" alt=""> Adicionar Novo Serviço
           </a>
         </div>
-        
+
         <div class="btnAdd">
           <a  (click)="adicionarNovoAmbiente()">
             <img src="../../../assets/Add.svg" alt=""> Adicionar Novo Ambiente
@@ -91,7 +91,7 @@
         </div>
       </fieldset>
     </div>
-        
+
       <div class="total-section">
         <button class="btn btn-primary btnSalvar" (click)="guardarAmbiente()">Cadastrar</button>
         <div class="total-value">Total: {{ total }}</div>

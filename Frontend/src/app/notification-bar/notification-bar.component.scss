@@ -1,50 +1,51 @@
 .notification-bar {
-  position: fixed;
-  top: 80px;
-  right: 85px;
-  width: 400px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  padding: 30px;
-}
-.notification{
-color: black;
-text-decoration: none;
-font-weight: 700;
-font-family: Arial;
+  font-family:"Inter";
+  position: absolute;
+  top: 2rem;
+  right: 8rem;
+  width: 250px;
+  background-color: #989898;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  z-index: 100000;
+  visibility: hidden;
+  opacity: 0;
+
+  &.open {
+    animation: slide-in 0.5s forwards;
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
-.subtitle{
-  color: black;
-  font-size: 11px;
-  font-weight: 900;
-  font-family: Arial;
-}
+  h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: white;
+  }
 
-.title{
-  padding-left: 10px;
-  font-size: 14px;
-  font-weight: 700;
-}
+  ul {
+    list-style-type: none;
+    padding: 0;
 
-.notification-1{
-padding-bottom: 19px;
-display: flex;
-background-color: #F7F9FB;
-border-radius: 15px;
-}
-.notification-2{
-display: flex;
-padding-top: 20px;
-background-color: #F7F9FB;
-border-radius: 15px;
-}
-.notification-icon{
-padding-top: 15px;
-height: 50px;
+    li {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #444;
+      border-radius: 5px;
 
-}
+      strong {
+        color: #f39c12;
+      }
+
+      small {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.9em;
+        color: black;
+      }
+    }
+  }
 

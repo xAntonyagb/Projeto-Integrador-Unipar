@@ -13,6 +13,7 @@ import {TabTodosOsServicosComponent} from "./ordem-de-servico/tab-todos-os-servi
 import {UsuariosComponent} from "./usuarios/usuarios.component";
 import {ArquivadosComponent} from "./arquivados/arquivados.component";
 import {TabOrdemDeServicoComponent} from "./ordem-de-servico/tab-ordem-de-servico/tab-ordem-de-servico.component";
+import {PatrimonioComponent} from "./patrimonio/patrimonio.component";
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full', },
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'categorias', component: CategoriaComponent, canActivate: [authGuard]},
     { path: 'usuarios', component: UsuariosComponent, canActivate: [authGuard]},
     { path: 'arquivados', component: ArquivadosComponent, canActivate: [authGuard]},
+    { path: 'patrimonios', component:PatrimonioComponent, canActivate: [authGuard]},
     { path: 'ambientes', component: AmbientesComponent, canActivate: [authGuard], children: [
         { path: '', component: TabAmbientesComponent},
         { path: 'blocos', component: TabBlocoComponent},

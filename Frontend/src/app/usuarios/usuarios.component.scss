@@ -85,30 +85,6 @@ body, html {
   background-color: white;
 }
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  width: 300px;
-}
-
-.card-header {
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 8px;
-  padding-bottom: 8px;
-}
-
-.card-body {
-  padding-top: 8px;
-}
 table {
   width: 100%;
 }
@@ -138,4 +114,48 @@ th.mat-sort-header-sorted {
       font-weight: bold;
     }
   }
+}
+.user-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  width: 18rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-logo {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.user-logo-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.badge {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+hr {
+  margin: 10px 0;
 }
