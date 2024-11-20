@@ -17,12 +17,7 @@ export class AmbienteRequest {
   constructor(private http:HttpClient, private auth: AuthRequest){}
 
   getAmbientes(): Observable<AmbienteResponse[]>{
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
-    });
-
-    console.log(headers);
-    return this.http.get<AmbienteResponse[]>(`${this.apiUrl}/ambiente/all`, { headers });
+    return this.http.get<AmbienteResponse[]>(`${this.apiUrl}/ambiente/all`);
   }
   setAmbiente(ordemData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/ambiente`, ordemData);

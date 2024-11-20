@@ -7,9 +7,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class CadastrarAmbienteComponent {
   ambientesAdicionados: any[] = [];
+  blocosSelecionados: any[] = [];
   nomeAmbiente: string = '';
   bloco: any = {};
-  blocosSelecionados: any[] = [];
 
   @Output() close = new EventEmitter<void>();
   isModalOpen = false;
@@ -26,7 +26,7 @@ export class CadastrarAmbienteComponent {
     this.ambientesAdicionados.splice(index, 1);
   }
 
-  adicionarServico() {
+  adicionarAmbiente() {
     this.ambientesAdicionados.push({
       nomeAmbiente: this.nomeAmbiente,
       bloco: this.bloco,

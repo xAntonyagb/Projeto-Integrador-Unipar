@@ -11,7 +11,7 @@ export interface ArquivadoResponse{
     dtArquivado: Date;
     arquivadoBy: ArquivadoBy;
   }
-  
+
   interface ArquivadoBy {
     id: string;
     username: string;
@@ -26,13 +26,13 @@ export interface ArquivadoResponse{
     accountNonLocked: boolean;
     credentialsNonExpired: boolean;
   }
-  
+
   interface Authority {
     authority: string;
   }
-  
+
   interface ListRole {
     id: number;
-    permisao: string;
+    permissao: string;
   }
-  
+

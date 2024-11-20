@@ -1,58 +1,63 @@
-<div class="modal">
-    <div>
-        <div>
-            <div class="desc-part">
-                <label>Nome da Tarefa</label>
-                <input type="text" class="form-control" [(ngModel)]="titulo">
-              </div>
-              <div class="form-row">
-                <label>Previsão:</label>
-                <input type="date" class="form-control" [(ngModel)]="previsao">
-              </div>
-
-
-              <div class="form-row">
-                <label>Ambiente:</label>
-                <select class="form-control" [(ngModel)]="ambienteSelecionado">
-                  <option *ngFor="let ambiente of ambientes" [value]="ambiente.id">{{ ambiente.descricao }}</option>
-                </select>
-              </div>
-              <div>
-                <label>Prioridade:</label>
-                <div class="form-check">
-                  <input type="radio" id="prioridadeBaixa" name="prioridade" class="form-check-input" [(ngModel)]="prioridade" value="Baixa">
-                  <label for="prioridadeBaixa" class="form-check-label">Baixa</label>
-                </div>
-                <div class="form-check">
-                  <input type="radio" id="prioridadeMedia" name="prioridade" class="form-check-input" [(ngModel)]="prioridade" value="Média">
-                  <label for="prioridadeMedia" class="form-check-label">Média</label>
-                </div>
-                <div class="form-check">
-                  <input type="radio" id="prioridadeAlta" name="prioridade" class="form-check-input" [(ngModel)]="prioridade" value="Alta">
-                  <label for="prioridadeAlta" class="form-check-label">Alta</label>
-                </div>
-              </div>
-              <div class="data-part">
-                <label>Categoria:</label>
-                <select class="form-control" [(ngModel)]="categoriaSelecionada">
-                  <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</option>
-                </select>
-              </div>
-              <div class="data-part">
-                <label>Status:</label>
-                <select class="form-control" [(ngModel)]="statusSelecionado">
-                  <option *ngFor="let status of statusOptions" [value]="status">{{ getStatusDescricao(status) }}</option>
-                </select>
-              </div>
-              <div class="desc-part">
-                <label>Descrição:</label>
-                <input type="text" class="form-control" [(ngModel)]="descricao">
-              </div>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'show': isModalOpen}" [style.display]="isModalOpen ? 'block' : 'none'">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cadastrar Tarefa</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="desc-part">
+          <label>Nome da Tarefa</label>
+          <input type="text" class="form-control" [(ngModel)]="titulo">
         </div>
-        <div class="button-part">
-          <button type="submit" class="btn btn-success" (click)="adicionarTarefa()">Cadastrar</button>
-
+        <div class="form-row">
+          <label>Previsão:</label>
+          <input type="date" class="form-control" [(ngModel)]="previsao">
+        </div>
+        <div class="form-row">
+          <label>Ambiente:</label>
+          <select class="form-control" [(ngModel)]="ambienteSelecionado">
+            <option *ngFor="let ambiente of ambientes" [value]="ambiente.id">{{ ambiente.descricao }}</option>
+          </select>
+        </div>
+        <div>
+          <label>Prioridade:</label>
+          <div class="form-check">
+            <input type="radio" id="prioridadeBaixa" name="prioridade" class="form-check-input" [(ngModel)]="prioridade" value="Baixa">
+            <label for="prioridadeBaixa" class="form-check-label">Baixa</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" id="prioridadeMedia" name="prioridade" class="form-check-input" [(ngModel)]="prioridade" value="Média">
+            <label for="prioridadeMedia" class="form-check-label">Média</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" id="prioridadeAlta" name="prioridade" class="form-check-input" [(ngModel)]="prioridade" value="Alta">
+            <label for="prioridadeAlta" class="form-check-label">Alta</label>
+          </div>
+        </div>
+        <div class="data-part">
+          <label>Categoria:</label>
+          <select class="form-control" [(ngModel)]="categoriaSelecionada">
+            <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</option>
+          </select>
+        </div>
+        <div class="data-part">
+          <label>Status:</label>
+          <select class="form-control" [(ngModel)]="statusSelecionado">
+            <option *ngFor="let status of statusOptions" [value]="status">{{ getStatusDescricao(status) }}</option>
+          </select>
+        </div>
+        <div class="desc-part">
+          <label>Descrição:</label>
+          <input type="text" class="form-control" [(ngModel)]="descricao">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Fechar</button>
+        <button type="submit" class="btn btn-success" (click)="adicionarTarefa()">Cadastrar</button>
+      </div>
     </div>
   </div>
 </div>
-

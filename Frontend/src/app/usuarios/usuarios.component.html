@@ -1,9 +1,6 @@
-<!DOCTYPE html>
+
 <html>
 <head>
-  <meta charset='utf-8'>
-  <title>Page Title</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
   <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
@@ -33,6 +30,22 @@
         </div>
         <p class="cinza ">Mostrando todos os registros</p>
         <hr>
+        <div class="user-cards-container">
+          <div class="card" *ngFor="let usuario of usuarios">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <span class="badge badge-primary">{{ usuario.permissoes[0] }}</span>
+                <div class="user-logo">
+                  <img src="assets/admin.svg" alt="Logo do Usuário" class="user-logo-img">
+                </div>
+              </div>
+              <h5 class="card-title">{{ usuario.username }}</h5>
+              <hr>
+              <p><strong>Criado em::</strong> {{ usuario.dtCriacao | date }}</p>
+              <p><strong>Último Acesso:</strong> {{ usuario.lastLogin | date }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

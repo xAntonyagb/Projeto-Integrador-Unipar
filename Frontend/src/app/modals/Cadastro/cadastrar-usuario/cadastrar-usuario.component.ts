@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { UsuarioRequest } from '../../../dtos/requests/usuario.request';
-import { AddUsuario, UsuarioPermissoes, UsuarioResponse } from '../../../dtos/responses/usuario.response';
+import { AddUsuario, UsuarioResponse } from '../../../dtos/responses/usuario.response';
 
 @Component({
   selector: 'app-cadastrar-usuario',
@@ -36,7 +36,7 @@ export class CadastrarUsuarioComponent {
       permissoes: permissoesArray
     };
 
-    this.usuario.setUsuario(usuario).subscribe(() => {
+    this.usuario.setUsuario(this.usuarioResponse).subscribe(() => {
       this.usuarioAdicionado.emit();
     });
   }

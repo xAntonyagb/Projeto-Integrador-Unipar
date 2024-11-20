@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { NotificationBarComponent, } from '../notification-bar/notification-bar.component';
+import {NotificacaoResponse} from "../dtos/responses/notificacao.response";
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,13 @@ import { NotificationBarComponent, } from '../notification-bar/notification-bar.
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  notificacoes: NotificacaoResponse[] = [];
   @ViewChild('notificationBar') notificationBar!: NotificationBarComponent;
 
-  toggleNotificationBar() {
+  toggleNotificationBar( event: Event ){
+    event.preventDefault();
+    event.stopPropagation();
     this.notificationBar.toggleVisibility();
   }
+
 }

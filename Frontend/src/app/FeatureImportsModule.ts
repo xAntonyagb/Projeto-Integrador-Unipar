@@ -34,9 +34,11 @@ import {TarefasModule} from "./tarefas/tarefa.module";
 import {UsuariosModule} from "./usuarios/usuarios.module";
 import {ArquivadosModule} from "./arquivados/arquivados.module";
 import {PatrimonioModule} from "./patrimonio/patrimonio.module";
+import {DeletarAmbienteModule} from "./modals/Deletar/deletar-ambiente/deletar-ambiente.module";
+import {PesquisarPatrimonioModule} from "./patrimonio/pesquisar-patrimonio/pesquisar-patrimonio.module";
 
 const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
-  timeOut: 2100,
+  timeOut: 1100,
   positionClass: 'toast-top-right',
   preventDuplicates: true,
 });
@@ -78,6 +80,8 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
         UsuariosModule,
         ArquivadosModule,
         PatrimonioModule,
+        DeletarAmbienteModule,
+        PesquisarPatrimonioModule,
         toastrModule,
       ],
     exports: [
@@ -116,5 +120,7 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
       UsuariosModule,
       ArquivadosModule,
       PatrimonioModule,
+      DeletarAmbienteModule,
+      PesquisarPatrimonioModule,
     ],
 }) export class FeatureImportsModule {}
