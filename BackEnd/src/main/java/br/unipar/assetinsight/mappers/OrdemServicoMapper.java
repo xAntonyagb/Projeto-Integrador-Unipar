@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.OrdemServicoRequest;
-import br.unipar.assetinsight.dtos.responses.main.OrdemServicoResponse;
+import br.unipar.assetinsight.dtos.responses.principal.OrdemServicoResponse;
 import br.unipar.assetinsight.entities.OrdemServicoEntity;
 import br.unipar.assetinsight.entities.ServicoEntity;
 import br.unipar.assetinsight.utils.DataUtils;

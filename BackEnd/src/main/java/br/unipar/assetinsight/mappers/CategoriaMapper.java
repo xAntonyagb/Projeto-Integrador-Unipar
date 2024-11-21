@@ -2,7 +2,7 @@ package br.unipar.assetinsight.mappers;
 
 
 import br.unipar.assetinsight.dtos.requests.CategoriaRequest;
-import br.unipar.assetinsight.dtos.responses.main.CategoriaResponse;
+import br.unipar.assetinsight.dtos.responses.principal.CategoriaResponse;
 import br.unipar.assetinsight.entities.CategoriaEntity;
 import br.unipar.assetinsight.utils.DataUtils;
 import org.mapstruct.AfterMapping;

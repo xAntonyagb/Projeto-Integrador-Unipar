@@ -54,8 +54,8 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
     }
 
     @Override
-    public Page<ArquivadoEntity> getAll(Pageable pageable) {
-        Page<ArquivadoEntity> arquivados = arquivadoRepository.findAll(pageable);
+    public Page<ArquivadoEntity> getAll(Pageable pageable, Map<String, String> filtros) {
+        Page<ArquivadoEntity> arquivados = arquivadoRepository.findAllWithFilters(pageable, filtros);
 
         if (arquivados.isEmpty()) {
             throw new NotFoundException("arquivado", "Nenhum arquivado foi encontrado.");

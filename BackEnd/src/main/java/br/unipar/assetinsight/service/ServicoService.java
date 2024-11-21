@@ -20,14 +20,13 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
-public class ServicoService implements IService<ServicoEntity> {
+public class ServicoService {
     private final ServicoRepository servicoRepository;
     private final AmbienteRepository ambienteRepository;
     private final CategoriaRepository categoriaRepository;
     private final SecurityService securityService;
     private final OrdemServicoRepository ordemServicoRepository;
 
-    @Override
     public ServicoEntity getById(long id) {
         Optional<ServicoEntity> servico = servicoRepository.findById(id);
         return servico.orElseThrow(
@@ -35,7 +34,6 @@ public class ServicoService implements IService<ServicoEntity> {
         );
     }
 
-    @Override
     public Page<ServicoEntity> getAll(Pageable pageable) {
         Page<ServicoEntity> servicos = servicoRepository.findAll(pageable);
 
@@ -57,7 +55,6 @@ public class ServicoService implements IService<ServicoEntity> {
     }
 
 
-    @Override
     public ServicoEntity save(ServicoEntity servicoEntity) {
         servicoEntity = validateServico(servicoEntity);
 
@@ -66,7 +63,6 @@ public class ServicoService implements IService<ServicoEntity> {
     }
 
 
-    @Override
     public void deleteById(long id) {
         if (!servicoRepository.existsById(id)) {
             throw new NotFoundException("servico", "Nenhum serviço foi encontrado com o id: " + id);

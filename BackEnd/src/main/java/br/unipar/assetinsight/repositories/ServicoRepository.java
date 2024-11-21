@@ -1,6 +1,7 @@
 package br.unipar.assetinsight.repositories;
 
 import br.unipar.assetinsight.entities.ServicoEntity;
+import br.unipar.assetinsight.repositories.custom.interfaces.ICustomRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,8 +15,6 @@ public interface ServicoRepository extends JpaRepository<ServicoEntity, Long> {
     Optional<List<ServicoEntity>> findAllByCategoriaEntity_Id (long id);
 
     Page<ServicoEntity> findAll(Pageable pageable);
-
-    long countByAmbienteEntity_Id(long id);
 
     long countByCategoriaEntity_Id(long id);
 

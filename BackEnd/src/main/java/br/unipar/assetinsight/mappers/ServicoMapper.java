@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.ServicoRequest;
-import br.unipar.assetinsight.dtos.responses.main.ServicoRespose;
+import br.unipar.assetinsight.dtos.responses.principal.ServicoRespose;
 import br.unipar.assetinsight.entities.ServicoEntity;
 import br.unipar.assetinsight.utils.DataUtils;
 import org.mapstruct.AfterMapping;

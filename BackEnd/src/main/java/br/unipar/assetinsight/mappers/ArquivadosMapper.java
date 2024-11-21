@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.ArquivadoRequest;
-import br.unipar.assetinsight.dtos.responses.main.ArquivadoResponse;
+import br.unipar.assetinsight.dtos.responses.principal.ArquivadoResponse;
 import br.unipar.assetinsight.entities.ArquivadoEntity;
 import br.unipar.assetinsight.utils.DataUtils;
 import org.mapstruct.AfterMapping;

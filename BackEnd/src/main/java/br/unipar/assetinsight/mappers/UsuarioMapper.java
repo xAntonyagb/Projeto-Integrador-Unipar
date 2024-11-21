@@ -1,6 +1,6 @@
 package br.unipar.assetinsight.mappers;
 
-import br.unipar.assetinsight.dtos.responses.main.UsuarioResponse;
+import br.unipar.assetinsight.dtos.responses.principal.UsuarioResponse;
 import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.utils.DataUtils;
 import org.mapstruct.AfterMapping;

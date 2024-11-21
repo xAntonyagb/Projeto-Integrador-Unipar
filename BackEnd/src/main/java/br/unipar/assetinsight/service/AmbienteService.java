@@ -20,7 +20,6 @@ public class AmbienteService implements IService<AmbienteEntity> {
     private final BlocoRepository blocoRepository;
     private final PatrimonioRepository patrimonioRepository;
     private final PatrimonioService patrimonioService;
-    private final BlocoService blocoService;
     private AmbienteRepository ambienteRepository;
     private SecurityService securityService;
     private ServicoRepository servicoRepository;
@@ -48,8 +47,8 @@ public class AmbienteService implements IService<AmbienteEntity> {
     }
 
     @Override
-    public Page<AmbienteEntity> getAll(Pageable pagable) {
-        Page<AmbienteEntity> ambientes = ambienteRepository.findAll(pagable);
+    public Page<AmbienteEntity> getAll(Pageable pagable, Map<String, String> filtros) {
+        Page<AmbienteEntity> ambientes = ambienteRepository.findAllWithFilters(pagable, filtros);
 
         if (ambientes.isEmpty()) {
             throw new NotFoundException("ambiente","Nenhum ambiente foi encontrado");

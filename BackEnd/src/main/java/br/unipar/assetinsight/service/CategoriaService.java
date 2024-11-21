@@ -44,8 +44,8 @@ public class CategoriaService implements IService<CategoriaEntity> {
     }
 
     @Override
-    public Page<CategoriaEntity> getAll(Pageable pageable) {
-        Page<CategoriaEntity> categorias = categoriaRepository.findAll(pageable);
+    public Page<CategoriaEntity> getAll(Pageable pageable, Map<String, String> filtros) {
+        Page<CategoriaEntity> categorias = categoriaRepository.findAllWithFilters(pageable, filtros);
 
         if (categorias.isEmpty()) {
             throw new NotFoundException("categoria", "Nenhuma categoria foi encontrada");

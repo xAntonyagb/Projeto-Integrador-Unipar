@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses.main;
+package br.unipar.assetinsight.dtos.responses.principal;
 
 import br.unipar.assetinsight.dtos.responses.simple.PatrimonioSimpleResponse;
 import io.swagger.v3.oas.annotations.media.Schema;

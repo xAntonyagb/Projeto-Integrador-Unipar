@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -27,8 +28,8 @@ public class PatrimonioService implements IService<PatrimonioEntity>{
     }
 
     @Override
-    public Page<PatrimonioEntity> getAll(Pageable pagable) throws NotFoundException {
-        Page<PatrimonioEntity> patrimonios = patrimonioRepository.findAll(pagable);
+    public Page<PatrimonioEntity> getAll(Pageable pagable, Map<String, String> filtros) throws NotFoundException {
+        Page<PatrimonioEntity> patrimonios = patrimonioRepository.findAllWithFilters(pagable, filtros);
 
         if (patrimonios.isEmpty()) {
             throw new NotFoundException("patrimonio", "Nenhum patrimonio foi encontrado");

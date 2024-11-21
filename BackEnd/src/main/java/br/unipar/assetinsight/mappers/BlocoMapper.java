@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.BlocoRequest;
-import br.unipar.assetinsight.dtos.responses.main.BlocoResponse;
+import br.unipar.assetinsight.dtos.responses.principal.BlocoResponse;
 import br.unipar.assetinsight.entities.BlocoEntity;
 import br.unipar.assetinsight.utils.DataUtils;
 import org.mapstruct.AfterMapping;

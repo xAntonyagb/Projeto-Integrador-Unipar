@@ -5,7 +5,6 @@ import br.unipar.assetinsight.enums.NotificacaoEnum;
 import br.unipar.assetinsight.enums.StatusTarefaEnum;
 import br.unipar.assetinsight.exceptions.NotFoundException;
 import br.unipar.assetinsight.repositories.*;
-import br.unipar.assetinsight.service.interfaces.IService;
 import br.unipar.assetinsight.utils.CalculoUtils;
 import br.unipar.assetinsight.utils.DataUtils;
 import lombok.AllArgsConstructor;
@@ -20,7 +19,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class NotificacaoService implements IService<NotificacaoEntity> {
+public class NotificacaoService {
     private final TarefaRepository tarefaRepository;
     private final NotificacaoRepository notificacaoRepository;
     private final OrdemServicoRepository ordemServicoRepository;
@@ -28,7 +27,6 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
     private final SecurityService securityService;
     private final UsuarioRepository usuarioRepository;
 
-    @Override
     public NotificacaoEntity getById(long id) {
         Optional<NotificacaoEntity> notificacao = notificacaoRepository.findById(id);
 
@@ -37,7 +35,6 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
         );
     }
 
-    @Override
     public Page<NotificacaoEntity> getAll(Pageable pageable) {
         UUID userId = securityService.getUsuario().getId();
         Page<NotificacaoEntity> notificacoes = notificacaoUsuarioRepository.findAllByUsuario(userId, pageable);
@@ -49,14 +46,12 @@ public class NotificacaoService implements IService<NotificacaoEntity> {
         return notificacoes;
     }
 
-    @Override
     public NotificacaoEntity save(NotificacaoEntity entity) {
         NotificacaoEntity notificacao = notificacaoRepository.save(entity);
         notificarTodos(notificacao);
         return notificacao;
     }
 
-    @Override
     public void deleteById(long id) {
         Optional<NotificacaoEntity> notificacao = notificacaoRepository.findById(id);
 

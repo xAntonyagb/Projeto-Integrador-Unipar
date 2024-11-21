@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -38,8 +39,8 @@ public class BlocoService implements IService<BlocoEntity>{
     }
 
     @Override
-    public Page<BlocoEntity> getAll(Pageable pagable) throws NotFoundException {
-        Page<BlocoEntity> blocos = blocoRepository.findAll(pagable);
+    public Page<BlocoEntity> getAll(Pageable pagable, Map<String, String> filtros) throws NotFoundException {
+        Page<BlocoEntity> blocos = blocoRepository.findAllWithFilters(pagable, filtros);
 
         for (BlocoEntity bloco : blocos) {
             bloco.setQtdAmbientes(ambienteRepository.countByBlocoEntityId(bloco.getId()));

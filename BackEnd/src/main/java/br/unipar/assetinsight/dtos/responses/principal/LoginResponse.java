@@ -1,4 +1,4 @@
-package br.unipar.assetinsight.dtos.responses.main;
+package br.unipar.assetinsight.dtos.responses.principal;
 
 import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.enums.PermissoesEnum;

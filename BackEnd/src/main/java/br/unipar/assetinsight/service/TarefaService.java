@@ -39,8 +39,8 @@ public class TarefaService implements IService<TarefaEntity> {
     }
 
     @Override
-    public Page<TarefaEntity> getAll(Pageable pageable) {
-        Page<TarefaEntity> tarefas = tarefaRepository.findAll(pageable);
+    public Page<TarefaEntity> getAll(Pageable pageable, Map<String, String> filtros) {
+        Page<TarefaEntity> tarefas = tarefaRepository.findAllWithFilters(pageable, filtros);
 
         if (tarefas.isEmpty()) {
             throw new NotFoundException("tarefa", "Nenhuma tarefa foi encontrada.");

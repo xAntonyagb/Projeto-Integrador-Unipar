@@ -1,6 +1,6 @@
 package br.unipar.assetinsight.controllers;
 
-import br.unipar.assetinsight.dtos.responses.main.ArquivadoResponse;
+import br.unipar.assetinsight.dtos.responses.principal.ArquivadoResponse;
 import br.unipar.assetinsight.entities.ArquivadoEntity;
 import br.unipar.assetinsight.enums.TipoArquivadoEnum;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
@@ -25,6 +25,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("arquivados")
 @RestController
@@ -46,11 +50,45 @@ public class ArquivadoController {
     @Parameters({
             @Parameter(name = "page", description = "Número da página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "0", example = "0")),
             @Parameter(name = "size", description = "Quantidade de registros por página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "10", example = "1")),
-            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc"))
+            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc")),
+            @Parameter(name = "tipo", description = "Filtro para informar o tipo do arquivado.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "TAREFA")),
+            @Parameter(name = "dtArquivado", description = "Filtro para informar a data de arquivamento.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "2021-09-01")),
+            @Parameter(name = "dtExcluir", description = "Filtro para informar a data de exclusão.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "2021-09-01")),
+            @Parameter(name = "arquivadoBy", description = "Filtro para informar o nome do usuário que arquivou.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "UNIPAR")),
+            @Parameter(name = "ordemServico", description = "Filtro para informar o ID da ordem de serviço.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", example = "1")),
+            @Parameter(name = "tarefa", description = "Filtro para informar o ID da tarefa.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", example = "1"))
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<ArquivadoResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
-        Page<ArquivadoEntity> retorno = arquivadoService.getAll(pageable);
+    public ResponseEntity<Page<ArquivadoResponse>> getAll(
+            @RequestParam(required = false) TipoArquivadoEnum tipo,
+            @RequestParam(required = false) Timestamp dtArquivado,
+            @RequestParam(required = false) Time dtExcluir,
+            @RequestParam(required = false) String arquivadoBy,
+            @RequestParam(required = false) Long ordemServico,
+            @RequestParam(required = false) Long tarefa,
+            @Parameter(hidden = true) Pageable pageable
+    ) {
+        Map<String, String> filtros = new HashMap<>();
+        if (tipo != null) {
+            filtros.put("tipo", tipo.toString());
+        }
+        if (dtArquivado != null) {
+            filtros.put("dtArquivado", dtArquivado.toString());
+        }
+        if (dtExcluir != null) {
+            filtros.put("dtExcluir", dtExcluir.toString());
+        }
+        if (arquivadoBy != null) {
+            filtros.put("arquivadoBy", arquivadoBy);
+        }
+        if (ordemServico != null) {
+            filtros.put("ordemServico", ordemServico.toString());
+        }
+        if (tarefa != null) {
+            filtros.put("tarefa", tarefa.toString());
+        }
+
+        Page<ArquivadoEntity> retorno = arquivadoService.getAll(pageable, filtros);
         Page<ArquivadoResponse> response = ArquivadosMapper.INSTANCE.toResponsePage(retorno);
 
         return ResponseEntity.ok(response);

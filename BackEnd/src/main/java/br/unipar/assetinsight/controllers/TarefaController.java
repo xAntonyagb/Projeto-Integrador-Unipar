@@ -1,8 +1,10 @@
 package br.unipar.assetinsight.controllers;
 
 import br.unipar.assetinsight.dtos.requests.TarefaRequest;
-import br.unipar.assetinsight.dtos.responses.main.TarefaResponse;
+import br.unipar.assetinsight.dtos.responses.principal.TarefaResponse;
 import br.unipar.assetinsight.entities.TarefaEntity;
+import br.unipar.assetinsight.enums.PrioridadeEnum;
+import br.unipar.assetinsight.enums.StatusTarefaEnum;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.TarefaMapper;
 import br.unipar.assetinsight.service.ArquivadoService;
@@ -27,6 +29,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("tarefa")
 @AllArgsConstructor
@@ -49,11 +54,53 @@ public class TarefaController {
     @Parameters({
             @Parameter(name = "page", description = "Número da página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "0", example = "0")),
             @Parameter(name = "size", description = "Quantidade de registros por página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "10", example = "1")),
-            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc"))
+            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc")),
+            @Parameter(name = "titulo", description = "Filtro para informar o título da tarefa.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "Título da tarefa")),
+            @Parameter(name = "descricao", description = "Filtro para informar a descrição da tarefa.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "Descrição da tarefa")),
+            @Parameter(name = "previsao", description = "Filtro para informar a previsão da tarefa.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "2021-12-31")),
+            @Parameter(name = "ambiente", description = "Filtro para informar o ID do ambiente.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", example = "1")),
+            @Parameter(name = "categoria", description = "Filtro para informar o ID da categoria.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", example = "1")),
+            @Parameter(name = "prioridade", description = "Filtro para informar a prioridade da tarefa.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "ALTA")),
+            @Parameter(name = "status", description = "Filtro para informar o status da tarefa.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "PENDENTE")),
+            @Parameter(name = "arquivado", description = "Filtro para informar se a tarefa está arquivada.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "boolean", example = "false"))
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<TarefaResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
-        Page<TarefaEntity> retorno = tarefaService.getAll(pageable);
+    public ResponseEntity<Page<TarefaResponse>> getAll(
+            @RequestParam(required = false) String titulo,
+            @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) Timestamp previsao,
+            @RequestParam(required = false) Long ambiente,
+            @RequestParam(required = false) Long categoria,
+            @RequestParam(required = false) PrioridadeEnum prioridade,
+            @RequestParam(required = false) StatusTarefaEnum status,
+            @RequestParam(required = false, defaultValue = "false") Boolean arquivado,
+            @Parameter(hidden = true) Pageable pageable
+    ) {
+        Map<String, String> filtros = new HashMap<>();
+        if (titulo != null ) {
+            filtros.put("titulo", titulo);
+        }
+        if (descricao != null ) {
+            filtros.put("descricao", descricao);
+        }
+        if (previsao != null ) {
+            filtros.put("previsao", previsao.toString());
+        }
+        if (ambiente != null ) {
+            filtros.put("ambiente", ambiente.toString());
+        }
+        if (categoria != null ) {
+            filtros.put("categoria", categoria.toString());
+        }
+        if (prioridade != null ) {
+            filtros.put("prioridade", prioridade.toString());
+        }
+        if (status != null ) {
+            filtros.put("status", status.toString());
+        }
+        filtros.put("arquivado", arquivado.toString());
+
+        Page<TarefaEntity> retorno = tarefaService.getAll(pageable, filtros);
         Page<TarefaResponse> response = TarefaMapper.INSTANCE.toResponsePage(retorno);
 
         return ResponseEntity.ok(response);

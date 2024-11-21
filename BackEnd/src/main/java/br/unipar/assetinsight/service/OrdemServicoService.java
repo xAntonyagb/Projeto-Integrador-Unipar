@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -32,8 +33,8 @@ public class OrdemServicoService implements IService<OrdemServicoEntity> {
     }
 
     @Override
-    public Page<OrdemServicoEntity> getAll(Pageable pageable) {
-        Page<OrdemServicoEntity> ordensServico = ordemServicoRepository.findAll(pageable);
+    public Page<OrdemServicoEntity> getAll(Pageable pageable, Map<String, String> filtros) {
+        Page<OrdemServicoEntity> ordensServico = ordemServicoRepository.findAllWithFilters(pageable, filtros);
 
         if (ordensServico.isEmpty()) {
             throw new NotFoundException("ordemServico","Nenhuma ordem de serviço foi encontrada.");

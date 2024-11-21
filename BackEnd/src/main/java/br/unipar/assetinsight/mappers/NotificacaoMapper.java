@@ -1,8 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
-import br.unipar.assetinsight.dtos.responses.main.NotificacaoResponse;
+import br.unipar.assetinsight.dtos.responses.principal.NotificacaoResponse;
 import br.unipar.assetinsight.entities.NotificacaoEntity;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;

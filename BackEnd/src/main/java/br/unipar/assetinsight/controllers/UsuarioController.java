@@ -1,7 +1,8 @@
 package br.unipar.assetinsight.controllers;
 
-import br.unipar.assetinsight.dtos.responses.main.UsuarioResponse;
+import br.unipar.assetinsight.dtos.responses.principal.UsuarioResponse;
 import br.unipar.assetinsight.entities.UsuarioEntity;
+import br.unipar.assetinsight.enums.PermissoesEnum;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.UsuarioMapper;
 import br.unipar.assetinsight.service.UsuarioService;
@@ -21,6 +22,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -43,11 +47,35 @@ public class UsuarioController {
     @Parameters({
             @Parameter(name = "page", description = "Número da página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "0", example = "0")),
             @Parameter(name = "size", description = "Quantidade de registros por página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "10", example = "1")),
-            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc"))
+            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc")),
+            @Parameter(name = "username", description = "Filtro para informar o username do usuário.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "UNIPAR")),
+            @Parameter(name = "dtCriacao", description = "Filtro para informar a data de criação do usuário.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "2021-09-01")),
+            @Parameter(name = "lastLogin", description = "Filtro para informar a última data de login do usuário.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "2021-09-01")),
+            @Parameter(name = "permissao", description = "Filtro para informar a permissão do usuário.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "ADMINISTRADOR"))
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<UsuarioResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
-        Page<UsuarioEntity> retorno = service.getAll(pageable);
+    public ResponseEntity<Page<UsuarioResponse>> getAll(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) Timestamp dtCriacao,
+            @RequestParam(required = false) Timestamp lastLogin,
+            @RequestParam(required = false) PermissoesEnum permissao,
+            @Parameter(hidden = true) Pageable pageable
+    ) {
+        Map<String, String> filtros = new HashMap<>();
+        if (username != null ) {
+            filtros.put("username", username);
+        }
+        if (dtCriacao != null ) {
+            filtros.put("dtCriacao", dtCriacao.toString());
+        }
+        if (lastLogin != null ) {
+            filtros.put("lastLogin", lastLogin.toString());
+        }
+        if (permissao != null ) {
+            filtros.put("permissao", permissao.toString());
+        }
+
+        Page<UsuarioEntity> retorno = service.getAll(pageable, filtros);
         Page<UsuarioResponse> response = UsuarioMapper.INSTANCE.toResponsePage(retorno);
 
         return ResponseEntity.ok(response);

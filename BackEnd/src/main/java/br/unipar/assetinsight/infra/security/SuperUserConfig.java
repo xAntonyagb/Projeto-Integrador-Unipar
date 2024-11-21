@@ -1,18 +1,14 @@
 package br.unipar.assetinsight.infra.security;
 
 import br.unipar.assetinsight.dtos.requests.CadastroRequest;
-import br.unipar.assetinsight.entities.RolesEntity;
-import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.enums.PermissoesEnum;
 import br.unipar.assetinsight.exceptions.ValidationException;
-import br.unipar.assetinsight.repositories.UsuarioRepository;
 import br.unipar.assetinsight.service.AuthenticationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.logging.Logger;

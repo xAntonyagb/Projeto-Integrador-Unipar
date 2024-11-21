@@ -1,15 +1,11 @@
 package br.unipar.assetinsight.controllers;
 
-import br.unipar.assetinsight.dtos.requests.BlocoRequest;
 import br.unipar.assetinsight.dtos.requests.PatrimonioRequest;
-import br.unipar.assetinsight.dtos.responses.main.BlocoResponse;
-import br.unipar.assetinsight.dtos.responses.main.PatrimonioResponse;
-import br.unipar.assetinsight.entities.BlocoEntity;
+import br.unipar.assetinsight.dtos.responses.principal.BlocoResponse;
+import br.unipar.assetinsight.dtos.responses.principal.PatrimonioResponse;
 import br.unipar.assetinsight.entities.PatrimonioEntity;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
-import br.unipar.assetinsight.mappers.BlocoMapper;
 import br.unipar.assetinsight.mappers.PatrimonioMapper;
-import br.unipar.assetinsight.service.BlocoService;
 import br.unipar.assetinsight.service.PatrimonioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -52,11 +50,25 @@ public class PatrimonioController {
     @Parameters({
             @Parameter(name = "page", description = "Número da página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "0", example = "0")),
             @Parameter(name = "size", description = "Quantidade de registros por página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "10", example = "1")),
-            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc"))
+            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc")),
+            @Parameter(name = "descricao", description = "Filtro para informar a descrição do patrimônio.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "Computador")),
+            @Parameter(name = "ambiente", description = "Filtro para informar o ID do ambiente.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", example = "1"))
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<PatrimonioResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
-        Page<PatrimonioEntity> retorno = service.getAll(pageable);
+    public ResponseEntity<Page<PatrimonioResponse>> getAll(
+            @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) Long ambiente,
+            @Parameter(hidden = true) Pageable pageable
+    ) {
+        Map<String, String> filtros = new HashMap<>();
+        if (descricao != null ) {
+            filtros.put("descricao", descricao);
+        }
+        if (ambiente != null ) {
+            filtros.put("ambiente", ambiente.toString());
+        }
+
+        Page<PatrimonioEntity> retorno = service.getAll(pageable, filtros);
         Page<PatrimonioResponse> response = PatrimonioMapper.INSTANCE.toResponsePage(retorno);
 
         return ResponseEntity.ok(response);

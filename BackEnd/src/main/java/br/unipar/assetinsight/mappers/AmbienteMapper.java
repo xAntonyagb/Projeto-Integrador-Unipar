@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.AmbienteRequest;
-import br.unipar.assetinsight.dtos.responses.main.AmbienteResponse;
+import br.unipar.assetinsight.dtos.responses.principal.AmbienteResponse;
 import br.unipar.assetinsight.dtos.responses.simple.AmbienteSimpleResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.utils.DataUtils;
@@ -13,7 +13,6 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
-import java.util.Collections;
 import java.util.List;
 
 @Mapper(uses = {BlocoMapper.class, UsuarioMapper.class, PatrimonioMapper.class})

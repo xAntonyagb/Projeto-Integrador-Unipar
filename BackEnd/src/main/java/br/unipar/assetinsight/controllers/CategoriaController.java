@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.controllers;
 
 import br.unipar.assetinsight.dtos.requests.CategoriaRequest;
-import br.unipar.assetinsight.dtos.responses.main.CategoriaResponse;
+import br.unipar.assetinsight.dtos.responses.principal.CategoriaResponse;
 import br.unipar.assetinsight.entities.CategoriaEntity;
 import br.unipar.assetinsight.exceptions.handler.ApiExceptionDTO;
 import br.unipar.assetinsight.mappers.CategoriaMapper;
@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -47,11 +49,20 @@ public class CategoriaController {
     @Parameters({
             @Parameter(name = "page", description = "Número da página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "0", example = "0")),
             @Parameter(name = "size", description = "Quantidade de registros por página.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "integer", defaultValue = "10", example = "1")),
-            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc"))
+            @Parameter(name = "sort", description = "Ordenação dos registros e exibição.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "property,asc")),
+            @Parameter(name = "descricao", description = "Filtro para informar a descrição da categoria.", in = ParameterIn.QUERY, required = false, schema = @Schema(type = "string", example = "Categoria 01"))
     })
     @GetMapping("/all")
-    public ResponseEntity<Page<CategoriaResponse>> getAll(@Parameter(hidden = true) Pageable pageable) {
-        Page<CategoriaEntity> retorno = service.getAll(pageable);
+    public ResponseEntity<Page<CategoriaResponse>> getAll(
+            @RequestParam(required = false) String descricao,
+            @Parameter(hidden = true) Pageable pageable
+    ) {
+        Map<String, String> filtros = new HashMap<>();
+        if (descricao != null && !descricao.isEmpty()) {
+            filtros.put("descricao", descricao);
+        }
+
+        Page<CategoriaEntity> retorno = service.getAll(pageable, filtros);
         Page<CategoriaResponse> response = CategoriaMapper.INSTANCE.toResponsePage(retorno);
 
         return ResponseEntity.ok(response);

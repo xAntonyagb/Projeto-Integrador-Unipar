@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.TarefaRequest;
-import br.unipar.assetinsight.dtos.responses.main.TarefaResponse;
+import br.unipar.assetinsight.dtos.responses.principal.TarefaResponse;
 import br.unipar.assetinsight.entities.TarefaEntity;
 import br.unipar.assetinsight.utils.DataUtils;
 import org.mapstruct.AfterMapping;

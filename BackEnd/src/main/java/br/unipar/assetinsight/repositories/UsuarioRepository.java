@@ -2,6 +2,7 @@ package br.unipar.assetinsight.repositories;
 
 import br.unipar.assetinsight.entities.RolesEntity;
 import br.unipar.assetinsight.entities.UsuarioEntity;
+import br.unipar.assetinsight.repositories.custom.interfaces.ICustomRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UsuarioRepository extends JpaRepository<UsuarioEntity, UUID> {
+public interface UsuarioRepository extends JpaRepository<UsuarioEntity, UUID>, ICustomRepository<UsuarioEntity> {
 
     Optional<List<UsuarioEntity>> findByListRolesContaining(RolesEntity rolesEntity);
 

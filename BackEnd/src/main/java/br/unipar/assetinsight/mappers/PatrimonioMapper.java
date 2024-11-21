@@ -1,7 +1,7 @@
 package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.PatrimonioRequest;
-import br.unipar.assetinsight.dtos.responses.main.PatrimonioResponse;
+import br.unipar.assetinsight.dtos.responses.principal.PatrimonioResponse;
 import br.unipar.assetinsight.dtos.responses.simple.AmbienteSimpleResponse;
 import br.unipar.assetinsight.dtos.responses.simple.PatrimonioSimpleResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;

@@ -2,7 +2,7 @@ package br.unipar.assetinsight.service;
 
 import br.unipar.assetinsight.dtos.requests.CadastroRequest;
 import br.unipar.assetinsight.dtos.requests.LoginRequest;
-import br.unipar.assetinsight.dtos.responses.main.LoginResponse;
+import br.unipar.assetinsight.dtos.responses.principal.LoginResponse;
 import br.unipar.assetinsight.entities.RolesEntity;
 import br.unipar.assetinsight.entities.UsuarioEntity;
 import br.unipar.assetinsight.exceptions.ValidationException;

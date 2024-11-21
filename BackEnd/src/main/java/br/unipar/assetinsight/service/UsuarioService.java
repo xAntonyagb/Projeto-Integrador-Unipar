@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -20,8 +21,8 @@ public class UsuarioService {
                 .orElseThrow( () -> new NotFoundException("username", "Usuário não encontrado"));
     }
 
-    public Page<UsuarioEntity> getAll(Pageable pageable) {
-        Page<UsuarioEntity> usuarios = usuarioRepository.findAll(pageable);
+    public Page<UsuarioEntity> getAll(Pageable pageable, Map<String, String> filtros) {
+        Page<UsuarioEntity> usuarios = usuarioRepository.findAllWithFilters(pageable, filtros);
 
         if (usuarios.isEmpty()) {
             throw new NotFoundException("username", "Nenhum usuário encontrado");
