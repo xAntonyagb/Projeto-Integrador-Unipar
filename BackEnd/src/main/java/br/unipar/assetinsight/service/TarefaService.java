@@ -23,8 +23,6 @@ import java.util.*;
 @AllArgsConstructor
 public class TarefaService implements IService<TarefaEntity> {
     private final TarefaRepository tarefaRepository;
-    private final AmbienteRepository ambienteRepository;
-    private final CategoriaRepository categoriaRepository;
     private final SecurityService securityService;
     private final AmbienteService ambienteService;
     private final CategoriaService categoriaService;
