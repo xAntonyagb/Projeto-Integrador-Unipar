@@ -4,6 +4,8 @@ package br.unipar.assetinsight.mappers;
 import br.unipar.assetinsight.dtos.requests.CategoriaRequest;
 import br.unipar.assetinsight.dtos.responses.main.CategoriaResponse;
 import br.unipar.assetinsight.entities.CategoriaEntity;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -16,6 +18,11 @@ import java.util.List;
 @Mapper(uses = UsuarioMapper.class)
 public interface CategoriaMapper {
     CategoriaMapper INSTANCE = Mappers.getMapper(CategoriaMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(CategoriaRequest request, @MappingTarget CategoriaEntity entity) {
+        entity.setDtRecord(DataUtils.getNow());
+    }
 
     CategoriaEntity toEntity(CategoriaRequest request);
 

@@ -3,6 +3,8 @@ package br.unipar.assetinsight.mappers;
 import br.unipar.assetinsight.dtos.requests.ArquivadoRequest;
 import br.unipar.assetinsight.dtos.responses.main.ArquivadoResponse;
 import br.unipar.assetinsight.entities.ArquivadoEntity;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -15,6 +17,11 @@ import java.util.List;
 @Mapper(uses = {OrdemServicoMapper.class, TarefaMapper.class})
 public interface ArquivadosMapper {
     ArquivadosMapper INSTANCE = Mappers.getMapper(ArquivadosMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(ArquivadoRequest request, @MappingTarget ArquivadoEntity entity) {
+        entity.setDtExcluir(DataUtils.getNow());
+    }
 
     @Mapping(source = "ordemServico", target = "ordemServicoEntity")
     @Mapping(source = "tarefa", target = "tarefaEntity")

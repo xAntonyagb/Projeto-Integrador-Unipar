@@ -3,6 +3,8 @@ package br.unipar.assetinsight.mappers;
 import br.unipar.assetinsight.dtos.requests.BlocoRequest;
 import br.unipar.assetinsight.dtos.responses.main.BlocoResponse;
 import br.unipar.assetinsight.entities.BlocoEntity;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -15,6 +17,11 @@ import java.util.List;
 @Mapper(uses = UsuarioMapper.class)
 public interface BlocoMapper {
     BlocoMapper INSTANCE = Mappers.getMapper(BlocoMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(BlocoRequest request, @MappingTarget BlocoEntity entity) {
+        entity.setDtRecord(DataUtils.getNow());
+    }
 
     BlocoEntity toEntity(BlocoRequest request);
 

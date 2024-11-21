@@ -2,6 +2,8 @@ package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.responses.main.UsuarioResponse;
 import br.unipar.assetinsight.entities.UsuarioEntity;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -14,6 +16,11 @@ import java.util.List;
 @Mapper(uses = RoleMapper.class)
 public interface UsuarioMapper {
     UsuarioMapper INSTANCE = Mappers.getMapper(UsuarioMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(UsuarioResponse request, @MappingTarget UsuarioEntity entity) {
+        entity.setDtRecord(DataUtils.getNow());
+    }
 
     @Mapping(target = "listRoles", source = "permissoes")
     @Mapping(target = "dtRecord", source = "dtCriacao")

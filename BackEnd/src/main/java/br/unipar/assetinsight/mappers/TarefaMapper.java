@@ -3,6 +3,8 @@ package br.unipar.assetinsight.mappers;
 import br.unipar.assetinsight.dtos.requests.TarefaRequest;
 import br.unipar.assetinsight.dtos.responses.main.TarefaResponse;
 import br.unipar.assetinsight.entities.TarefaEntity;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -15,6 +17,11 @@ import java.util.List;
 @Mapper(uses = {CategoriaMapper.class, AmbienteMapper.class, UsuarioMapper.class})
 public interface TarefaMapper {
     TarefaMapper INSTANCE = Mappers.getMapper(TarefaMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(TarefaRequest request, @MappingTarget TarefaEntity entity) {
+        entity.setDtRecord(DataUtils.getNow());
+    }
 
     @Mapping(source = "categoria", target = "categoriaEntity")
     @Mapping(source = "ambiente", target = "ambienteEntity")

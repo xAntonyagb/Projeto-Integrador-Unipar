@@ -6,10 +6,8 @@ import br.unipar.assetinsight.dtos.responses.simple.AmbienteSimpleResponse;
 import br.unipar.assetinsight.dtos.responses.simple.PatrimonioSimpleResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.entities.PatrimonioEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,6 +19,11 @@ import java.util.stream.Collectors;
 @Mapper(uses = UsuarioMapper.class)
 public interface PatrimonioMapper {
     PatrimonioMapper INSTANCE = Mappers.getMapper(PatrimonioMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(PatrimonioRequest request, @MappingTarget PatrimonioEntity entity) {
+        entity.setDtRecord(DataUtils.getNow());
+    }
 
     @Mapping(source = "patrimonio", target = "id")
     @Mapping(source = "ambiente", target = "ambienteEntity")
@@ -73,6 +76,8 @@ public interface PatrimonioMapper {
         List<PatrimonioResponse> responses = toResponseList(entities);
         return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
     }
+
+    /* Feche os olhos, a partir daq é só dor, tristeza e go horse */
 
     default PatrimonioEntity mapLongToEntity(Long id) {
         if (id == null) {

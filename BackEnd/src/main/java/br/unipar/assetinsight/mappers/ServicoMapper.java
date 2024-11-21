@@ -3,6 +3,8 @@ package br.unipar.assetinsight.mappers;
 import br.unipar.assetinsight.dtos.requests.ServicoRequest;
 import br.unipar.assetinsight.dtos.responses.main.ServicoRespose;
 import br.unipar.assetinsight.entities.ServicoEntity;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -15,6 +17,11 @@ import java.util.List;
 @Mapper(uses = {CategoriaMapper.class, AmbienteMapper.class, UsuarioMapper.class, PatrimonioMapper.class})
 public interface ServicoMapper {
     ServicoMapper INSTANCE = Mappers.getMapper(ServicoMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(ServicoRequest request, @MappingTarget ServicoEntity entity) {
+        entity.setDtRecord(DataUtils.getNow());
+    }
 
     ServicoEntity toEntity(ServicoRequest request);
 
@@ -32,6 +39,7 @@ public interface ServicoMapper {
     @Mapping(source = "patrimonioEntity", target = "patrimonio")
     ServicoRequest toRequest(ServicoEntity entity);
 
+    //TODO: Ajustar os mappers pra ter os SimpleReponses seprados em outra package -Antony
     //ServicoRequest toRequest(ServicoRespose request);
 
 
@@ -43,7 +51,8 @@ public interface ServicoMapper {
     @Mapping(source = "patrimonioEntity", target = "patrimonio")
     ServicoRespose toResponse(ServicoEntity entity);
 
-    ServicoRespose toResponse(ServicoRequest request);
+    //TODO: Ajustar os mappers pra ter os SimpleReponses seprados em outra package -Antony
+    //ServicoRespose toResponse(ServicoRequest request);
 
 
     ServicoEntity updateEntity(ServicoRequest request, @MappingTarget ServicoEntity entity);

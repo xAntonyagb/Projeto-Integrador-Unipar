@@ -4,6 +4,8 @@ import br.unipar.assetinsight.dtos.requests.AmbienteRequest;
 import br.unipar.assetinsight.dtos.responses.main.AmbienteResponse;
 import br.unipar.assetinsight.dtos.responses.simple.AmbienteSimpleResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -17,6 +19,11 @@ import java.util.List;
 @Mapper(uses = {BlocoMapper.class, UsuarioMapper.class, PatrimonioMapper.class})
 public interface AmbienteMapper {
     AmbienteMapper INSTANCE = Mappers.getMapper(AmbienteMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(AmbienteRequest request, @MappingTarget AmbienteEntity entity) {
+        entity.setDtRecord(DataUtils.getNow());
+    }
 
     @Mapping(source = "bloco", target = "blocoEntity")
     @Mapping(source = "patrimonios", target = "listPatrimonioEntities")

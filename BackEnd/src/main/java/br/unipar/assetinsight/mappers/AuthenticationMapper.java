@@ -5,8 +5,11 @@ import br.unipar.assetinsight.dtos.requests.LoginRequest;
 import br.unipar.assetinsight.dtos.responses.main.CadastroResponse;
 import br.unipar.assetinsight.dtos.responses.main.LoginResponse;
 import br.unipar.assetinsight.entities.UsuarioEntity;
+import br.unipar.assetinsight.utils.DataUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.sql.Timestamp;
@@ -16,6 +19,10 @@ import java.time.Instant;
 public interface AuthenticationMapper {
     AuthenticationMapper INSTANCE = Mappers.getMapper(AuthenticationMapper.class);
 
+    @AfterMapping
+    default void setDtRecord(CadastroRequest cadastroRequest, @MappingTarget UsuarioEntity usuarioEntity) {
+        usuarioEntity.setDtRecord(DataUtils.getNow());
+    }
 
     UsuarioEntity toUsuarioEntity(CadastroRequest cadastroRequest);
 

@@ -4,6 +4,7 @@ import br.unipar.assetinsight.dtos.requests.OrdemServicoRequest;
 import br.unipar.assetinsight.dtos.responses.main.OrdemServicoResponse;
 import br.unipar.assetinsight.entities.OrdemServicoEntity;
 import br.unipar.assetinsight.entities.ServicoEntity;
+import br.unipar.assetinsight.utils.DataUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,11 @@ import java.util.List;
 @Mapper(uses = {UsuarioMapper.class, ServicoMapper.class})
 public interface OrdemServicoMapper {
     OrdemServicoMapper INSTANCE = Mappers.getMapper(OrdemServicoMapper.class);
+
+    @AfterMapping
+    default void setDtRecord(OrdemServicoRequest request, @MappingTarget OrdemServicoEntity entity) {
+        entity.setDtRecord(DataUtils.getNow());
+    }
 
     @Mapping(source = "servicos", target = "listServicoEntities")
     OrdemServicoEntity toEntity(OrdemServicoRequest request);
