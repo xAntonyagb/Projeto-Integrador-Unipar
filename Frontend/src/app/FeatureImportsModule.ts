@@ -17,7 +17,6 @@ import { AmbientesModule } from './ambientes/ambientes.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { TabBlocoModule } from './ambientes/tab-bloco/tab-bloco.module';
 import { TabAmbientesModule } from './ambientes/tab-ambientes/tab-ambientes.module';
-import { TabLancamentosModule } from './ambientes/tab-lancamentos/tab-lancamentos.module';
 import { MenuModule } from 'primeng/menu';
 import { MatSortModule } from '@angular/material/sort';
 import { OrdemDeServicoModule } from './ordem-de-servico/ordem-de-servico-module';
@@ -35,7 +34,13 @@ import {UsuariosModule} from "./usuarios/usuarios.module";
 import {ArquivadosModule} from "./arquivados/arquivados.module";
 import {PatrimonioModule} from "./patrimonio/patrimonio.module";
 import {DeletarAmbienteModule} from "./modals/Deletar/deletar-ambiente/deletar-ambiente.module";
-import {PesquisarPatrimonioModule} from "./patrimonio/pesquisar-patrimonio/pesquisar-patrimonio.module";
+import {PesquisarPatrimonioModule} from "./modals/Cadastro/cadastrar-ambiente/pesquisar-patrimonio/pesquisar-patrimonio.module";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {DialogModule} from "primeng/dialog";
+import {DropdownModule} from "primeng/dropdown";
+import {DividerModule} from "primeng/divider";
+import {EditarBlocoModule} from "./modals/Editar/editar-bloco/editar-bloco.module";
+import {EditarCategoriaModule} from "./modals/Editar/editar-categoria/editar-categoria.module";
 
 const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
   timeOut: 1100,
@@ -61,11 +66,14 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
         MatMenuModule,
         MatTableModule,
         MatSortModule,
+        MatPaginatorModule,
         MatButtonModule,
+        DialogModule,
+        DropdownModule,
+        DividerModule,
         ButtonModule,
         TabBlocoModule,
         TabAmbientesModule,
-        TabLancamentosModule,
         MenuModule,
         OrdemDeServicoModule,
         CadastrarOrdemModule,
@@ -82,6 +90,8 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
         PatrimonioModule,
         DeletarAmbienteModule,
         PesquisarPatrimonioModule,
+        EditarBlocoModule,
+        EditarCategoriaModule,
         toastrModule,
       ],
     exports: [
@@ -104,8 +114,8 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
       MatButtonModule,
       ButtonModule,
       TabBlocoModule,
+      AmbientesModule,
       TabAmbientesModule,
-      TabLancamentosModule,
       MenuModule,
       OrdemDeServicoModule,
       CadastrarOrdemModule,
@@ -122,5 +132,10 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
       PatrimonioModule,
       DeletarAmbienteModule,
       PesquisarPatrimonioModule,
+      DialogModule,
+      DropdownModule,
+      DividerModule,
+      EditarBlocoModule,
+      EditarCategoriaModule
     ],
 }) export class FeatureImportsModule {}

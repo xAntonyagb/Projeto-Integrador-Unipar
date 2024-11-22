@@ -8,10 +8,11 @@ import { AddCategoria } from '../../../dtos/responses/categoria.response';
   styleUrl: './cadastrar-categoria.component.scss'
 })
 export class CadastrarCategoriaComponent {
-  descricaoCategoria: string[] = [];  
-  descricao: string = '';          
+  descricaoCategoria: string[] = [];
+  id:number = 0;
+  descricao: string = '';
 
-  constructor(private categoriaService: CategoriaRequest) { 
+  constructor(private categoriaService: CategoriaRequest) {
     this.loadCategorias();
   }
   onSubmit( event: Event): void {
@@ -29,7 +30,7 @@ export class CadastrarCategoriaComponent {
   }
 
   adicionarCategoria() {
-    const categoria: AddCategoria = { descricao: this.descricao };
+    const categoria: AddCategoria = {id:this.id, descricao: this.descricao };
     this.categoriaService.setCategoria(categoria).subscribe(() => {
       this.descricao = '';
     });

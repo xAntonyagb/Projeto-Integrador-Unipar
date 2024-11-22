@@ -11,21 +11,23 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ArquivadosComponent} from "./arquivados.component";
 import {CadastrarCategoriaModule} from "../modals/Cadastro/cadastrar-categoria/cadastrar-categoria.module";
 import {MatTable, MatTableModule} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [ArquivadosComponent],
-  imports: [
-    FormsModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    MenuModule,
-    SidebarModule,
-    HeaderModule,
-    MatTableModule,
-  ],
+    imports: [
+        FormsModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        ButtonModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MenuModule,
+        SidebarModule,
+        HeaderModule,
+        MatTableModule,
+        MatPaginator,
+    ],
   exports: [ArquivadosComponent]
 }) export class ArquivadosModule {}

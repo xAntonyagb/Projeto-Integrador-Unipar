@@ -16,27 +16,16 @@ export class BlocoRequest {
   constructor(private http: HttpClient, private auth: AuthRequest) {}
 
   getBlocosData(): Observable<BlocoResponse[]>{
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
-    });
-
-    console.log(headers);
-    return this.http.get<BlocoResponse[]>(`${this.apiUrl}/bloco/all`, { headers });
+    return this.http.get<BlocoResponse[]>(`${this.apiUrl}/bloco/all`);
   }
   setBloco(bloco:AddBloco): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`,
-      'Content-Type': 'application/json'
-    });
-  
-    return this.http.post<AddBloco>(`${this.apiUrl}/bloco`, bloco, { headers });
+    return this.http.post<AddBloco>(`${this.apiUrl}/bloco`, bloco);
   }
-  
+
   deleteBloco(id: number): Observable<void> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
-    });
-  
-    return this.http.delete<void>(`${this.apiUrl}/bloco/${id}`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/bloco/${id}`);
+  }
+  updateBloco(id: number, bloco: AddBloco): Observable<any> {
+    return this.http.post<AddBloco>(`${this.apiUrl}/bloco?id=${id}`, bloco);
   }
 }

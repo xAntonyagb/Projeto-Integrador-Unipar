@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {BlocoResponse} from "../dtos/responses/bloco.response";
-import {CategoriaResponse} from "../dtos/responses/categoria.response";
+import {AddCategoria, CategoriaResponse} from "../dtos/responses/categoria.response";
 import {CategoriaRequest} from "../dtos/requests/categoria.request";
 
 @Component({
@@ -11,7 +10,10 @@ import {CategoriaRequest} from "../dtos/requests/categoria.request";
 })
 export class CategoriaComponent  implements OnInit {
   isModalOpen = false;
+  isEditModalOpen = false;
   dataSource = new MatTableDataSource<CategoriaResponse>([]);
+  categoriaParaEditar: AddCategoria | null = null;
+
   constructor(private categoria: CategoriaRequest) {}
 
   ngOnInit() {
@@ -24,9 +26,7 @@ export class CategoriaComponent  implements OnInit {
       this.dataSource.data = data;
     });
   }
-  atualizarLista() {
-    this.loadCategorias();
-  }
+
   extractContent(response: any): CategoriaResponse[] {
     return response.content || [];
   }
@@ -35,6 +35,24 @@ export class CategoriaComponent  implements OnInit {
   }
   closeModal() {
     this.isModalOpen = false;
+  }
+  atualizarLista() {
+    this.loadCategorias();
+  }
+  openEditModal(categoria: CategoriaResponse) {
+    this.categoriaParaEditar = this.convertCategoriaResponseToAddCategoria(categoria);
+    this.isEditModalOpen = true;
+  }
+  convertCategoriaResponseToAddCategoria(categoria: CategoriaResponse): AddCategoria {
+    return {
+      id: categoria.id,
+      descricao: categoria.descricao
+    };
+  }
+
+  closeEditModal() {
+    this.isEditModalOpen = false;
+    this.categoriaParaEditar = null;
   }
 
   calcularProgressoTarefas(categoria: CategoriaResponse): number {

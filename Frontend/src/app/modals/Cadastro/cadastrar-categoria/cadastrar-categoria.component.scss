@@ -1,4 +1,5 @@
 .overlay {
+  font-family:"Inter";
   position: fixed;
   top: 0;
   left: 0;
@@ -9,11 +10,12 @@
   justify-content: center;
   align-items: center;
   z-index: 1010;
-  color: #000;
+  color: #fff;
+  font-weight: bold;
 }
 .modal-container {
   background-color: white;
-  padding: 20px;
+  padding: 0;
   border-radius: 5px;
   width: 50%;
   max-width: 600px;
@@ -26,8 +28,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("/assets/HEADDER1.png");
+  background-size: cover;
+  background-position: center;
+}
+.modal-header a{
+  position:fixed;
+  display: flex;
+  left:43rem;
+  height: 3rem;
 }
 
-.modal-body {
-  margin-top: 20px;
+.body {
+  padding: 1rem;
+  margin-top: 0.8rem;
+
+  color: #000000;
+}
+.modal-footer {
+  margin-top:3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  border-radius: 20px;
 }

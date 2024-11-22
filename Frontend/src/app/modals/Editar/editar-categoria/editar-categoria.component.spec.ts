@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabLancamentosComponent } from './tab-lancamentos.component';
+import { EditarCategoriaComponent } from './editar-categoria.component';
 
-describe('TabLancamentosComponent', () => {
-  let component: TabLancamentosComponent;
-  let fixture: ComponentFixture<TabLancamentosComponent>;
+describe('EditarCategoriaComponent', () => {
+  let component: EditarCategoriaComponent;
+  let fixture: ComponentFixture<EditarCategoriaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TabLancamentosComponent]
+      declarations: [EditarCategoriaComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TabLancamentosComponent);
+    fixture = TestBed.createComponent(EditarCategoriaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

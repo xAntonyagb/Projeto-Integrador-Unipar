@@ -14,25 +14,15 @@ export class CategoriaRequest {
   constructor(private http: HttpClient, private auth: AuthRequest) {}
 
   getCategorias(): Observable<CategoriaResponse[]> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
-    });
-
-    return this.http.get<CategoriaResponse[]>(`${this.apiUrl}/categoria/all`, { headers });
+    return this.http.get<CategoriaResponse[]>(`${this.apiUrl}/categoria/all`);
   }
   setCategoria(categoria: AddCategoria): Observable<AddCategoria> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`,
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post<AddCategoria>(`${this.apiUrl}/categoria`, categoria, { headers });
+    return this.http.post<AddCategoria>(`${this.apiUrl}/categoria`, categoria);
   }
   deleteCategoria(id: number): Observable<void> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getCookie('acessToken')}`
-    });
-
-    return this.http.delete<void>(`${this.apiUrl}/categoria/delete/${id}`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/categoria/delete/${id}`);
+  }
+  updateCategoria(id: number, categoria: AddCategoria): Observable<any> {
+    return this.http.post<AddCategoria>(`${this.apiUrl}/categoria?id=${id}`, categoria);
   }
 }

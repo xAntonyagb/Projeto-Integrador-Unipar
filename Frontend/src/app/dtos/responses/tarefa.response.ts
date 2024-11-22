@@ -25,9 +25,9 @@ export interface TarefaResponse {
     ambiente: AmbienteResponse;
   }
   export enum StatusTarefa {
-    ABERTA = 1,
-    ATRASADA = 2,
-    CONCLUIDA = 3
+    ABERTA = 'Pendente',
+    ATRASADA = 'Atrasada',
+    CONCLUIDA = 'Concluída'
   }
   export function getStatusDescricao(status: StatusTarefa): string {
     switch (status) {

@@ -16,22 +16,30 @@ body{
 }
 
 .card {
-  background-color: #fff;
+  background-color: #EAEAEA;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
   padding: 16px;
   width: 300px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
+}
 .card-header {
-  border-bottom: 1px solid #ddd;
+  text-align: center;
+  background-color: #EAEAEA;
+  border-bottom: 1px solid #fff;
   margin-bottom: 8px;
   padding-bottom: 8px;
 }
 
 .card-body {
   padding-top: 8px;
+  background-color: #EAEAEA;
 }
 .novo-ambiente{
   background-color: white;

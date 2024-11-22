@@ -13,6 +13,7 @@ import {MatTableModule} from '@angular/material/table';
 import { CadastrarOrdemModule } from "../../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.module";
 import {CadastrarCategoriaModule} from "../../modals/Cadastro/cadastrar-categoria/cadastrar-categoria.module";
 import {CadastrarAmbienteModule} from "../../modals/Cadastro/cadastrar-ambiente/cadastrar-ambiente.module";
+import { MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations:[TabAmbientesComponent],
@@ -25,11 +26,13 @@ import {CadastrarAmbienteModule} from "../../modals/Cadastro/cadastrar-ambiente/
     MatButtonModule,
     MatTableModule,
     MatSortModule,
+    MatPaginatorModule,
     MenuModule,
     TableModule,
     CadastrarOrdemModule,
     CadastrarCategoriaModule,
-    CadastrarAmbienteModule,
+    CadastrarAmbienteModule
+
   ],
   exports:[TabAmbientesComponent]
   })

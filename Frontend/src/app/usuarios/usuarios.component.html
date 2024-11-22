@@ -22,7 +22,11 @@
       <div class="tab-content">
         <div class="header-container">
           <button class="large-button" (click)="openModal()">NOVO USUARIO</button>
-          <input class="form-control search-bar" type="text" placeholder="Pesquisar" formControlName="btpesquisar">
+          <input
+            class="form-control search-bar"
+            type="text"
+            placeholder="Pesquisar"
+          />
           <div class="menu-container">
             <p-menu #menu [popup]="true"></p-menu>
             <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" [rounded]="true" ></p-button>
@@ -33,13 +37,13 @@
         <div class="user-cards-container">
           <div class="card" *ngFor="let usuario of usuarios">
             <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <span class="badge badge-primary">{{ usuario.permissoes[0] }}</span>
+                <span>{{ usuario.permissoes[0] }}</span>
+              <div class="d-flex justify-content-start">
                 <div class="user-logo">
                   <img src="assets/admin.svg" alt="Logo do Usuário" class="user-logo-img">
                 </div>
-              </div>
               <h5 class="card-title">{{ usuario.username }}</h5>
+              </div>
               <hr>
               <p><strong>Criado em::</strong> {{ usuario.dtCriacao | date }}</p>
               <p><strong>Último Acesso:</strong> {{ usuario.lastLogin | date }}</p>

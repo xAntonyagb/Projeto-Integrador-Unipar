@@ -6,8 +6,8 @@ import { AmbienteRequest } from '../../../dtos/requests/ambiente.request';
 import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
 import { ModalRequest } from '../../../dtos/requests/modal.request';
 import { TarefaRequest } from '../../../dtos/requests/tarefa.request';
-import * as bootstrap from 'bootstrap';
 import {ToastrService} from "ngx-toastr";
+import {PaginacaoResponse} from "../../../dtos/responses/paginacao.response";
 
 @Component({
   selector: 'app-cadastrar-tarefa',
@@ -21,82 +21,77 @@ export class CadastrarTarefaComponent  implements OnInit {
   previsao = '';
   categoriaSelecionada = '';
   ambienteSelecionado = '';
-  statusSelecionado : StatusTarefa | undefined;
-  prioridade = '';
+  prioridade: string = '';
+  statusSelecionado : string= '';
   tarefasAdicionadas: AddTarefas[] = [];
-  ambientes: any[] = [];
+  ambientes: AmbienteResponse[] = [];
   categorias: CategoriaResponse[] = [];
   statusOptions = Object.values(StatusTarefa).filter(value => typeof value === 'number') as StatusTarefa[];
-
+  statusArray = Object.values(this.statusOptions);
 
   constructor(
     private ambiente: AmbienteRequest,
     private categoria : CategoriaRequest,
     private tarefa : TarefaRequest,
-    private modalRequest :ModalRequest,
     private toastr: ToastrService,
   ){}
-    ngOnInit() {
-      this.modalRequest.isOpen$.subscribe( isOpen =>{
-      this.isModalOpen = isOpen;
-      });
-      this.statusOptions = Object.values(StatusTarefa).filter(value => typeof value === 'number') as StatusTarefa[];// Definindo um valor inicial
-      console.log('Status Options:', this.statusOptions);
-      this.ambientes = [
-        {id: 1, descricao: 'Ambiente 1'},
-        {id: 2, descricao: 'Ambiente 2'},
-        {id: 3, descricao: 'Ambiente 3'},
-      ];
-      this.loadCategorias();
-    }
-    loadTarefas() {
-      this.tarefa.getTarefa().subscribe((data: AddTarefas[]) => {
-        this.tarefasAdicionadas = Array.isArray(data) ? data : [];
-      });
-    }
+
+  ngOnInit() {
+    this.loadAmbientes();
+    this.loadCategorias();
+  }
+
+  loadTarefas() {
+    const page = 1;
+    const size = 10;
+    this.tarefa.getTarefa(page, size).subscribe((data: PaginacaoResponse<AddTarefas>) => {
+      this.tarefasAdicionadas = data.content;
+    });
+  }
 
   loadCategorias() {
-    this.categoria.getCategorias().subscribe((data: CategoriaResponse[]) => {
-      console.log('Categorias carregadas:', data);
-      this.categorias = Array.isArray(data) ? data : [];
+    this.categoria.getCategorias().subscribe(data => {
+      this.categorias = data
     });
   }
 
   loadAmbientes() {
-    this.ambiente.getAmbientes().subscribe((data: AmbienteResponse[]) => {
+    const page = 1;
+    const size = 10;
+    this.ambiente.getAmbientes(page, size).subscribe((data: PaginacaoResponse<AmbienteResponse>) => {
       console.log('Ambientes carregados:', data);
-      this.ambientes = Array.isArray(data) ? data : [];
+      this.ambientes = Array.isArray(data.content) ? data.content : [];
     });
   }
 
-
   adicionarTarefa() {
-      const novaTarefa: AddTarefas = {
-        titulo: this.titulo,
-        descricao: this.descricao,
-        previsao: new Date(this.previsao),
-        prioridade: this.prioridade,
-        status: this.statusSelecionado as StatusTarefa,
-        categoria: this.categorias.find(cat => cat.id === +this.categoriaSelecionada) || {} as CategoriaResponse,
-        ambiente: this.ambientes.find(amb => amb.id === +this.ambienteSelecionado) || {} as any,
-
+    const novaTarefa: AddTarefas = {
+      titulo: this.titulo,
+      descricao: this.descricao,
+      previsao: new Date(this.previsao),
+      prioridade: this.prioridade,
+      status: this.statusSelecionado as StatusTarefa,
+      categoria: this.categorias.find(cat => cat.id === +this.categoriaSelecionada) || {} as CategoriaResponse,
+      ambiente: this.ambientes.find(amb => amb.id === +this.ambienteSelecionado) || {} as AmbienteResponse
     };
-    this.tarefasAdicionadas.push(novaTarefa);
-    this.closeModal();
-    this.toastr.success('Tarefa adicionada com sucesso!');
+
+    this.tarefa.setTarefa(novaTarefa).subscribe(() => {
+      this.toastr.success('Tarefa adicionada com sucesso!');
+      this.closeModal();
+    });
   }
+
   openModal() {
     this.isModalOpen = true;
-    const modalElement = document.getElementById('myModal');
-    if (modalElement) {
-      modalElement.classList.add('show');
-    }
   }
+  onSubmit( event: Event): void {
 
+  }
   @Output() close = new EventEmitter<void>();
   closeModal() {
-    this.isModalOpen = false;
+
     this.close.emit();
+    this.loadTarefas()
   }
   protected readonly getStatusDescricao = getStatusDescricao;
 }

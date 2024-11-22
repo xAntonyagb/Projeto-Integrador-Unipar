@@ -22,7 +22,6 @@
         <nav class="nav nav-tabs">
           <a class="nav-item nav-link" [routerLink]="['/ambientes']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="updatePageTitle(0)">Ambientes</a>
           <a class="nav-item nav-link" [routerLink]="['/ambientes/blocos']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="updatePageTitle(1)">Blocos</a>
-          <a class="nav-item nav-link" [routerLink]="['/ambientes/lancamentos']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="updatePageTitle(2)">Lançamentos</a>
         </nav>
         <router-outlet></router-outlet>
       </div>

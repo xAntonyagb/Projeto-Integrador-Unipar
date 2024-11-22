@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ApiResponse } from "../responses/api.response";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import {UsuarioResponse} from "../responses/usuario.response";
+import {map, Observable, of} from "rxjs";
+import {AddUsuario, UsuarioResponse} from "../responses/usuario.response";
+import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -12,10 +13,18 @@ import {UsuarioResponse} from "../responses/usuario.response";
 
     constructor(private http: HttpClient) {}
 
-    getUsuario(): Observable<UsuarioResponse[]> {
-      return this.http.get<UsuarioResponse[]>(`${this.apiUrl}/usuario/all`);
-    }
-    setUsuario(ordemData: UsuarioResponse[]): Observable<UsuarioResponse[]> {
-      return this.http.post<UsuarioResponse[]>(`${this.apiUrl}/auth/cadastrar`, ordemData);
+  getUsuario(): Observable<UsuarioResponse[]> {
+    return this.http.get<{ content: UsuarioResponse[] }>(`${this.apiUrl}/usuario/all`).pipe(
+      tap((response) => console.log('Dados paginados recebidos:', response)),
+
+      map((response) => response.content),
+      catchError((error) => {
+        console.error('Erro ao buscar usuários:', error);
+        return of([]);
+      })
+    );
+  }
+    setUsuario(usuarioData: AddUsuario): Observable<AddUsuario> {
+      return this.http.post<AddUsuario>(`${this.apiUrl}/auth/cadastrar`, usuarioData);
     }
   }

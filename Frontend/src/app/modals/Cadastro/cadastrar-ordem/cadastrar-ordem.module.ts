@@ -11,24 +11,30 @@ import { MenuModule } from "primeng/menu";
 import { TableModule } from "primeng/table";
 import { FormsModule } from "@angular/forms";
 import { CadastrarOrdemComponent } from "./cadastrar-ordem.component";
+import {DropdownModule} from "primeng/dropdown";
+import {DividerModule} from "primeng/divider";
+import {DialogModule} from "primeng/dialog";
 
 
 @NgModule({
     declarations:[CadastrarOrdemComponent],
-    imports:[
-        BrowserAnimationsModule,
-        FormsModule,
-        TabViewModule,
-        ButtonModule,
-        MatIconModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatTableModule,
-        MatSortModule,
-        MenuModule,
-        TableModule,
-        
-    ],
+  imports: [
+    BrowserAnimationsModule,
+    FormsModule,
+    TabViewModule,
+    ButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatTableModule,
+    MatSortModule,
+    MenuModule,
+    TableModule,
+    DropdownModule,
+    DividerModule,
+    DialogModule,
+  ],
+
     exports:[CadastrarOrdemComponent]
     })
     export class CadastrarOrdemModule{}

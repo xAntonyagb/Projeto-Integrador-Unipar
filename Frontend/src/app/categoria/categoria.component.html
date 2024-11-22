@@ -36,7 +36,7 @@
       </div>
       <div>
         <div class="card-container">
-          <div *ngFor="let categoria of dataSource.filteredData" class="card">
+          <div *ngFor="let categoria of dataSource.filteredData" class="card" (click)="openEditModal(categoria)">
             <div class="card-header">
               <h3>{{ categoria.descricao }}</h3>
             </div>
@@ -72,6 +72,7 @@
     </div>
 
 <app-cadastrar-categoria *ngIf="isModalOpen" (close)="closeModal()"></app-cadastrar-categoria>
+<app-editar-categoria *ngIf="isEditModalOpen" [categoriaParaEditar]="categoriaParaEditar" (close)="closeEditModal()" (categoriaEditada)="loadCategorias()"> </app-editar-categoria>
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

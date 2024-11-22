@@ -29,9 +29,14 @@ export class UsuariosComponent implements OnInit {
     this.carregarUsuarios()
   }
   carregarUsuarios(): void {
-    this.usuarioRequest.getUsuario().subscribe((response) => {
-      console.log(response);
-      this.usuarios = response;
-    });
+    this.usuarioRequest.getUsuario().subscribe(
+      (usuarios) => {
+        console.log('Usuários carregados:', usuarios);
+        this.usuarios = usuarios;
+      },
+      (error) => {
+        console.error('Erro ao carregar usuários:', error);
+      }
+    );
   }
 }

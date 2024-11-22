@@ -22,41 +22,42 @@
             <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" [rounded]="true" ></p-button>
           </div>
         </div>
-        <p class="cinza ">Mostrando todos os registros</p>
+        <p class="cinza ">Todos os registros são deletados automáticamente depois de 60 dias.</p>
+
         <hr>
         <div class="table-container">
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
             <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef>ID</th>
-              <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+              <th mat-header-cell *matHeaderCellDef class="col-id">ID</th>
+              <td mat-cell *matCellDef="let element" class="col-id">{{ element.id }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="tipo">
-              <th mat-header-cell *matHeaderCellDef>Tipo</th>
-              <td mat-cell *matCellDef="let element">{{ element.tipo }}</td>
+            <ng-container  matColumnDef="tipo">
+              <th mat-header-cell *matHeaderCellDef class="col-tipo">Tipo</th>
+              <td mat-cell *matCellDef="let element" class="col-tipo">{{ element.tipo }}</td>
             </ng-container>
 
             <ng-container matColumnDef="descricao">
-              <th mat-header-cell *matHeaderCellDef>Descrição</th>
-              <td mat-cell *matCellDef="let element">
+              <th mat-header-cell *matHeaderCellDef class="col-descricao">Descrição</th>
+              <td mat-cell *matCellDef="let element" class="col-descricao">
                 {{ element.ordemServico?.descricao || element.tarefa?.descricao || 'N/A' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="dtArquivado">
-              <th mat-header-cell *matHeaderCellDef>Data Exclusão</th>
-              <td mat-cell *matCellDef="let element">{{ element.dtArquivado | date }}</td>
+              <th mat-header-cell *matHeaderCellDef class="col-dtArquivado">Data Exclusão</th>
+              <td mat-cell *matCellDef="let element" class="col-dtArquivado" >{{ element.dtArquivado | date: 'dd/MM/yyyy' }}</td>
             </ng-container>
 
             <ng-container matColumnDef="dtExcluir">
-              <th mat-header-cell *matHeaderCellDef>Excluir em</th>
-              <td mat-cell *matCellDef="let element">{{ element.dtExcluir | date }}</td>
+              <th mat-header-cell *matHeaderCellDef class="col-dtExcluir">Excluir em</th>
+              <td mat-cell *matCellDef="let element" class="col-dtExcluir">{{ calcularDiasRestantes(element.dtExcluir, element.dtArquivado) }} dias</td>
             </ng-container>
 
             <ng-container matColumnDef="excluir">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
+              <th mat-header-cell *matHeaderCellDef class="col-excluir"></th>
+              <td mat-cell *matCellDef="let element" class="col-excluir">
                 <button mat-button class="action-button" (click)="excluirArquivado(element.id)">
                   <img src="assets/Vector.svg" alt="Excluir" />
                   <span>Excluir</span>
@@ -71,6 +72,15 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+          <div class="pagination-container">
+            <mat-paginator
+              [length]="totalItems"
+              [pageSize]="pageSize"
+              (page)="onPageChange($event)"
+              [showFirstLastButtons]="true"
+            >
+            </mat-paginator>
+          </div>
         </div>
       </div>
 

@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TabViewModule } from 'primeng/tabview';
 import { TabAmbientesModule } from "./tab-ambientes/tab-ambientes.module";
 import { TabBlocoModule } from "./tab-bloco/tab-bloco.module";
-import { TabLancamentosModule } from "./tab-lancamentos/tab-lancamentos.module";
 import { ButtonModule } from 'primeng/button';
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
@@ -24,7 +23,6 @@ imports:[
   TabViewModule,
   TabAmbientesModule,
   TabBlocoModule,
-  TabLancamentosModule,
   ButtonModule,
   MatIconModule,
   MatMenuModule,

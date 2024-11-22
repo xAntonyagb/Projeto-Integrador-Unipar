@@ -5,9 +5,7 @@ import { HeaderModule } from "../header/header.module";
 import { MatTabsModule } from "@angular/material/tabs";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TabViewModule } from "primeng/tabview";
-import { TabAmbientesModule } from "../ambientes/tab-ambientes/tab-ambientes.module";
 import { TabBlocoModule } from "../ambientes/tab-bloco/tab-bloco.module";
-import { TabLancamentosModule } from "../ambientes/tab-lancamentos/tab-lancamentos.module";
 import { ButtonModule } from "primeng/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
@@ -15,24 +13,33 @@ import { MatButtonModule } from "@angular/material/button";
 import { MenuModule } from "primeng/menu";
 import { TabOrdemDeServicoModule } from "./tab-ordem-de-servico/tab-ordem-de-servico.module";
 import { CadastrarOrdemModule } from "../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.module";
+import {FormsModule} from "@angular/forms";
+import {DropdownModule} from "primeng/dropdown";
+import {DividerModule} from "primeng/divider";
+import {DialogModule} from "primeng/dialog";
+import {RouterOutlet} from "@angular/router";
 
 @NgModule({
   declarations: [OrdemDeServicoComponent],
   imports: [
-    HeaderModule,
+  HeaderModule,
   SidebarModule,
   MatTabsModule,
   BrowserAnimationsModule,
+  DropdownModule,
+  DividerModule,
+  DialogModule,
+  FormsModule,
   TabViewModule,
   TabBlocoModule,
-  TabLancamentosModule,
   ButtonModule,
   MatIconModule,
   MatMenuModule,
   MatButtonModule,
   MenuModule,
-  TabOrdemDeServicoModule, 
-  CadastrarOrdemModule
+  RouterOutlet,
+  TabOrdemDeServicoModule,
+  CadastrarOrdemModule,
 ],
   exports: [OrdemDeServicoComponent]
 })

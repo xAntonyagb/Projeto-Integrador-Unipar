@@ -4,10 +4,9 @@ import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
 import { CategoriaResponse } from '../../../dtos/responses/categoria.response';
 import { ServicoResponse } from '../../../dtos/responses/servico.response';
 import { OrdemRequest } from '../../../dtos/requests/ordem.request';
-import { ModalRequest } from '../../../dtos/requests/modal.request';
 import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
 import { ToastrService } from 'ngx-toastr';
-import { BlocoResponse } from '../../../dtos/responses/bloco.response';
+import { BlocoResponse} from '../../../dtos/responses/bloco.response';
 import {Subject} from "rxjs";
 
 @Component({
@@ -16,15 +15,16 @@ import {Subject} from "rxjs";
   styleUrl: './cadastrar-ordem.component.scss'
 })
 export class CadastrarOrdemComponent implements OnInit {
-  isModalOpen = true;
+  @Output() close = new EventEmitter<void>();
+
+  isModalOpen = false;
   descricaoOrdem = '';
   data = '';
-  subtotal = 0;
   bloco: BlocoResponse[] = [];
   servicosAdicionados: ServicoResponse[] = [];
-  ambientesSelecionados: any[] = [];
-  categoriasSelecionadas: any[] = [];
-  private destroy$ = new Subject<void>();
+  ambientesSelecionados: AmbienteResponse[] = [];
+  categoriasSelecionadas: CategoriaResponse[] = [];
+
 
   novoServico: {
     patrimonio: string,
@@ -48,31 +48,40 @@ export class CadastrarOrdemComponent implements OnInit {
     private ambiente: AmbienteRequest,
     private categoria: CategoriaRequest,
     private ordem: OrdemRequest,
-    private modalRequest: ModalRequest,
     private toastr: ToastrService,
   ) {
   }
 
   ngOnInit() {
-    this.modalRequest.isOpen$.subscribe(isOpen => {
-      this.isModalOpen = isOpen;
-      this.ambientesSelecionados = [
-        { id: 1, descricao: 'Ambiente 1' },
-        { id: 2, descricao: 'Ambiente 2' },
-      ];
     this.loadCategorias();
     this.loadAmbientes();
-    });
+  }
+
+  guardarOrdem() {
+    if (!this.ambientesSelecionados.length) {
+      this.toastr.warning('Selecione pelo menos um ambiente!');
+      return;
+    }
+
+    if (!this.servicosAdicionados.length) {
+      this.toastr.warning('Adicione pelo menos um serviço!');
+      return;
+    }
+
+    const ordemData = {
+      ambientes: this.ambientesSelecionados,
+      servicos: this.servicosAdicionados,
+      total: this.total
+    };
+    this.toastr.success('Ordem cadastrada com sucesso!');
   }
 
   loadAmbientes() {
-    this.ambiente.getAmbientes().subscribe({
+    this.ambiente.getAmbientes(0, 10).subscribe({
       next: (data: any) => {
-        console.log('Ambientes retornados:', data);
-        this.ambientesSelecionados = data.content || []; // Extraia apenas o conteúdo
+        this.ambientesSelecionados = data.content || [];
       },
       error: (error) => {
-        console.error('Erro ao carregar ambientes:', error);
         this.toastr.error('Erro ao carregar ambientes');
       }
     });
@@ -81,11 +90,9 @@ export class CadastrarOrdemComponent implements OnInit {
   loadCategorias() {
     this.categoria.getCategorias().subscribe({
       next: (data: any) => {
-        console.log('Categorias retornadas:', data);
-        this.categoriasSelecionadas = data.content || []; // Extraia apenas o conteúdo
+        this.categoriasSelecionadas = data.content || [];
       },
-      error: (error) => {
-        console.error('Erro ao carregar categorias:', error);
+      error: () => {
         this.toastr.error('Erro ao carregar categorias');
       }
     });
@@ -117,60 +124,35 @@ export class CadastrarOrdemComponent implements OnInit {
       ambienteSelecionado: '',
     };
   }
-
-  removerUltimoAmbiente() {
-    if (this.ambientesSelecionados.length > 1) {
-      const ambienteRemovido = this.ambientesSelecionados.pop();
-      this.servicosAdicionados = this.servicosAdicionados.filter(servico => servico.ambiente.id !== ambienteRemovido?.id);
-      this.calcularTotal();
-    } else {
-      this.servicosAdicionados = [];
-      this.calcularTotal();
-    }
-  }
-
   adicionarNovoAmbiente() {
-    const novoAmbiente: AmbienteResponse = {
-      id: this.ambientesSelecionados.length + 1,
-      descricao: `Ambiente ${this.ambientesSelecionados.length + 1}`,
-      bloco: this.bloco[0],
-      qtdPatrimonios: 0,
-      servicos: []
-    };
-    this.ambientesSelecionados.push(novoAmbiente);
+    this.ambientesSelecionados.push({});
   }
 
   calcularTotal() {
     this.total = this.servicosAdicionados.reduce((acc, cur) => acc + cur.valorTotal, 0);
   }
 
-  calcularSubtotal() {
-    this.subtotal = this.novoServico.quantidade * this.novoServico.valorNumerico;
-    this.calcularTotal();
-  }
-
   guardarAmbiente() {
-    const ordemData = {
+    const ordem = {
       descricao: this.descricaoOrdem,
       data: this.data,
       servicos: this.servicosAdicionados,
       total: this.total,
     };
 
-    this.ordem.setOrdensServico(ordemData).subscribe({
+    this.ordem.setOrdensServico(ordem).subscribe({
       next: () => {
-        this.toastr.success('Ordem Adicionada Com Sucesso', 'Cadastro Concluído');
+        this.toastr.success('Ordem cadastrada com sucesso!');
         this.closeModal();
       },
-      error: error => {
-        this.toastr.error('Ocorreu Um Erro Ao Cadastrar Sua Ordem', 'Erro ao Cadastrar');
-        console.error('Erro ao cadastrar ordem de serviço:', error);
+      error: () => {
+        this.toastr.error('Erro ao cadastrar ordem');
       }
     });
   }
 
-  @Output() close = new EventEmitter<void>();
   closeModal() {
+    this.isModalOpen = false;
     this.close.emit();
   }
 
@@ -180,26 +162,23 @@ export class CadastrarOrdemComponent implements OnInit {
   }
 
   onQuantidadeChange(event: any, index: number) {
-    const valor = Number(event.target.value);
-    if (valor >= 0) {
-      this.servicosAdicionados[index].quantidade = valor;
-      this.calcularSubtotal();
+    const quantidade = Number(event.target.value);
+    if (quantidade >= 0) {
+      this.servicosAdicionados[index].quantidade = quantidade;
+      this.recalcularSubtotal(index);
     }
   }
 
   onValorChange(event: any, index: number) {
-    let valorDigitado = event.target.value;
-    valorDigitado = valorDigitado.replace(/[^\d,]/g, '').replace(',', '.');
-    const valorNumerico = parseFloat(valorDigitado);
-
-    if (!isNaN(valorNumerico)) {
-      this.servicosAdicionados[index].valorUnit = valorNumerico;
-      this.servicosAdicionados[index].valorTotal = this.servicosAdicionados[index].quantidade * valorNumerico;
+    const valor = parseFloat(event.target.value);
+    if (!isNaN(valor)) {
+      this.servicosAdicionados[index].valorUnit = valor;
+      this.recalcularSubtotal(index);
     }
-    this.calcularTotal();
   }
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+  recalcularSubtotal(index: number) {
+    const servico = this.servicosAdicionados[index];
+    servico.valorTotal = servico.quantidade * servico.valorUnit;
+    this.calcularTotal();
   }
 }

@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Footer, MessageService} from "primeng/api";
-import {PatrimonioModule} from "../patrimonio.module";
+import {PatrimonioModule} from "../../../../patrimonio/patrimonio.module";
 
 @Component({
   selector: 'app-pesquisar-patrimonio',

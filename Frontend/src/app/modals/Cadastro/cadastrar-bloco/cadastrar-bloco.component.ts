@@ -8,10 +8,11 @@ import { AddBloco, BlocoResponse } from '../../../dtos/responses/bloco.response'
   styleUrl: './cadastrar-bloco.component.scss'
 })
 export class CadastrarBlocoComponent {
-  blocosDescricao: string[] = [];  
-  descricao: string = '';          
+  blocosDescricao: string[] = [];
+  id:number = 0;
+  descricao: string = '';
 
-  constructor(private blocoService: BlocoRequest) { 
+  constructor(private blocoService: BlocoRequest) {
     this.loadBlocos();
   }
   @Output() blocoAdicionado = new EventEmitter<void>();
@@ -29,7 +30,7 @@ export class CadastrarBlocoComponent {
   }
 
   adicionarBloco() {
-    const bloco: AddBloco = { descricao: this.descricao };
+    const bloco: AddBloco = {id:this.id, descricao: this.descricao };
     this.blocoService.setBloco(bloco).subscribe(() => {
       this.descricao = '';
       this.blocoAdicionado.emit();
