@@ -45,9 +45,22 @@ public class OrdemServicoService implements IService<OrdemServicoEntity> {
 
     @Override
     public OrdemServicoEntity save(OrdemServicoEntity ordemServico) {
+        double valorTotal = 0;
+
+        for (int i = 0; i < ordemServico.getListServicoEntities().size(); i++) {
+            ServicoEntity servico = servicoService.validateServico(ordemServico.getListServicoEntities().get(i)); // Throws ValidationException
+            servico = servicoService.save(servico);
+            valorTotal += servico.getValorTotal();
+            ordemServico.getListServicoEntities().set(i, servico);
+        }
+
+        ordemServico.setValorTotal(valorTotal);
+        ordemServico.setUsuarioEntityCriador(securityService.getUsuario());
+        ordemServico.setDtRecord(DataUtils.getNow());
+
         boolean isDescricaoValida = ordemServico.getDescricao() != null && !ordemServico.getDescricao().isEmpty() && !ordemServico.getDescricao().isBlank();
         boolean isDataValida = ordemServico.getData() != null;
-        boolean isValorTotalValido = ordemServico.getValorTotal() != 0 && !ordemServico.getListServicoEntities().isEmpty();
+        boolean isValorTotalValido = ordemServico.getValorTotal() != 0;
 
         if (isDataValida && isValorTotalValido && isDescricaoValida && isServicosValidos(ordemServico.getListServicoEntities())) {
             ordemServico.setStatus(StatusOrdemServicoEnum.PREENCHIDA);
@@ -59,18 +72,6 @@ public class OrdemServicoService implements IService<OrdemServicoEntity> {
         if (!isDescricaoValida) {
             ordemServico.setDescricao("Sem descrição");
         }
-
-        double valorTotal = 0;
-
-        for (int i = 0; i < ordemServico.getListServicoEntities().size(); i++) {
-            servicoService.validateServico(ordemServico.getListServicoEntities().get(i)); // Throws ValidationException
-            servicoService.save(ordemServico.getListServicoEntities().get(i));
-            valorTotal += ordemServico.getListServicoEntities().get(i).getValorTotal();
-        }
-
-        ordemServico.setValorTotal(valorTotal);
-        ordemServico.setUsuarioEntityCriador(securityService.getUsuario());
-        ordemServico.setDtRecord(DataUtils.getNow());
 
         return ordemServicoRepository.save(ordemServico);
     }

@@ -40,6 +40,7 @@ public interface PatrimonioMapper {
     @Mapping(source = "dtRecord", target = "lastChange")
     @Mapping(source = "ambienteEntity", target = "ambiente")
     @Mapping(source = "usuarioEntityCriador", target = "lastChangedBy")
+    @Mapping(source = "id", target = "patrimonio")
     PatrimonioResponse toResponse(PatrimonioEntity entity);
     PatrimonioResponse toResponse(PatrimonioRequest request);
 

@@ -5,10 +5,7 @@ import br.unipar.assetinsight.dtos.responses.principal.AmbienteResponse;
 import br.unipar.assetinsight.dtos.responses.simple.AmbienteSimpleResponse;
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.utils.DataUtils;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -67,7 +64,7 @@ public interface AmbienteMapper {
         return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
     }
 
-
+    @Named("mapLongToAmbienteEntity")
     default AmbienteEntity mapLongToEntity(Long id) {
         if (id == null) {
             return null;

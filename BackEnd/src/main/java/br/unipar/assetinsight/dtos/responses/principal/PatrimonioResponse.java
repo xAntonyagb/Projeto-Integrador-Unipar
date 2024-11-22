@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 public record PatrimonioResponse(
         @Schema(description = "Id do patrimonio.", example = "1")
-        Long id,
+        Long patrimonio,
 
         @Schema(description = "Descrição do patrimonio.", example = "Patrimonio 1")
         String descricao,
