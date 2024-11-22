@@ -12,8 +12,8 @@ import java.io.Serializable;
  * DTO para requests post de {@link BlocoEntity}
  */
 public record PatrimonioRequest(
-        @Schema(description = "Id do patrimonio", example = "1", required = false)
-        Long patrimonio,
+        @Schema(description = "Id do patrimonio", example = "1", required = true)
+        @NotNull Long patrimonio,
 
         @Schema(description = "Descrição / Nome identificador do patrimonio", example = "Exemplo", required = true)
         @NotNull @NotEmpty @NotBlank String descricao,

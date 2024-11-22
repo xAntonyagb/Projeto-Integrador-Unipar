@@ -2,13 +2,11 @@ package br.unipar.assetinsight.service;
 
 import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.entities.CategoriaEntity;
+import br.unipar.assetinsight.entities.PatrimonioEntity;
 import br.unipar.assetinsight.entities.ServicoEntity;
 import br.unipar.assetinsight.exceptions.NotFoundException;
 import br.unipar.assetinsight.exceptions.ValidationException;
-import br.unipar.assetinsight.repositories.AmbienteRepository;
-import br.unipar.assetinsight.repositories.CategoriaRepository;
-import br.unipar.assetinsight.repositories.OrdemServicoRepository;
-import br.unipar.assetinsight.repositories.ServicoRepository;
+import br.unipar.assetinsight.repositories.*;
 import br.unipar.assetinsight.service.interfaces.IService;
 import br.unipar.assetinsight.utils.DataUtils;
 import lombok.AllArgsConstructor;
@@ -26,6 +24,8 @@ public class ServicoService {
     private final CategoriaRepository categoriaRepository;
     private final SecurityService securityService;
     private final OrdemServicoRepository ordemServicoRepository;
+    private final PatrimonioService patrimonioService;
+    private final PatrimonioRepository patrimonioRepository;
 
     public ServicoEntity getById(long id) {
         Optional<ServicoEntity> servico = servicoRepository.findById(id);
@@ -79,22 +79,27 @@ public class ServicoService {
         boolean isPatrimonioPreenchido = servicoEntity.getPatrimonioEntity() != null;
 
         Map<String, String> listErros = new HashMap<>();
+
+        Optional<CategoriaEntity> categoria = Optional.empty();
         if (isCategoriaPreenchida) {
-            Optional<CategoriaEntity> categoria = categoriaRepository.findById(servicoEntity.getCategoriaEntity().getId());
+            categoria = categoriaRepository.findById(servicoEntity.getCategoriaEntity().getId());
             if (categoria.isEmpty()) {
                 listErros.put("categoria", "Nenhuma categoria foi encontrada com o id: " + servicoEntity.getCategoriaEntity().getId());
             }
         }
 
+        Optional<AmbienteEntity> ambiente = Optional.empty();
         if (isAmbientePreenchido) {
-            Optional<AmbienteEntity> ambiente = ambienteRepository.findById(servicoEntity.getAmbienteEntity().getId());
+            ambiente = ambienteRepository.findById(servicoEntity.getAmbienteEntity().getId());
             if (ambiente.isEmpty()) {
                 listErros.put("ambiente", "Nenhum ambiente foi encontrado com o id: " + servicoEntity.getAmbienteEntity().getId());
             }
         }
 
+        Optional<PatrimonioEntity> patrimonio = Optional.empty();
         if (isPatrimonioPreenchido) {
-            if (servicoEntity.getPatrimonioEntity().getId() <= 0) {
+            patrimonio = patrimonioRepository.findById(servicoEntity.getPatrimonioEntity().getId());
+            if (patrimonio.isEmpty()) {
                 long id = servicoEntity.getPatrimonioEntity().getId();
                 listErros.put("patrimonio"+id, "Nenhum patrimônio foi encontrado com o id: " + id);
             }
@@ -105,8 +110,9 @@ public class ServicoService {
         }
 
         servicoEntity.setValorTotal(servicoEntity.getValorUnit() * servicoEntity.getQuantidade());
-        servicoEntity.setCategoriaEntity(servicoEntity.getCategoriaEntity());
-        servicoEntity.setAmbienteEntity(servicoEntity.getAmbienteEntity());
+        servicoEntity.setCategoriaEntity(categoria.orElse(servicoEntity.getCategoriaEntity()));
+        servicoEntity.setAmbienteEntity(ambiente.orElse(servicoEntity.getAmbienteEntity()));
+        servicoEntity.setPatrimonioEntity(patrimonio.orElse(servicoEntity.getPatrimonioEntity()));
         servicoEntity.setUsuarioEntityCriador(securityService.getUsuario());
         servicoEntity.setDtRecord(DataUtils.getNow());
 

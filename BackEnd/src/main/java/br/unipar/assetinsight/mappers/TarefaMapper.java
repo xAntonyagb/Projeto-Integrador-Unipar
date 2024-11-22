@@ -24,7 +24,7 @@ public interface TarefaMapper {
     }
 
     @Mapping(source = "categoria", target = "categoriaEntity")
-    @Mapping(source = "ambiente", target = "ambienteEntity")
+    @Mapping(source = "ambiente", target = "ambienteEntity", qualifiedByName = "mapLongToAmbienteEntity")
     @Mapping(source = "previsao", target = "dtPrevisao")
     TarefaEntity toEntity(TarefaRequest request);
 
@@ -51,6 +51,7 @@ public interface TarefaMapper {
     @Mapping(source = "dtPrevisao", target = "previsao")
     TarefaResponse toResponse(TarefaEntity entity);
 
+    @Mapping(source = "ambiente", target = "ambiente", qualifiedByName = "mapLongToAmbienteEntity")
     TarefaResponse toResponse(TarefaRequest request);
 
 

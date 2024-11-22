@@ -1,7 +1,9 @@
 package br.unipar.assetinsight.service;
 
+import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.entities.PatrimonioEntity;
 import br.unipar.assetinsight.exceptions.NotFoundException;
+import br.unipar.assetinsight.repositories.AmbienteRepository;
 import br.unipar.assetinsight.repositories.PatrimonioRepository;
 import br.unipar.assetinsight.service.interfaces.IService;
 import br.unipar.assetinsight.utils.DataUtils;
@@ -17,6 +19,7 @@ import java.util.Optional;
 @Service
 public class PatrimonioService implements IService<PatrimonioEntity>{
     private final PatrimonioRepository patrimonioRepository;
+    private final AmbienteRepository ambienteRepository;
     private SecurityService securityService;
 
     @Override
@@ -40,6 +43,12 @@ public class PatrimonioService implements IService<PatrimonioEntity>{
 
     @Override
     public PatrimonioEntity save(PatrimonioEntity patrimonio) {
+        if (patrimonio.getAmbienteEntity() != null) {
+            long id = patrimonio.getAmbienteEntity().getId();
+            AmbienteEntity ambiente = ambienteRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("ambiente", "Nenhum ambiente foi encontrado com o id: " + id));
+        }
+
         patrimonio.setUsuarioEntityCriador(securityService.getUsuario());
         patrimonio.setDtRecord(DataUtils.getNow());
 

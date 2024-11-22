@@ -2,6 +2,7 @@ package br.unipar.assetinsight.mappers;
 
 import br.unipar.assetinsight.dtos.requests.ServicoRequest;
 import br.unipar.assetinsight.dtos.responses.principal.ServicoRespose;
+import br.unipar.assetinsight.entities.AmbienteEntity;
 import br.unipar.assetinsight.entities.ServicoEntity;
 import br.unipar.assetinsight.utils.DataUtils;
 import org.mapstruct.AfterMapping;
@@ -23,6 +24,10 @@ public interface ServicoMapper {
         entity.setDtRecord(DataUtils.getNow());
     }
 
+    @Mapping(source = "categoria", target = "categoriaEntity")
+    @Mapping(source = "ambiente", target = "ambienteEntity", qualifiedByName = "mapLongToAmbienteEntity")
+    @Mapping(source = "id", target = "idServico")
+    @Mapping(source = "patrimonio", target = "patrimonioEntity")
     ServicoEntity toEntity(ServicoRequest request);
 
     @Mapping(source = "lastChange", target = "dtRecord")
@@ -65,5 +70,14 @@ public interface ServicoMapper {
         List<ServicoEntity> entities = entityPage.getContent();
         List<ServicoRespose> responses = toResponseList(entities);
         return new PageImpl<>(responses, entityPage.getPageable(), entityPage.getTotalElements());
+    }
+
+    default AmbienteEntity mapLongToEntity(Long id) {
+        if (id == null) {
+            return null;
+        }
+        AmbienteEntity entity = new AmbienteEntity();
+        entity.setId(id);
+        return entity;
     }
 }
