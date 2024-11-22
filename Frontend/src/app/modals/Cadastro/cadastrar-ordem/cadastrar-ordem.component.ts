@@ -1,13 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AmbienteRequest } from '../../../dtos/requests/ambiente.request';
-import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
-import { CategoriaResponse } from '../../../dtos/responses/categoria.response';
-import { ServicoResponse } from '../../../dtos/responses/servico.response';
-import { OrdemRequest } from '../../../dtos/requests/ordem.request';
-import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
+import { AmbienteService } from '../../../services/ambiente.service';
+import { CategoriaService } from '../../../services/categoria.service';
+import { CategoriaResponse } from '../../../dtos/responses/Categoria.response';
+import { ServicoResponse } from '../../../dtos/responses/Servico.response';
+import { OrdemService } from '../../../services/ordem.service';
+import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
 import { ToastrService } from 'ngx-toastr';
-import { BlocoResponse} from '../../../dtos/responses/bloco.response';
+import { BlocoResponse} from '../../../dtos/responses/Bloco.response';
 import {Subject} from "rxjs";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import {PatrimonioSimpleResponse} from "../../../dtos/responses/PatrimonioSimple.response";
+import {OrdemServicoRequest} from "../../../dtos/requests/OrdemServico.request";
 
 @Component({
   selector: 'app-cadastrar-ordem',
@@ -32,23 +35,24 @@ export class CadastrarOrdemComponent implements OnInit {
     quantidade: number,
     valorNumerico: number,
     categoriaSelecionada: string,
-    ambienteSelecionado: string,
+    ambientesSelecionados: string,
   } = {
     quantidade: 0,
     patrimonio: '',
     servicoDescricao: '',
     valorNumerico: 0,
     categoriaSelecionada: '',
-    ambienteSelecionado: '',
+    ambientesSelecionados: '',
   };
 
   total = 0;
 
   constructor(
-    private ambiente: AmbienteRequest,
-    private categoria: CategoriaRequest,
-    private ordem: OrdemRequest,
+    private ambiente: AmbienteService,
+    private categoria: CategoriaService,
+    private ordem: OrdemService,
     private toastr: ToastrService,
+    private apiToast: ApiGenericToasts
   ) {
   }
 
@@ -77,18 +81,18 @@ export class CadastrarOrdemComponent implements OnInit {
   }
 
   loadAmbientes() {
-    this.ambiente.getAmbientes(0, 10).subscribe({
+    this.ambiente.getAll(0, 10).subscribe({
       next: (data: any) => {
         this.ambientesSelecionados = data.content || [];
       },
       error: (error) => {
-        this.toastr.error('Erro ao carregar ambientes');
+        this.apiToast.showErro(error);
       }
     });
   }
 
   loadCategorias() {
-    this.categoria.getCategorias().subscribe({
+    this.categoria.getAll().subscribe({
       next: (data: any) => {
         this.categoriasSelecionadas = data.content || [];
       },
@@ -100,15 +104,19 @@ export class CadastrarOrdemComponent implements OnInit {
 
 
   adicionarServico() {
-    const novoServico: ServicoResponse = {
-      patrimonio: this.novoServico.patrimonio,
-      descricao: this.novoServico.servicoDescricao,
+    const patrimonio: PatrimonioSimpleResponse = {
+      patrimonio: Number(this.novoServico.patrimonio)
+    }
+
+    const novoServico: ServicoResponse | any = {
+      patrimonio: patrimonio.patrimonio,
       quantidade: this.novoServico.quantidade,
       valorUnit: this.novoServico.valorNumerico,
       valorTotal: this.novoServico.quantidade * this.novoServico.valorNumerico,
       categoria: this.categoriasSelecionadas.find(cat => cat.id === +this.novoServico.categoriaSelecionada) || {} as CategoriaResponse,
-      ambiente: this.ambientesSelecionados.find(amb => amb.id === +this.novoServico.ambienteSelecionado) || {} as AmbienteResponse,
+      ambiente: this.ambientesSelecionados.find(amb => amb.id === +this.novoServico.ambientesSelecionados) || {} as AmbienteResponse,
     };
+
     this.servicosAdicionados.push(novoServico);
     this.calcularTotal();
     this.resetNovoServico();
@@ -121,11 +129,11 @@ export class CadastrarOrdemComponent implements OnInit {
       quantidade: 0,
       valorNumerico: 0,
       categoriaSelecionada: '',
-      ambienteSelecionado: '',
+      ambientesSelecionados: '',
     };
   }
   adicionarNovoAmbiente() {
-    this.ambientesSelecionados.push({});
+    //this.ambientesSelecionados.push({});
   }
 
   calcularTotal() {
@@ -133,14 +141,14 @@ export class CadastrarOrdemComponent implements OnInit {
   }
 
   guardarAmbiente() {
-    const ordem = {
+    const ordem: OrdemServicoRequest | any = {
       descricao: this.descricaoOrdem,
       data: this.data,
       servicos: this.servicosAdicionados,
       total: this.total,
     };
 
-    this.ordem.setOrdensServico(ordem).subscribe({
+    this.ordem.save(ordem).subscribe({
       next: () => {
         this.toastr.success('Ordem cadastrada com sucesso!');
         this.closeModal();

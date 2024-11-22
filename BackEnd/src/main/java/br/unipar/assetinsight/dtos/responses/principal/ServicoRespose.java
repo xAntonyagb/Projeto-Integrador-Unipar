@@ -1,5 +1,6 @@
 package br.unipar.assetinsight.dtos.responses.principal;
 
+import br.unipar.assetinsight.dtos.responses.simple.PatrimonioSimpleResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ public record ServicoRespose(
         long id,
 
         @Schema(description = "Patrimonio em que foi prestada manutenção.", example = "{\"id\": 1, \"descricao\": \"Patrimonio Exemplo\"}")
-        PatrimonioResponse patrimonio,
+        PatrimonioSimpleResponse patrimonio,
 
         @Schema(description = "Quantidade de vezes que este serviço foi prestado.", example = "1")
         long quantidade,

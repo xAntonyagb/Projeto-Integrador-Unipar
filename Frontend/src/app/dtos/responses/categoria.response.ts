@@ -1,4 +1,4 @@
-import { UsuarioResponse } from "./usuario.response";
+import {UsuarioResponse} from "./Usuario.response";
 
 export interface CategoriaResponse {
     id: number;
@@ -9,8 +9,4 @@ export interface CategoriaResponse {
     qtdTotalServicos: number;
     lastChange: Date;
     usuarioResponse: UsuarioResponse;
-  }
-  export interface AddCategoria{
-    id: number
-    descricao: string;
   }

@@ -1,0 +1,36 @@
+<div class="col-2 text-white vh-100 position-fixed sidebar ">
+  <div class="py-4  text-center">
+    <img src="../../../../assets/Logo.png" class="img-fluid" />
+  </div>
+  <div class="nav flex-column barralateral py-4">
+    <a routerLink="/inicio"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-white inicio sidebar-item">
+      <img src="../../../../assets/HomePage.svg" class="mr-2" style="width: 20px;" /> INÍCIO
+    </a>
+    <a routerLink="/ordem-servico"  routerLinkActive="active" class="nav-link text-white sidebar-item">
+      <img src="../../../../assets/Document.svg" class="mr-2" style="width: 20px;" /> ORDENS DE SERVIÇO
+    </a>
+    <a routerLink="/tarefas" routerLinkActive="active" class="nav-link text-white sidebar-item">
+      <img src="../../../../assets/Todo%20List.svg" class="mr-2" style="width: 20px;" /> TAREFAS
+    </a>
+    <a routerLink="/ambientes"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-white sidebar-item">
+      <img src="../../../../assets/Ambiente.svg" class="mr-2" style="width: 20px;" /> AMBIENTES
+    </a>
+    <a routerLink="/categorias"  routerLinkActive="active" class="nav-link text-white sidebar-item">
+      <img src="../../../../assets/Categoria.svg" class="mr-2" style="width: 20px;" /> CATEGORIAS
+    </a>
+    <a routerLink="/patrimonios"  routerLinkActive="active" class="nav-link text-white sidebar-item">
+      <img src="../../../../assets/Patrimonios.svg" class="mr-2" style="width: 20px;" /> PATRIMÔNIOS
+    </a>
+    <a routerLink="/usuarios"  routerLinkActive="active" class="nav-link text-white sidebar-item">
+      <img src="../../../../assets/User.svg" class="mr-2" style="width: 20px;" /> USUÁRIOS
+    </a>
+    <a routerLink="/arquivados"  routerLinkActive="active" class="nav-link text-white sidebar-item">
+      <img src="../../../../assets/Arquivados.svg" class="mr-2" style="width: 20px;" /> ARQUIVADOS
+    </a>
+    <div class="espacamento"></div>
+    <a (click)="Logout($event)" class="nav-link text-white mt-auto  sidebar-item">
+      <img src="../../../../assets/Logout.svg" class="mr-2" style="width: 20px;" /> SAIR
+    </a>
+  </div>
+</div>
+

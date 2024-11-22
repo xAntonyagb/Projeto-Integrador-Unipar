@@ -12,11 +12,11 @@
         <div class="form-row">
           <div class="desc-part col-8">
             <label for="descricao-{{i}}">Nome do Ambiente:</label>
-            <input id="descricao-{{i}}" type="text" class="form-control" [(ngModel)]="ambiente.nomeAmbiente" required>
+            <input id="descricao-{{i}}" type="text" class="form-control" [(ngModel)]="ambiente.descricao" required>
           </div>
           <div class="data-part col-4">
             <label for="bloco-{{i}}">Bloco:</label>
-            <select id="bloco-{{i}}" class="form-control" [(ngModel)]="ambiente.bloco"  required>
+            <select id="bloco-{{i}}" class="form-control" [(ngModel)]="ambiente.bloco.id"  required>
               <option *ngFor="let optBloco of blocosSelecionados" [value]="optBloco.id">
                 {{ optBloco.descricao }}
               </option>
@@ -30,9 +30,20 @@
             <button (click)="openPatrimonioOverlay(ambiente)" class="btn btn-primary">Selecionar Patrimônios</button>
           </div>
           <div class="data-part">
-            <label for="descricaoPatrimonio-{{i}}">Descrição do Patrimônio:</label>
-            <input id="descricaoPatrimonio-{{i}}" type="text" class="form-control"
-                   [value]="getDescricaoPatrimonios(ambiente.patrimonios)" readonly>
+            <div *ngFor="let patrimonio of ambiente.patrimonios; let j = index" class="patrimonio-item">
+              <div class="form-row">
+                <div class="desc-part col-8">
+                  <label for="patrimonio-{{i}}-{{j}}">Patrimônio:</label>
+                  <input id="patrimonio-{{i}}-{{j}}" type="text" class="form-control"
+                         [value]="patrimonio.patrimonio" readonly>
+                </div>
+                <div class="data-part col-4">
+                  <label for="descricao-{{i}}-{{j}}">Descrição:</label>
+                  <input id="descricao-{{i}}-{{j}}" type="text" class="form-control"
+                         [value]="patrimonio.descricao" readonly>
+                </div>
+              </div>
+            </div>
           </div>
           <img src="../../../assets/Vector.svg" class="removerServico" *ngIf="i > 0" (click)="removerAmbiente(i)" />
         </div>
@@ -45,20 +56,20 @@
 </div>
 
 <div *ngIf="showPatrimonioOverlay" class="overlay">
-  <div class="modal-container">
-    <div class="modal-header">
+  <div class="modal-container-find">
+    <div class="modal-header-find">
       <h2>Selecione os Patrimônios</h2>
       <button (click)="closePatrimonioOverlay()" class="close-button">X</button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body-find">
       <ul>
         <li *ngFor="let patrimonio of patrimoniosDisponiveis">
-          <input type="checkbox" [(ngModel)]="patrimonio.selected" />
-          {{ patrimonio.descricao }}
+          <input class="patrimonio-check" type="checkbox" [(ngModel)]="patrimonio.selected" />
+          {{ patrimonio.patrimonio }} : {{ patrimonio.descricao}}
         </li>
       </ul>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer-find">
       <button (click)="confirmarPatrimonios()" class="btn btn-primary">Confirmar</button>
     </div>
   </div>

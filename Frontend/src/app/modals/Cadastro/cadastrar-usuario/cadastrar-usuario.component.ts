@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { UsuarioRequest } from '../../../dtos/requests/usuario.request';
-import {AddUsuario, UsuarioPermissoes, UsuarioResponse} from '../../../dtos/responses/usuario.response';
+import { UsuarioService } from '../../../services/usuario.service';
+import {UsuarioResponse} from '../../../dtos/responses/Usuario.response';
 import {ToastrService} from "ngx-toastr";
 import {NgForm} from "@angular/forms";
+import {UsuarioRequest} from "../../../dtos/requests/Usuario.request";
+import {UsuarioPermissoes} from "../../../dtos/enums/UsuarioPermissoes.enum";
+import {CadastroRequest} from "../../../dtos/requests/Cadastro.request";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
 
 @Component({
   selector: 'app-cadastrar-usuario',
@@ -18,8 +22,9 @@ export class CadastrarUsuarioComponent {
   permissoesDisponiveis = Object.values(UsuarioPermissoes);
 
   constructor(
-    private usuario: UsuarioRequest,
-    private toastr: ToastrService
+    private usuario: UsuarioService,
+    private toastr: ToastrService,
+    private genericToast: ApiGenericToasts
   ) {
     this.loadUsuarios();
   }
@@ -32,8 +37,13 @@ export class CadastrarUsuarioComponent {
   }
 
   loadUsuarios() {
-    this.usuario.getUsuario().subscribe((data: UsuarioResponse[]) => {
-      this.usuarioResponse = data;
+    this.usuario.getAll().subscribe({
+      next: (data) => {
+        this.usuarioResponse = data.content;
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
   }
 
@@ -51,13 +61,12 @@ export class CadastrarUsuarioComponent {
       console.error('Nenhuma permissão válida selecionada');
       return;
     }
-    const usuarioData: AddUsuario = {
-      username: this.username,
-      password: this.password,
-      permissoes: permissoesValidas
-    };
+
+    let usuarioData: CadastroRequest = new CadastroRequest();
+    usuarioData.setValues(this.username, this.password, permissoesValidas);
+
     console.log('Dados do usuário:', usuarioData);
-    this.usuario.setUsuario(usuarioData).subscribe({
+    this.usuario.cadastrar(usuarioData).subscribe({
       next: () => {
         console.log('Usuário cadastrado com sucesso!');
         this.usuarioAdicionado.emit();

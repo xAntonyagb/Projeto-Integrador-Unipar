@@ -1,7 +1,9 @@
+import {TipoNotificacao} from "../enums/TipoNotificacao.enum";
+
 export interface NotificacaoResponse{
-    id: number;
-    tipo: string;
-    titulo: string;
-    descricao: string;
+    id: Number;
+    tipo: TipoNotificacao;
+    titulo: String;
+    descricao: String;
     dtEnvio: Date;
 }

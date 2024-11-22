@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {AddCategoria, CategoriaResponse} from "../../../dtos/responses/categoria.response";
-import {CategoriaRequest} from "../../../dtos/requests/categoria.request";
+import {CategoriaResponse} from "../../../dtos/responses/Categoria.response";
+import {CategoriaService} from "../../../services/categoria.service";
 import {MatTableDataSource} from "@angular/material/table";
+import {CategoriaRequest} from "../../../dtos/requests/Categoria.request";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
 
 @Component({
   selector: 'app-editar-categoria',
@@ -9,11 +11,14 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrl: './editar-categoria.component.scss'
 })
 export class EditarCategoriaComponent implements OnChanges {
-  @Input() categoriaParaEditar: AddCategoria | null = null;
+  @Input() categoriaParaEditar: CategoriaRequest | null = null;
   descricao: string = '';
   dataSource = new MatTableDataSource<CategoriaResponse>([]);
 
-  constructor(private categoriaService: CategoriaRequest) {}
+  constructor(
+    private categoriaService: CategoriaService,
+    private genericToast: ApiGenericToasts
+  ) {}
 
   @Output() categoriaEditada = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
@@ -33,19 +38,30 @@ export class EditarCategoriaComponent implements OnChanges {
   }
 
   editarCategoria() {
-    if (this.categoriaParaEditar) {
-      const categoriaEditada: AddCategoria = {id:this.categoriaParaEditar.id, descricao: this.descricao };
-      this.categoriaService.updateCategoria(this.categoriaParaEditar.id, categoriaEditada).subscribe(() => {
-        this.descricao = '';
-        this.categoriaEditada.emit();
-      });
+    if (!this.categoriaParaEditar) {
+      return;
     }
+
+    let categoria: CategoriaRequest = new CategoriaRequest();
+    categoria.id = this.categoriaParaEditar.id;
+    categoria.descricao = this.descricao;
+
+    this.categoriaService.save(categoria).subscribe({
+      complete: () => {
+        this.genericToast.showSalvoSucesso(`Categoria`)
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
+    });
   }
+
   closeModal() {
     this.close.emit();
   }
+
   loadCategorias() {
-    this.categoriaService.getCategorias().subscribe((response: any) => {
+    this.categoriaService.getAll().subscribe((response: any) => {
       const data = this.extractContent(response);
       this.dataSource.data = data;
     });

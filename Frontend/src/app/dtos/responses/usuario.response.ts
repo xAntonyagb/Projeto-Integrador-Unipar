@@ -1,18 +1,10 @@
+import {UsuarioPermissoes} from "../enums/UsuarioPermissoes.enum";
+
 export interface UsuarioResponse {
-    id: number;
-    username: string;
-    password : string;
+    id: String;
+    username: String;
+    password : String;
     dtCriacao: Date;
     lastLogin: Date;
     permissoes: UsuarioPermissoes[] ;
-  }
-export enum UsuarioPermissoes {
-  ADMINISTRADOR = 'ADMINISTRADOR',
-  SUPER = 'SUPER',
-  OPERADOR = 'OPERADOR'
-}
-  export interface AddUsuario{
-    username: string;
-    password : string;
-    permissoes: UsuarioPermissoes[];
   }

@@ -1,8 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AmbienteResponse} from "../../../dtos/responses/ambiente.response";
-import {PatrimonioRequest} from "../../../dtos/requests/patrimonio.request";
-import {AmbienteRequest} from "../../../dtos/requests/ambiente.request";
+import {AmbienteResponse} from "../../../dtos/responses/Ambiente.response";
+import {PatrimonioService} from "../../../services/patrimonio.service";
+import {AmbienteService} from "../../../services/ambiente.service";
 import {ToastrService} from "ngx-toastr";
+import {PatrimonioRequest} from "../../../dtos/requests/Patrimonio.request";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
 
 @Component({
   selector: 'app-cadastrar-patrimonio',
@@ -20,9 +22,10 @@ export class CadastrarPatrimonioComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
 
   constructor(
-    private patrimonioRequest: PatrimonioRequest,
-    private ambienteRequest: AmbienteRequest,
-    private toastr: ToastrService
+    private patrimonioRequest: PatrimonioService,
+    private ambienteRequest: AmbienteService,
+    private toastr: ToastrService,
+    private genericToast: ApiGenericToasts
   ) {
   }
 
@@ -36,7 +39,7 @@ export class CadastrarPatrimonioComponent implements OnInit {
   }
 
   loadAmbientes() {
-    this.ambienteRequest.getAmbientes(0, 10).subscribe({
+    this.ambienteRequest.getAll(0, 10).subscribe({
       next: (response) => {
         this.ambientesDisponiveis = response.content;
       },
@@ -47,19 +50,20 @@ export class CadastrarPatrimonioComponent implements OnInit {
   }
 
   adicionarPatrimonio() {
-    const patrimonioData = {
+    const patrimonioData: PatrimonioRequest | any = {
       patrimonio: this.patrimonio,
       ambiente: this.ambiente || null, // Define ambiente as null if not selected
       descricao: this.descricao
     };
-    this.patrimonioRequest.setPatrimonio(patrimonioData).subscribe({
+
+    this.patrimonioRequest.save(patrimonioData).subscribe({
       next: (response) => {
-        this.toastr.success('Patrimônio adicionado com sucesso:');
+        this.genericToast.showSalvoSucesso(`Patrimônio`);
         this.patrimonioAdicionado.emit();
         this.closeModal();
       },
-      error: () => {
-        this.toastr.error('Erro ao adicionar patrimônio:');
+      error: (e) => {
+        this.genericToast.showErro(e);
       }
     });
   }

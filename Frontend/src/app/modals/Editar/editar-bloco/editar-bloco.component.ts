@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {AddBloco, BlocoResponse} from "../../../dtos/responses/bloco.response";
-import {BlocoRequest} from "../../../dtos/requests/bloco.request";
+import {BlocoResponse} from "../../../dtos/responses/Bloco.response";
+import {BlocoService} from "../../../services/bloco.service";
 import {MatTableDataSource} from "@angular/material/table";
+import {BlocoRequest} from "../../../dtos/requests/Bloco.request";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
 
 @Component({
   selector: 'app-editar-bloco',
@@ -9,11 +11,14 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrl: './editar-bloco.component.scss'
 })
 export class EditarBlocoComponent implements OnChanges {
-  @Input() blocoParaEditar: AddBloco | null = null;
+  @Input() blocoParaEditar: BlocoRequest | null = null;
   descricao: string = '';
   dataSource = new MatTableDataSource<BlocoResponse>([]);
 
-  constructor(private blocoService: BlocoRequest) {}
+  constructor(
+    private blocoService: BlocoService,
+    private genericToast: ApiGenericToasts
+  ) {}
 
   @Output() blocoEditado = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
@@ -24,7 +29,7 @@ export class EditarBlocoComponent implements OnChanges {
     }
   }
   loadBlocos() {
-    this.blocoService.getBlocosData().subscribe((response: any) => {
+    this.blocoService.getAll().subscribe((response: any) => {
       const data = this.extractContent(response);
       this.dataSource.data = data;
     });
@@ -44,11 +49,20 @@ export class EditarBlocoComponent implements OnChanges {
 
   editarBloco() {
     if (this.blocoParaEditar) {
-      const blocoEditado: AddBloco = {id:this.blocoParaEditar.id, descricao: this.descricao };
-      this.blocoService.updateBloco(this.blocoParaEditar.id, blocoEditado).subscribe(() => {
-        this.descricao = '';
-        this.blocoEditado.emit();
+      let bloco: BlocoRequest = new BlocoRequest();
+      bloco.setValues(this.descricao, this.blocoParaEditar.id);
+
+      this.blocoService.save(bloco).subscribe({
+        complete: () => {
+          this.genericToast.showSalvoSucesso(`Bloco`)
+        },
+        error: (e) => {
+          this.genericToast.showErro(e)
+        },
       });
+
+      this.descricao = '';
+      this.blocoEditado.emit();
     }
   }
 

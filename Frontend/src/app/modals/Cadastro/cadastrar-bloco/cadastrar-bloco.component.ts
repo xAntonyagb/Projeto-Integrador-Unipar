@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { BlocoRequest } from '../../../dtos/requests/bloco.request';
-import { AddBloco, BlocoResponse } from '../../../dtos/responses/bloco.response';
+import { BlocoService } from '../../../services/bloco.service';
+import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
+import {BlocoRequest} from "../../../dtos/requests/Bloco.request";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
 
 @Component({
   selector: 'app-cadastrar-bloco',
@@ -12,9 +14,13 @@ export class CadastrarBlocoComponent {
   id:number = 0;
   descricao: string = '';
 
-  constructor(private blocoService: BlocoRequest) {
+  constructor(
+    private blocoService: BlocoService,
+    private genericToast: ApiGenericToasts
+  ) {
     this.loadBlocos();
   }
+
   @Output() blocoAdicionado = new EventEmitter<void>();
   onSubmit( event: Event): void {
     if (!this.descricao || this.blocosDescricao.includes(this.descricao)) {
@@ -23,19 +29,35 @@ export class CadastrarBlocoComponent {
     this.adicionarBloco();
     this.closeModal();
   }
+
   loadBlocos() {
-    this.blocoService.getBlocosData().subscribe((data: any[]) => {
-      this.blocosDescricao = data.map(bloco => bloco.descricao);  // Extrai apenas as descrições
+    this.blocoService.getAll().subscribe({
+      next: (data) => {
+        this.blocosDescricao = data.content.map(bloco => bloco.descricao);
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
   }
 
   adicionarBloco() {
-    const bloco: AddBloco = {id:this.id, descricao: this.descricao };
-    this.blocoService.setBloco(bloco).subscribe(() => {
-      this.descricao = '';
-      this.blocoAdicionado.emit();
+    let bloco: BlocoRequest = new BlocoRequest();
+    bloco.setValues(this.descricao, this.id)
+
+    this.blocoService.save(bloco).subscribe({
+      complete: () => {
+        this.genericToast.showSalvoSucesso(`Bloco`)
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
+
+    this.descricao = '';
+    this.blocoAdicionado.emit();
   }
+
   @Output() close = new EventEmitter<void>();
   closeModal() {
     this.close.emit();

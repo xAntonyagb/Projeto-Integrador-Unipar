@@ -1,10 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
-import {BlocoRequest} from "../../../dtos/requests/bloco.request";
-import {PatrimonioRequest} from "../../../dtos/requests/patrimonio.request";
-import {BlocoResponse} from "../../../dtos/responses/bloco.response";
-import {PatrimonioResponse} from "../../../dtos/responses/patrimonio.response";
-import {AmbienteResponse} from "../../../dtos/responses/ambiente.response";
+import {BlocoService} from "../../../services/bloco.service";
+import {PatrimonioService} from "../../../services/patrimonio.service";
+import {BlocoResponse} from "../../../dtos/responses/Bloco.response";
+import {PatrimonioResponse} from "../../../dtos/responses/Patrimonio.response";
+import {AmbienteResponse} from "../../../dtos/responses/Ambiente.response";
+import {AmbienteService} from "../../../services/ambiente.service";
+import {AmbienteRequest} from "../../../dtos/requests/Ambiente.request";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
 
 @Component({
   selector: 'app-cadastrar-ambiente',
@@ -17,36 +20,43 @@ export class CadastrarAmbienteComponent implements OnInit {
   @Output() ambientesSalvos = new EventEmitter<AmbienteResponse[]>();
   @Output() close = new EventEmitter<void>();
   ambientesAdicionados: any[] = [
-    { descricao: '', bloco: { id: null }, patrimonios: [] }
+    {descricao: '', bloco: {id: null}, patrimonios: []}
   ];
   isModalOpen = false;
   showPatrimonioOverlay: boolean = false;
-  ambienteAtual:any = null;
+  ambienteAtual: any = null;
 
   constructor(
     private toastr: ToastrService,
-    private blocoRequest: BlocoRequest,
-    private patrimonioRequest: PatrimonioRequest
-  ) {}
+    private blocoRequest: BlocoService,
+    private patrimonioRequest: PatrimonioService,
+    private ambiente: AmbienteService,
+    private genericToast: ApiGenericToasts
+  ) {
+  }
+
   ngOnInit() {
     this.loadBlocos();
     this.loadPatrimonios();
   }
+
   loadBlocos() {
-    this.blocoRequest.getBlocosData().subscribe((response: any) => {
-      this.blocosSelecionados = Array.isArray(response) ? response : [];
+    this.blocoRequest.getAll().subscribe((response: any) => {
+      this.blocosSelecionados = Array.isArray(response.content) ? response.content : [];
     });
   }
 
   loadPatrimonios() {
-    this.patrimonioRequest.getPatrimonios(0, 100).subscribe((response: any) => {
-      this.patrimoniosDisponiveis = Array.isArray(response.content) ? response.content : [];
+    this.patrimonioRequest.getAll(0, 999).subscribe({
+      next: (data) => {
+        this.patrimoniosDisponiveis = data.content;
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
   }
 
-  getDescricaoPatrimonios(patrimonios: PatrimonioResponse[]): string {
-    return patrimonios.map(p => p.descricao).join(', ');
-  }
   openModal() {
     this.isModalOpen = true;
   }
@@ -59,6 +69,7 @@ export class CadastrarAmbienteComponent implements OnInit {
   removerAmbiente(index: number) {
     this.ambientesAdicionados.splice(index, 1);
   }
+
   openPatrimonioOverlay(ambiente: any) {
     this.ambienteAtual = ambiente;
     this.showPatrimonioOverlay = true;
@@ -67,32 +78,44 @@ export class CadastrarAmbienteComponent implements OnInit {
   closePatrimonioOverlay() {
     this.showPatrimonioOverlay = false;
   }
-  confirmarPatrimonios() {
-    const idsPatrimoniosSelecionados = this.patrimoniosDisponiveis
-      .filter(p => p.selected)
-      .map(p => p.id);
 
-    const ambienteParaSalvar = {
-      descricao: this.ambienteAtual.nomeAmbiente,
-      bloco: this.ambienteAtual.bloco.id,
-      patrimonios: idsPatrimoniosSelecionados
-    };
+  confirmarPatrimonios() {
+    const patrimoniosSelecionados = this.patrimoniosDisponiveis.filter(p => p.selected);
+    if (patrimoniosSelecionados.length === 0) {
+      this.toastr.warning('Nenhum patrimônio foi selecionado!');
+      return;
+    }
+    if (this.ambienteAtual) {
+      this.ambienteAtual.patrimonios = patrimoniosSelecionados.map(p => ({
+        patrimonio: p.patrimonio,
+        descricao: p.descricao,
+      }));
+    }
+    this.patrimoniosDisponiveis.forEach(p => (p.selected = false));
     this.closePatrimonioOverlay();
   }
 
   salvarAmbientes() {
-    const ambientesValidados = this.ambientesAdicionados.filter(
-      ambiente => ambiente.descricao && ambiente.bloco.id && ambiente.patrimonios.length >= 0
+    const ambiente = this.ambientesAdicionados[0];
+    let ambienteRequest: AmbienteRequest = new AmbienteRequest();
+    ambienteRequest.setValues(
+      ambiente.descricao,
+      ambiente.bloco.id,
+      ambiente.id,
+      ambiente.patrimonios.map((p: any) => p.patrimonio)
     );
 
-    if (ambientesValidados.length !== this.ambientesAdicionados.length) {
-      this.toastr.warning('Por favor, preencha todos os campos antes de salvar!', '',{timeOut:3000});
-      return;
-    }
-    this.ambientesSalvos.emit(ambientesValidados);
-    this.closeModal();
-    this.toastr.success('Ambientes salvos com sucesso!');
-
+    this.ambiente.save(ambienteRequest).subscribe({
+      next: (data) => {
+        this.ambientesSalvos.emit([data]);
+        this.closeModal();
+        this.genericToast.showSalvoSucesso(`Ambiente`);
+      },
+      error: (e) => {
+        this.genericToast.showErro(e);
+      },
+    });
   }
 
 }
+

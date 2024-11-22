@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
-import { AddCategoria } from '../../../dtos/responses/categoria.response';
+import { CategoriaService } from '../../../services/categoria.service';
+
+import {CategoriaRequest} from "../../../dtos/requests/Categoria.request";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
 
 @Component({
   selector: 'app-cadastrar-categoria',
@@ -12,7 +14,10 @@ export class CadastrarCategoriaComponent {
   id:number = 0;
   descricao: string = '';
 
-  constructor(private categoriaService: CategoriaRequest) {
+  constructor(
+    private categoriaService: CategoriaService,
+    private genericToast: ApiGenericToasts
+  ) {
     this.loadCategorias();
   }
   onSubmit( event: Event): void {
@@ -23,18 +28,33 @@ export class CadastrarCategoriaComponent {
     this.closeModal();
     this.reload();
   }
+
   loadCategorias() {
-    this.categoriaService.getCategorias().subscribe((data: any[]) => {
-      this.descricaoCategoria = data.map(bloco => bloco.descricao);  // Extrai apenas as descrições
+    this.categoriaService.getAll().subscribe({
+      next: (data) => {
+        this.descricaoCategoria = data.content.map(bloco => bloco.descricao);
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
   }
 
   adicionarCategoria() {
-    const categoria: AddCategoria = {id:this.id, descricao: this.descricao };
-    this.categoriaService.setCategoria(categoria).subscribe(() => {
-      this.descricao = '';
+    let categoria: CategoriaRequest = new CategoriaRequest();
+    categoria.setValues(this.descricao, this.id)
+
+    this.categoriaService.save(categoria).subscribe({
+      complete: () => {
+        this.genericToast.showSalvoSucesso(`Categoria`)
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
+
   }
+
   @Output() close = new EventEmitter<void>();
   closeModal() {
     this.close.emit();

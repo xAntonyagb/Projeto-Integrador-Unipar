@@ -30,7 +30,7 @@ public class ServicoService {
     public ServicoEntity getById(long id) {
         Optional<ServicoEntity> servico = servicoRepository.findById(id);
         return servico.orElseThrow(
-                () -> new NotFoundException("servico", "Nenhum serviço foi encontrado com o id: " + id)
+                () -> new NotFoundException("servico/"+ id, "Nenhum serviço foi encontrado com o id: " + id)
         );
     }
 
@@ -84,7 +84,8 @@ public class ServicoService {
         if (isCategoriaPreenchida) {
             categoria = categoriaRepository.findById(servicoEntity.getCategoriaEntity().getId());
             if (categoria.isEmpty()) {
-                listErros.put("categoria", "Nenhuma categoria foi encontrada com o id: " + servicoEntity.getCategoriaEntity().getId());
+                long id = servicoEntity.getCategoriaEntity().getId();
+                listErros.put("categoria/"+ id, "Nenhuma categoria foi encontrada com o id: " + id);
             }
         }
 
@@ -92,7 +93,8 @@ public class ServicoService {
         if (isAmbientePreenchido) {
             ambiente = ambienteRepository.findById(servicoEntity.getAmbienteEntity().getId());
             if (ambiente.isEmpty()) {
-                listErros.put("ambiente", "Nenhum ambiente foi encontrado com o id: " + servicoEntity.getAmbienteEntity().getId());
+                long id = servicoEntity.getAmbienteEntity().getId();
+                listErros.put("ambiente/"+id, "Nenhum ambiente foi encontrado com o id: " + id);
             }
         }
 
@@ -101,7 +103,7 @@ public class ServicoService {
             patrimonio = patrimonioRepository.findById(servicoEntity.getPatrimonioEntity().getId());
             if (patrimonio.isEmpty()) {
                 long id = servicoEntity.getPatrimonioEntity().getId();
-                listErros.put("patrimonio"+id, "Nenhum patrimônio foi encontrado com o id: " + id);
+                listErros.put("patrimonio/"+id, "Nenhum patrimônio foi encontrado com o id: " + id);
             }
         }
 

@@ -1,13 +1,13 @@
-import { BlocoResponse } from "./bloco.response";
-import { ServicoResponse } from "./servico.response";
-import {PatrimonioResponse} from "./patrimonio.response";
-
+import { BlocoResponse } from "./Bloco.response";
+import { ServicoResponse } from "./Servico.response";
+import {PatrimonioResponse} from "./Patrimonio.response";
+import {PatrimonioSimpleResponse} from "./PatrimonioSimple.response";
 
 export interface AmbienteResponse {
-  id?: number;
-  descricao?: string;
-  bloco?: BlocoResponse[];
-  patrimonios?:PatrimonioResponse[];
-  qtdPatrimonios?:number;
-  servicos? :ServicoResponse[];
+  id : number;
+  descricao : string;
+  bloco : BlocoResponse[];
+  patrimonios : PatrimonioSimpleResponse[];
+  qtdPatrimonios : number;
+  lastChange : Date;
 }

@@ -1,4 +1,4 @@
-<div class="overlay" *ngIf="isModalOpen">
+<div class="overlay">
   <div class="modal-container">
     <div class="modal-header">
       <a (click)="closeModal()">
@@ -25,8 +25,9 @@
           <select
             id="ambiente-selecao"
             class="form-control"
-            [(ngModel)]="ambientesSelecionados[0]"
+            [(ngModel)]="novoServico.ambientesSelecionados"
             required>
+            <option value="" disabled selected>Selecione um ambiente</option>
             <option *ngFor="let ambiente of ambientesSelecionados" [value]="ambiente.id">
               {{ ambiente.descricao }}
             </option>
@@ -36,7 +37,7 @@
         <div class="form-row">
           <div class="desc-part col-8">
             <label for="servicoDescricao-{{i}}">Serviço:</label>
-            <input id="servicoDescricao-{{i}}" type="text" class="form-control" [(ngModel)]="servico.descricao">
+            <input id="servicoDescricao-{{i}}" type="text" class="form-control">
           </div>
           <div class="data-part col-4">
             <label for="categoria-{{i}}">Categoria:</label>

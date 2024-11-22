@@ -29,15 +29,15 @@
             <label>Prioridade</label>
             <div class="prioridade-config">
             <div>
-              <input type="radio" id="prioridade-baixa" name="prioridade" value="baixa" [(ngModel)]="prioridade">
+              <input type="radio" id="prioridade-baixa" name="prioridade" value="BAIXA" [(ngModel)]="prioridade">
               <label for="prioridade-baixa">Baixa</label>
             </div>
             <div>
-              <input type="radio" id="prioridade-media" name="prioridade" value="media" [(ngModel)]="prioridade">
+              <input type="radio" id="prioridade-media" name="prioridade" value="MEDIA" [(ngModel)]="prioridade">
               <label for="prioridade-media">Média</label>
             </div>
             <div>
-              <input type="radio" id="prioridade-alta" name="prioridade" value="alta" [(ngModel)]="prioridade">
+              <input type="radio" id="prioridade-alta" name="prioridade" value="ALTA" [(ngModel)]="prioridade">
               <label for="prioridade-alta">Alta</label>
             </div>
             </div>
@@ -47,7 +47,7 @@
           <div class="col">
             <label for="categoria">Categoria</label>
             <select id="categoria" [(ngModel)]="categoriaSelecionada" class="form-control">
-              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</option>
+              <option *ngFor="let categoria of categorias" [value]="categoria.id.toString()">{{ categoria.descricao }}</option>
             </select>
           </div>
           <div class="col">
@@ -62,7 +62,7 @@
           <textarea id="descricao" [(ngModel)]="descricao" class="form-control" rows="3" placeholder="Digite a descrição"></textarea>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Cadastrar</button>
+          <button type="submit" class="btn btn-success" (click)="adicionarTarefa()">Cadastrar</button>
         </div>
       </form>
     </div>

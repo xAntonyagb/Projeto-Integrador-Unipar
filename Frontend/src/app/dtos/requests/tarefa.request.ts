@@ -1,26 +1,34 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ApiResponse } from '../responses/api.response';
-import {PaginacaoResponse} from "../responses/paginacao.response";
+import {StatusTarefa} from "../enums/StatusTarefa.enum";
 
-
-@Injectable({
-  providedIn: 'root'
-})
 export class TarefaRequest {
-  private apiUrl = ApiResponse.DESENVOLVIMENTO;
+  id?: number;
+  titulo!: string;
+  descricao!: string;
+  ambiente!: number;
+  categoria!: number;
+  previsao!: Date;
+  prioridade!: string;
+  status!: StatusTarefa;
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  getTarefa(page: number, size: number): Observable<PaginacaoResponse<any>> {
-    const params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString());
-    return this.http.get<PaginacaoResponse<any>>(`${this.apiUrl}/tarefa/all`, { params });
-  }
-
-  setTarefa(ordemData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/tarefa`, ordemData);
+  setValues(
+    titulo: string,
+    descricao: string,
+    ambiente: number,
+    categoria: number,
+    previsao: Date,
+    prioridade: string,
+    status: StatusTarefa,
+    id?: number
+  ) {
+    this.id = id;
+    this.titulo = titulo;
+    this.descricao = descricao;
+    this.ambiente = ambiente;
+    this.categoria = categoria;
+    this.previsao = previsao;
+    this.prioridade = prioridade;
+    this.status = status;
   }
 }

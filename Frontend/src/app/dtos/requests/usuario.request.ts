@@ -1,30 +1,15 @@
-import { Injectable } from "@angular/core";
-import { ApiResponse } from "../responses/api.response";
-import { HttpClient } from "@angular/common/http";
-import {map, Observable, of} from "rxjs";
-import {AddUsuario, UsuarioResponse} from "../responses/usuario.response";
-import {catchError, tap} from "rxjs/operators";
+import {UsuarioPermissoes} from "../enums/UsuarioPermissoes.enum";
 
-@Injectable({
-    providedIn: 'root'
-  })
-  export class UsuarioRequest {
-    private apiUrl = ApiResponse.DESENVOLVIMENTO;
+export class UsuarioRequest {
+  username!: string;
+  password!: string;
+  permissoes!: UsuarioPermissoes[];
 
-    constructor(private http: HttpClient) {}
+  constructor() {}
 
-  getUsuario(): Observable<UsuarioResponse[]> {
-    return this.http.get<{ content: UsuarioResponse[] }>(`${this.apiUrl}/usuario/all`).pipe(
-      tap((response) => console.log('Dados paginados recebidos:', response)),
-
-      map((response) => response.content),
-      catchError((error) => {
-        console.error('Erro ao buscar usuários:', error);
-        return of([]);
-      })
-    );
+  setValues(username: string, password: string, permissoes: UsuarioPermissoes[]) {
+    this.username = username;
+    this.password = password;
+    this.permissoes = permissoes;
   }
-    setUsuario(usuarioData: AddUsuario): Observable<AddUsuario> {
-      return this.http.post<AddUsuario>(`${this.apiUrl}/auth/cadastrar`, usuarioData);
-    }
-  }
+}

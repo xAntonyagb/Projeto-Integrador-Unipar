@@ -1,13 +1,14 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AddTarefas, getStatusDescricao, StatusTarefa, TarefaResponse} from '../../../dtos/responses/tarefa.response';
-import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
-import { CategoriaResponse } from '../../../dtos/responses/categoria.response';
-import { AmbienteRequest } from '../../../dtos/requests/ambiente.request';
-import { CategoriaRequest } from '../../../dtos/requests/categoria.request';
-import { ModalRequest } from '../../../dtos/requests/modal.request';
-import { TarefaRequest } from '../../../dtos/requests/tarefa.request';
+import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
+import { CategoriaResponse } from '../../../dtos/responses/Categoria.response';
+import { AmbienteService } from '../../../services/ambiente.service';
+import { CategoriaService } from '../../../services/categoria.service';
+import { TarefaService } from '../../../services/tarefa.service';
 import {ToastrService} from "ngx-toastr";
-import {PaginacaoResponse} from "../../../dtos/responses/paginacao.response";
+import {getStatusDescricao, StatusTarefa} from "../../../dtos/enums/StatusTarefa.enum";
+import {TarefaRequest} from "../../../dtos/requests/Tarefa.request";
+import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import {TarefaResponse} from "../../../dtos/responses/Tarefa.response";
 
 @Component({
   selector: 'app-cadastrar-tarefa',
@@ -19,21 +20,21 @@ export class CadastrarTarefaComponent  implements OnInit {
   titulo ='';
   descricao = '';
   previsao = '';
-  categoriaSelecionada = '';
+  categoriaSelecionada: string = '';
   ambienteSelecionado = '';
   prioridade: string = '';
   statusSelecionado : string= '';
-  tarefasAdicionadas: AddTarefas[] = [];
+  tarefasAdicionadas: TarefaResponse[] = [];
   ambientes: AmbienteResponse[] = [];
   categorias: CategoriaResponse[] = [];
-  statusOptions = Object.values(StatusTarefa).filter(value => typeof value === 'number') as StatusTarefa[];
+  statusOptions = StatusTarefa;
   statusArray = Object.values(this.statusOptions);
 
   constructor(
-    private ambiente: AmbienteRequest,
-    private categoria : CategoriaRequest,
-    private tarefa : TarefaRequest,
-    private toastr: ToastrService,
+    private ambiente: AmbienteService,
+    private categoria : CategoriaService,
+    private tarefa : TarefaService,
+    private genericToast: ApiGenericToasts
   ){}
 
   ngOnInit() {
@@ -42,30 +43,44 @@ export class CadastrarTarefaComponent  implements OnInit {
   }
 
   loadTarefas() {
-    const page = 1;
-    const size = 10;
-    this.tarefa.getTarefa(page, size).subscribe((data: PaginacaoResponse<AddTarefas>) => {
-      this.tarefasAdicionadas = data.content;
+    this.tarefa.getAll(0, 999).subscribe({
+      next: (data) => {
+        this.tarefasAdicionadas = data.content;
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
   }
 
   loadCategorias() {
-    this.categoria.getCategorias().subscribe(data => {
-      this.categorias = data
+    this.categoria.getAll(0, 999).subscribe({
+      next: (data) => {
+        this.categorias = data.content;
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
   }
 
   loadAmbientes() {
-    const page = 1;
-    const size = 10;
-    this.ambiente.getAmbientes(page, size).subscribe((data: PaginacaoResponse<AmbienteResponse>) => {
-      console.log('Ambientes carregados:', data);
-      this.ambientes = Array.isArray(data.content) ? data.content : [];
+    this.ambiente.getAll(0, 999).subscribe({
+      next: (data) => {
+        this.ambientes = data.content;
+      },
+      error: (e) => {
+        if(e.status === 404) {
+          this.ambientes = [];
+        } else {
+          this.genericToast.showErro(e)
+        }
+      },
     });
   }
 
   adicionarTarefa() {
-    const novaTarefa: AddTarefas = {
+    const novaTarefa: TarefaRequest | any = {
       titulo: this.titulo,
       descricao: this.descricao,
       previsao: new Date(this.previsao),
@@ -75,9 +90,14 @@ export class CadastrarTarefaComponent  implements OnInit {
       ambiente: this.ambientes.find(amb => amb.id === +this.ambienteSelecionado) || {} as AmbienteResponse
     };
 
-    this.tarefa.setTarefa(novaTarefa).subscribe(() => {
-      this.toastr.success('Tarefa adicionada com sucesso!');
-      this.closeModal();
+    this.tarefa.save(novaTarefa).subscribe({
+      complete: () => {
+        this.genericToast.showSalvoSucesso(`Tarefa`)
+        this.closeModal();
+      },
+      error: (e) => {
+        this.genericToast.showErro(e)
+      },
     });
   }
 

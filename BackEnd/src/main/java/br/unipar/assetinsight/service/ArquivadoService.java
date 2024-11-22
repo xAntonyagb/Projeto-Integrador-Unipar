@@ -135,14 +135,14 @@ public class ArquivadoService implements IService<ArquivadoEntity> {
             arquivado = retorno.get();
         }
 
-        if(arquivado.getTipo() == TipoArquivadoEnum.ORDEM_SERVICO) {
+        arquivadoRepository.deleteById(id);
+
+        if (arquivado.getTipo() == TipoArquivadoEnum.ORDEM_SERVICO) {
             ordemServicoService.deleteById(arquivado.getOrdemServicoEntity().getId());
         }
-        else if(arquivado.getTipo() == TipoArquivadoEnum.TAREFA) {
+        else if (arquivado.getTipo() == TipoArquivadoEnum.TAREFA) {
             tarefaService.deleteById(arquivado.getTarefaEntity().getId());
         }
-
-        arquivadoRepository.deleteById(id);
     }
 
     public ArquivadoEntity restaurarById(long id) {
