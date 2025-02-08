@@ -11,6 +11,7 @@ import {Subject} from "rxjs";
 import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
 import {PatrimonioSimpleResponse} from "../../../dtos/responses/PatrimonioSimple.response";
 import {OrdemServicoRequest} from "../../../dtos/requests/OrdemServico.request";
+import { ServicoRequest } from '../../../dtos/requests/Servico.request';
 
 @Component({
   selector: 'app-cadastrar-ordem',
@@ -22,11 +23,14 @@ export class CadastrarOrdemComponent implements OnInit {
 
   isModalOpen = false;
   descricaoOrdem = '';
-  data = '';
+  data: Date | any = '';
   bloco: BlocoResponse[] = [];
-  servicosAdicionados: ServicoResponse[] = [];
-  ambientesSelecionados: AmbienteResponse[] = [];
   categoriasSelecionadas: CategoriaResponse[] = [];
+  ambientesDisponiveis: AmbienteResponse[] = [];
+  ambientesComServicos: {
+    ambiente: any;
+    servicos: any[];
+  }[] = [];
 
 
   novoServico: {
@@ -62,28 +66,35 @@ export class CadastrarOrdemComponent implements OnInit {
   }
 
   guardarOrdem() {
-    if (!this.ambientesSelecionados.length) {
-      this.toastr.warning('Selecione pelo menos um ambiente!');
-      return;
-    }
-
-    if (!this.servicosAdicionados.length) {
-      this.toastr.warning('Adicione pelo menos um serviço!');
-      return;
-    }
-
-    const ordemData = {
-      ambientes: this.ambientesSelecionados,
-      servicos: this.servicosAdicionados,
-      total: this.total
+    const allServicos = this.ambientesComServicos.flatMap(ambienteGroup => 
+      ambienteGroup.servicos.map(servico => ({
+        ...servico,
+        categoria: servico.categoria.id,
+        ambiente: ambienteGroup.ambiente.id
+      }))
+    );
+  
+    const ordem: OrdemServicoRequest | any = {
+      descricao: this.descricaoOrdem,
+      data: this.data,
+      servicos: allServicos
     };
-    this.toastr.success('Ordem cadastrada com sucesso!');
+
+    this.ordem.save(ordem).subscribe({
+      next: () => {
+        this.toastr.success('Ordem cadastrada com sucesso!');
+        this.closeModal();
+      },
+      error: () => {
+        this.toastr.error('Erro ao cadastrar ordem');
+      }
+    });
   }
 
   loadAmbientes() {
     this.ambiente.getAll(0, 10).subscribe({
       next: (data: any) => {
-        this.ambientesSelecionados = data.content || [];
+        this.ambientesDisponiveis = data.content || [];
       },
       error: (error) => {
         this.apiToast.showErro(error);
@@ -102,22 +113,23 @@ export class CadastrarOrdemComponent implements OnInit {
     });
   }
 
+  comparaAmbientes(a1: AmbienteResponse, a2: AmbienteResponse): boolean {
+    return a1 && a2 ? a1.id === a2.id : a1 === a2;
+  }
 
-  adicionarServico() {
-    const patrimonio: PatrimonioSimpleResponse = {
-      patrimonio: Number(this.novoServico.patrimonio)
-    }
-
-    const novoServico: ServicoResponse | any = {
-      patrimonio: patrimonio.patrimonio,
+  adicionarServico(ambienteIndex: number) {
+    const categoria = this.categoriasSelecionadas.find(cat => cat.id === +this.novoServico.categoriaSelecionada);
+    
+    const novoServico = {
+      patrimonio: Number(this.novoServico.patrimonio),
       quantidade: this.novoServico.quantidade,
       valorUnit: this.novoServico.valorNumerico,
       valorTotal: this.novoServico.quantidade * this.novoServico.valorNumerico,
-      categoria: this.categoriasSelecionadas.find(cat => cat.id === +this.novoServico.categoriaSelecionada) || {} as CategoriaResponse,
-      ambiente: this.ambientesSelecionados.find(amb => amb.id === +this.novoServico.ambientesSelecionados) || {} as AmbienteResponse,
+      categoria: categoria,
+      ambiente: this.ambientesComServicos[ambienteIndex].ambiente
     };
-
-    this.servicosAdicionados.push(novoServico);
+  
+    this.ambientesComServicos[ambienteIndex].servicos.push(novoServico);
     this.calcularTotal();
     this.resetNovoServico();
   }
@@ -132,31 +144,18 @@ export class CadastrarOrdemComponent implements OnInit {
       ambientesSelecionados: '',
     };
   }
+
   adicionarNovoAmbiente() {
-    //this.ambientesSelecionados.push({});
+    this.ambientesComServicos.push({
+      ambiente: null,
+      servicos: []
+    });
   }
 
   calcularTotal() {
-    this.total = this.servicosAdicionados.reduce((acc, cur) => acc + cur.valorTotal, 0);
-  }
-
-  guardarAmbiente() {
-    const ordem: OrdemServicoRequest | any = {
-      descricao: this.descricaoOrdem,
-      data: this.data,
-      servicos: this.servicosAdicionados,
-      total: this.total,
-    };
-
-    this.ordem.save(ordem).subscribe({
-      next: () => {
-        this.toastr.success('Ordem cadastrada com sucesso!');
-        this.closeModal();
-      },
-      error: () => {
-        this.toastr.error('Erro ao cadastrar ordem');
-      }
-    });
+    this.total = this.ambientesComServicos.reduce((acc, cur) => {
+      return acc + cur.servicos.reduce((sum, servico) => sum + servico.valorTotal, 0);
+    }, 0);
   }
 
   closeModal() {
@@ -164,28 +163,29 @@ export class CadastrarOrdemComponent implements OnInit {
     this.close.emit();
   }
 
-  removerServico(index: number) {
-    this.servicosAdicionados.splice(index, 1);
+  removerServico(ambienteIndex: number, servicoIndex: number) {
+    this.ambientesComServicos[ambienteIndex].servicos.splice(servicoIndex, 1);
     this.calcularTotal();
   }
 
-  onQuantidadeChange(event: any, index: number) {
+  onQuantidadeChange(event: any, ambienteIndex: number, servicoIndex: number) {
     const quantidade = Number(event.target.value);
     if (quantidade >= 0) {
-      this.servicosAdicionados[index].quantidade = quantidade;
-      this.recalcularSubtotal(index);
+      this.ambientesComServicos[ambienteIndex].servicos[servicoIndex].quantidade = quantidade;
+      this.recalcularSubtotal(ambienteIndex, servicoIndex);
     }
   }
-
-  onValorChange(event: any, index: number) {
+  
+  onValorChange(event: any, ambienteIndex: number, servicoIndex: number) {
     const valor = parseFloat(event.target.value);
     if (!isNaN(valor)) {
-      this.servicosAdicionados[index].valorUnit = valor;
-      this.recalcularSubtotal(index);
+      this.ambientesComServicos[ambienteIndex].servicos[servicoIndex].valorUnit = valor;
+      this.recalcularSubtotal(ambienteIndex, servicoIndex);
     }
   }
-  recalcularSubtotal(index: number) {
-    const servico = this.servicosAdicionados[index];
+  
+  recalcularSubtotal(ambienteIndex: number, servicoIndex: number) {
+    const servico = this.ambientesComServicos[ambienteIndex].servicos[servicoIndex];
     servico.valorTotal = servico.quantidade * servico.valorUnit;
     this.calcularTotal();
   }

@@ -18,65 +18,69 @@
           <input id="data" type="date" class="form-control" [(ngModel)]="data" required>
         </div>
       </div>
-      <div class="modal-body">
-        <!-- Dropdown de Ambientes -->
+      <div class="modal-body" *ngFor="let ambienteGroup of ambientesComServicos; let i = index">
         <div class="form-row">
-          <label for="ambiente-selecao">Selecionar Ambiente:</label>
+          <label for="ambiente-selecao-{{i}}">Selecionar Ambiente:</label>
           <select
-            id="ambiente-selecao"
+            id="ambiente-selecao-{{i}}"
             class="form-control"
-            [(ngModel)]="novoServico.ambientesSelecionados"
+            [(ngModel)]="ambienteGroup.ambiente"
+            [compareWith]="comparaAmbientes"
             required>
             <option value="" disabled selected>Selecione um ambiente</option>
-            <option *ngFor="let ambiente of ambientesSelecionados" [value]="ambiente.id">
+            <option *ngFor="let ambiente of ambientesDisponiveis" [ngValue]="ambiente">
               {{ ambiente.descricao }}
             </option>
           </select>
         </div>
-      <fieldset *ngFor="let servico of servicosAdicionados; let i = index">
-        <div class="form-row">
-          <div class="desc-part col-8">
-            <label for="servicoDescricao-{{i}}">Serviço:</label>
-            <input id="servicoDescricao-{{i}}" type="text" class="form-control">
+      
+        <fieldset *ngFor="let servico of ambienteGroup.servicos; let j = index">
+          <!-- Categoria -->
+          <div class="form-row">
+            <div class="desc-part col-8">
+              <label for="servicoDescricao-{{i}}">Serviço:</label>
+              <input id="servicoDescricao-{{i}}" type="text" class="form-control">
+            </div>
+            <div class="data-part col-4">
+              <label for="categoria-{{i}}">Categoria:</label>
+              <select id="categoria-{{i}}" class="form-control" [(ngModel)]="servico.categoria.id" required>
+                <option *ngFor="let categoria of categoriasSelecionadas" [value]="categoria.id">
+                  {{ categoria.descricao }}
+                </option>
+              </select>
+            </div>
           </div>
-          <div class="data-part col-4">
-            <label for="categoria-{{i}}">Categoria:</label>
-            <select id="categoria-{{i}}" class="form-control" [(ngModel)]="servico.categoria" required>
-              <option *ngFor="let categoria of categoriasSelecionadas" [value]="categoria.id">
-                {{ categoria.descricao }}
-              </option>
-            </select>
+          <!-- Valores -->
+          <div class="form-row">
+            <div class="desc-part col-4">
+              <label for="quantidade-{{i}}">Quantidade:</label>
+              <input id="quantidade-{{i}}-{{j}}" type="number" class="form-control" [(ngModel)]="servico.quantidade" (change)="onQuantidadeChange($event, i, j)">
+            </div>
+            <div class="data-part col-4">
+              <label for="valor-{{i}}">Valor Unitário:</label>
+              <input id="valor-{{i}}-{{j}}" type="number" class="form-control" [(ngModel)]="servico.valorUnit" (input)="onValorChange($event, i, j)">
+            </div>
+            <div class="data-part col-4">
+              <label>Subtotal:</label>
+              <input type="number" class="form-control" [value]="servico.valorTotal" readonly>
+            </div>
           </div>
+          <!-- Remover -->
+          <img src="assets/Vector.svg" class="removerServico" *ngIf="j > 0" (click)="removerServico(i, j)" />
+        </fieldset>
+
+        <div class="modal-footer">
+          <button (click)="adicionarServico(i)" class="btn btn-primary">Adicionar Serviço</button>
         </div>
-        <div class="form-row">
-          <div class="desc-part col-4">
-            <label for="quantidade-{{i}}">Quantidade:</label>
-            <input id="quantidade-{{i}}" type="number" class="form-control" [(ngModel)]="servico.quantidade" (change)="onQuantidadeChange($event, i)">
-          </div>
-          <div class="data-part col-4">
-            <label for="valor-{{i}}">Valor Unitário:</label>
-            <input id="valor-{{i}}" type="number" class="form-control" [(ngModel)]="servico.valorUnit" (input)="onValorChange($event, i)">
-          </div>
-          <div class="data-part col-4">
-            <label>Subtotal:</label>
-            <input type="number" class="form-control" [value]="servico.valorTotal" readonly>
-          </div>
-        </div>
-        <img src="assets/Vector.svg" class="removerServico" *ngIf="i > 0" (click)="removerServico(i)" />
-      </fieldset>
+      </div>
+      <div class="form-row" style="text-align: center;">
+        <button class="btn btn-primary" (click)="adicionarNovoAmbiente()">Adicionar Novo Ambiente</button>
+      </div>
+
       <div class="modal-footer">
-        <button (click)="adicionarServico()" class="btn btn-primary">Adicionar Novo Serviço</button>
+        <button (click)="guardarOrdem()" class="btn btn-success">Cadastrar</button>
+        <div class="total-value">Total: {{ total | currency:'BRL' }}</div>
       </div>
     </div>
-
-    <div class="form-row" style="text-align: center;">
-      <button class="btn btn-primary" (click)="adicionarNovoAmbiente()">Adicionar Novo Ambiente</button>
-    </div>
-
-    <div class="modal-footer">
-      <button (click)="guardarAmbiente()" class="btn btn-success">Cadastrar</button>
-      <div class="total-value">Total: {{ total | currency:'BRL' }}</div>
-    </div>
   </div>
-</div>
 </div>

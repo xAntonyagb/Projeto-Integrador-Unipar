@@ -23,12 +23,11 @@ export class CadastrarTarefaComponent  implements OnInit {
   categoriaSelecionada: string = '';
   ambienteSelecionado = '';
   prioridade: string = '';
-  statusSelecionado : string= '';
+  statusSelecionado : string = '';
   tarefasAdicionadas: TarefaResponse[] = [];
   ambientes: AmbienteResponse[] = [];
   categorias: CategoriaResponse[] = [];
-  statusOptions = StatusTarefa;
-  statusArray = Object.values(this.statusOptions);
+  statusArray = Object.entries(StatusTarefa).map(([key, value]) => ({ key, value }));
 
   constructor(
     private ambiente: AmbienteService,
@@ -85,9 +84,9 @@ export class CadastrarTarefaComponent  implements OnInit {
       descricao: this.descricao,
       previsao: new Date(this.previsao),
       prioridade: this.prioridade,
-      status: this.statusSelecionado as StatusTarefa,
-      categoria: this.categorias.find(cat => cat.id === +this.categoriaSelecionada) || {} as CategoriaResponse,
-      ambiente: this.ambientes.find(amb => amb.id === +this.ambienteSelecionado) || {} as AmbienteResponse
+      status: this.statusSelecionado,
+      categoria: (this.categorias.find(cat => cat.id === +this.categoriaSelecionada) || {} as CategoriaResponse).id,
+      ambiente: (this.ambientes.find(amb => amb.id === +this.ambienteSelecionado) || {} as AmbienteResponse).id
     };
 
     this.tarefa.save(novaTarefa).subscribe({

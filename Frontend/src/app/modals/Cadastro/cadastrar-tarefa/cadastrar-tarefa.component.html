@@ -21,7 +21,7 @@
         <div class="form-row">
           <div class="col">
             <label for="ambiente">Ambiente</label>
-            <select id="ambiente" [(ngModel)]="ambienteSelecionado" class="form-control">
+            <select id="ambiente" name="ambiente" [(ngModel)]="ambienteSelecionado" class="form-control">
               <option *ngFor="let ambiente of ambientes" [value]="ambiente.id">{{ ambiente.descricao }}</option>
             </select>
           </div>
@@ -46,20 +46,20 @@
         <div class="form-row">
           <div class="col">
             <label for="categoria">Categoria</label>
-            <select id="categoria" [(ngModel)]="categoriaSelecionada" class="form-control">
+            <select id="categoria" name="categoria" [(ngModel)]="categoriaSelecionada" class="form-control">
               <option *ngFor="let categoria of categorias" [value]="categoria.id.toString()">{{ categoria.descricao }}</option>
             </select>
           </div>
           <div class="col">
             <label for="status">Status</label>
-            <select id="status" [(ngModel)]="statusSelecionado" class="form-control">
-              <option *ngFor="let status of statusArray" [value]="status">{{ status }}</option>
+            <select id="status" [(ngModel)]="statusSelecionado" name="status" class="form-control">
+              <option *ngFor="let status of statusArray" [value]="status.key">{{ status.value }}</option>
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="descricao">Descrição</label>
-          <textarea id="descricao" [(ngModel)]="descricao" class="form-control" rows="3" placeholder="Digite a descrição"></textarea>
+          <textarea id="descricao" name="descricao" [(ngModel)]="descricao" class="form-control" rows="3" placeholder="Digite a descrição"></textarea>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success" (click)="adicionarTarefa()">Cadastrar</button>

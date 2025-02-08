@@ -3,7 +3,7 @@ import {ServicoRequest} from "./Servico.request";
 export class OrdemServicoRequest {
   id?: number;
   descricao?: string;
-  data?: Date;
+  data?: Date | string;
   servicos?: ServicoRequest[];
 
   constructor() {}
