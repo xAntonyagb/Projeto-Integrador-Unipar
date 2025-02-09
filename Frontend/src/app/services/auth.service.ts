@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = ApiBaseUrls.DESENVOLVIMENTO;
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
   constructor(private http: HttpClient, private router: Router, private toastr : ToastrService) {}
 

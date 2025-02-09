@@ -2,16 +2,14 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AmbienteService } from '../../../services/ambiente.service';
 import { CategoriaService } from '../../../services/categoria.service';
 import { CategoriaResponse } from '../../../dtos/responses/Categoria.response';
-import { ServicoResponse } from '../../../dtos/responses/Servico.response';
 import { OrdemService } from '../../../services/ordem.service';
 import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
 import { ToastrService } from 'ngx-toastr';
 import { BlocoResponse} from '../../../dtos/responses/Bloco.response';
-import {Subject} from "rxjs";
 import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
-import {PatrimonioSimpleResponse} from "../../../dtos/responses/PatrimonioSimple.response";
 import {OrdemServicoRequest} from "../../../dtos/requests/OrdemServico.request";
-import { ServicoRequest } from '../../../dtos/requests/Servico.request';
+import { PatrimonioResponse } from '../../../dtos/responses/Patrimonio.response';
+import { PatrimonioService } from '../../../services/patrimonio.service';
 
 @Component({
   selector: 'app-cadastrar-ordem',
@@ -27,6 +25,7 @@ export class CadastrarOrdemComponent implements OnInit {
   bloco: BlocoResponse[] = [];
   categoriasSelecionadas: CategoriaResponse[] = [];
   ambientesDisponiveis: AmbienteResponse[] = [];
+  patrimoniosDisponiveis: PatrimonioResponse[] = [];
   ambientesComServicos: {
     ambiente: any;
     servicos: any[];
@@ -40,6 +39,7 @@ export class CadastrarOrdemComponent implements OnInit {
     valorNumerico: number,
     categoriaSelecionada: string,
     ambientesSelecionados: string,
+    valorTotal: number
   } = {
     quantidade: 0,
     patrimonio: '',
@@ -47,6 +47,7 @@ export class CadastrarOrdemComponent implements OnInit {
     valorNumerico: 0,
     categoriaSelecionada: '',
     ambientesSelecionados: '',
+    valorTotal: 0
   };
 
   total = 0;
@@ -54,6 +55,7 @@ export class CadastrarOrdemComponent implements OnInit {
   constructor(
     private ambiente: AmbienteService,
     private categoria: CategoriaService,
+    private patrimonio: PatrimonioService,
     private ordem: OrdemService,
     private toastr: ToastrService,
     private apiToast: ApiGenericToasts
@@ -63,14 +65,19 @@ export class CadastrarOrdemComponent implements OnInit {
   ngOnInit() {
     this.loadCategorias();
     this.loadAmbientes();
+    this.loadPatrimonios();
   }
 
   guardarOrdem() {
     const allServicos = this.ambientesComServicos.flatMap(ambienteGroup => 
       ambienteGroup.servicos.map(servico => ({
-        ...servico,
-        categoria: servico.categoria.id,
-        ambiente: ambienteGroup.ambiente.id
+        descricao: servico.descricao,
+        quantidade: servico.quantidade,
+        valorUnit: servico.valorUnit,
+        valorTotal: servico.valorTotal,
+        categoria: servico.categoria?.id,
+        ambiente: ambienteGroup?.ambiente?.id,
+        patrimonio: servico.patrimonio?.patrimonio
       }))
     );
   
@@ -113,20 +120,38 @@ export class CadastrarOrdemComponent implements OnInit {
     });
   }
 
+  loadPatrimonios() {
+    this.patrimonio.getAll().subscribe({
+      next: (data: any) => {
+        this.patrimoniosDisponiveis = data.content || [];
+      },
+      error: () => {
+        this.toastr.error('Erro ao carregar patrimonios');
+      }
+    });
+  }
+
   comparaAmbientes(a1: AmbienteResponse, a2: AmbienteResponse): boolean {
     return a1 && a2 ? a1.id === a2.id : a1 === a2;
   }
 
+  comparaCategorias(c1: CategoriaResponse, c2: CategoriaResponse): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
+  comparaPatrimonios(p1: PatrimonioResponse, p2: PatrimonioResponse): boolean {
+    return p1 && p2 ? p1.patrimonio === p2.patrimonio : p1 === p2;
+  }
+
   adicionarServico(ambienteIndex: number) {
-    const categoria = this.categoriasSelecionadas.find(cat => cat.id === +this.novoServico.categoriaSelecionada);
-    
     const novoServico = {
+      descricao: '',
       patrimonio: Number(this.novoServico.patrimonio),
       quantidade: this.novoServico.quantidade,
       valorUnit: this.novoServico.valorNumerico,
       valorTotal: this.novoServico.quantidade * this.novoServico.valorNumerico,
-      categoria: categoria,
-      ambiente: this.ambientesComServicos[ambienteIndex].ambiente
+      categoria: { } as CategoriaResponse,
+      ambiente: this.ambientesComServicos[ambienteIndex].ambiente,
     };
   
     this.ambientesComServicos[ambienteIndex].servicos.push(novoServico);
@@ -142,6 +167,7 @@ export class CadastrarOrdemComponent implements OnInit {
       valorNumerico: 0,
       categoriaSelecionada: '',
       ambientesSelecionados: '',
+      valorTotal: 0
     };
   }
 
@@ -153,8 +179,10 @@ export class CadastrarOrdemComponent implements OnInit {
   }
 
   calcularTotal() {
-    this.total = this.ambientesComServicos.reduce((acc, cur) => {
-      return acc + cur.servicos.reduce((sum, servico) => sum + servico.valorTotal, 0);
+    this.total = this.ambientesComServicos.reduce((acc, ambiente) => {
+      return acc + ambiente.servicos.reduce((sum, servico) => {
+        return sum + (servico.quantidade || 0) * (servico.valorUnit || 0);
+      }, 0);
     }, 0);
   }
 
@@ -186,7 +214,12 @@ export class CadastrarOrdemComponent implements OnInit {
   
   recalcularSubtotal(ambienteIndex: number, servicoIndex: number) {
     const servico = this.ambientesComServicos[ambienteIndex].servicos[servicoIndex];
-    servico.valorTotal = servico.quantidade * servico.valorUnit;
+    this.ambientesComServicos[ambienteIndex].servicos[servicoIndex].valorTotal = servico.quantidade * servico.valorUnit;
+    this.calcularTotal();
+  }
+
+  removerAmbiente(ambienteIndex: number) {
+    this.ambientesComServicos.splice(ambienteIndex, 1);
     this.calcularTotal();
   }
 }

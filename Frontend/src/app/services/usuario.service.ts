@@ -13,7 +13,7 @@ import {CadastroRequest} from "../dtos/requests/Cadastro.request";
     providedIn: 'root'
   })
   export class UsuarioService {
-    private apiUrl = ApiBaseUrls.DESENVOLVIMENTO;
+    private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
     constructor(private http: HttpClient) {}
 

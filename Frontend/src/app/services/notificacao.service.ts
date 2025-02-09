@@ -10,7 +10,7 @@ import {PaginacaoResponse} from "../dtos/responses/Paginacao.response";
 })
 export class NotificacaoService {
 
-  private apiUrl = ApiBaseUrls.DESENVOLVIMENTO; // URL do endpoint do backend
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl(); // URL do endpoint do backend
 
   constructor(private http: HttpClient) {}
 

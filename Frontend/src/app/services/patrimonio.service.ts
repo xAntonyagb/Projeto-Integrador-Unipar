@@ -10,7 +10,7 @@ import {PatrimonioRequest} from "../dtos/requests/Patrimonio.request";
   providedIn: 'root'
 })
 export class PatrimonioService {
-  private apiUrl = `${ApiBaseUrls.DESENVOLVIMENTO}`;
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
   constructor(private http: HttpClient) {}
 

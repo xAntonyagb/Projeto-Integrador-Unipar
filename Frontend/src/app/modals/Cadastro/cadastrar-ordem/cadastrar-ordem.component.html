@@ -1,85 +1,108 @@
 <div class="overlay">
   <div class="modal-container">
-    <div class="modal-header">
-      <a (click)="closeModal()">
-        <img src="assets/Voltar.png">
-      </a>
-      <h2>Cadastro De Ordem De Serviço</h2>
+    <div class="modal-header bg-primary text-white p-3">
+      <h2 class="mb-0">Cadastro De Ordem De Serviço</h2>
+      <button class="btn btn-link text-white p-0" (click)="closeModal()">
+        <i class="pi pi-times"></i>
+      </button>
     </div>
 
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="desc-part col-8">
-          <label for="descricao">Descrição:</label>
-          <input id="descricao" type="text" class="form-control" [(ngModel)]="descricaoOrdem" required>
+    <div class="modal-body p-3">
+      <div class="row mb-3 g-2">
+        <div class="col-8 form-group">
+          <label class="form-label mb-1">Descrição da Ordem</label>
+          <input type="text" class="form-control" [(ngModel)]="descricaoOrdem">
         </div>
-        <div class="data-part col-4">
-          <label for="data">Data:</label>
-          <input id="data" type="date" class="form-control" [(ngModel)]="data" required>
+        <div class="col-4 form-group">
+          <label class="form-label mb-1">Data</label>
+          <input type="date" class="form-control" [(ngModel)]="data">
         </div>
-      </div>
-      <div class="modal-body" *ngFor="let ambienteGroup of ambientesComServicos; let i = index">
-        <div class="form-row">
-          <label for="ambiente-selecao-{{i}}">Selecionar Ambiente:</label>
-          <select
-            id="ambiente-selecao-{{i}}"
-            class="form-control"
-            [(ngModel)]="ambienteGroup.ambiente"
-            [compareWith]="comparaAmbientes"
-            required>
-            <option value="" disabled selected>Selecione um ambiente</option>
-            <option *ngFor="let ambiente of ambientesDisponiveis" [ngValue]="ambiente">
-              {{ ambiente.descricao }}
-            </option>
-          </select>
-        </div>
-      
-        <fieldset *ngFor="let servico of ambienteGroup.servicos; let j = index">
-          <!-- Categoria -->
-          <div class="form-row">
-            <div class="desc-part col-8">
-              <label for="servicoDescricao-{{i}}">Serviço:</label>
-              <input id="servicoDescricao-{{i}}" type="text" class="form-control">
-            </div>
-            <div class="data-part col-4">
-              <label for="categoria-{{i}}">Categoria:</label>
-              <select id="categoria-{{i}}" class="form-control" [(ngModel)]="servico.categoria.id" required>
-                <option *ngFor="let categoria of categoriasSelecionadas" [value]="categoria.id">
-                  {{ categoria.descricao }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <!-- Valores -->
-          <div class="form-row">
-            <div class="desc-part col-4">
-              <label for="quantidade-{{i}}">Quantidade:</label>
-              <input id="quantidade-{{i}}-{{j}}" type="number" class="form-control" [(ngModel)]="servico.quantidade" (change)="onQuantidadeChange($event, i, j)">
-            </div>
-            <div class="data-part col-4">
-              <label for="valor-{{i}}">Valor Unitário:</label>
-              <input id="valor-{{i}}-{{j}}" type="number" class="form-control" [(ngModel)]="servico.valorUnit" (input)="onValorChange($event, i, j)">
-            </div>
-            <div class="data-part col-4">
-              <label>Subtotal:</label>
-              <input type="number" class="form-control" [value]="servico.valorTotal" readonly>
-            </div>
-          </div>
-          <!-- Remover -->
-          <img src="assets/Vector.svg" class="removerServico" *ngIf="j > 0" (click)="removerServico(i, j)" />
-        </fieldset>
-
-        <div class="modal-footer">
-          <button (click)="adicionarServico(i)" class="btn btn-primary">Adicionar Serviço</button>
-        </div>
-      </div>
-      <div class="form-row" style="text-align: center;">
-        <button class="btn btn-primary" (click)="adicionarNovoAmbiente()">Adicionar Novo Ambiente</button>
       </div>
 
-      <div class="modal-footer">
-        <button (click)="guardarOrdem()" class="btn btn-success">Cadastrar</button>
-        <div class="total-value">Total: {{ total | currency:'BRL' }}</div>
+      <div class="ambiente-section mb-4" *ngFor="let ambienteGroup of ambientesComServicos; let i = index">
+        <label class="form-label mb-1">Ambiente</label>
+        <div class="ambiente-header mb-3 d-flex align-items-center gap-2">
+          <p-dropdown [options]="ambientesDisponiveis" [(ngModel)]="ambienteGroup.ambiente" optionLabel="descricao" 
+                    placeholder="Selecione o Ambiente" [filter]="true" class="w-100"></p-dropdown>
+          <button class="btn btn-danger btn-sm" (click)="removerAmbiente(i)">
+            <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="servico-container mb-3" *ngFor="let servico of ambienteGroup.servicos; let j = index">
+          <div class="servico-item p-3 border rounded position-relative">
+            <div class="row g-2 mb-2">
+              <div class="col-7 form-group">
+                <label class="form-label mb-1">Descrição do Serviço</label>
+                <input type="text" class="form-control" [(ngModel)]="servico.descricao">
+              </div>
+              <div class="col-5 form-group">
+                <label class="form-label mb-1">Categoria</label>
+                <p-dropdown [options]="categoriasSelecionadas" [(ngModel)]="servico.categoria" 
+                            placeholder="Selecione uma Categoria" optionLabel="descricao" [filter]="true"></p-dropdown>
+              </div>
+            </div>
+
+            <div class="row g-2 align-items-end">
+              <div class="col-4 form-group">
+                <label class="form-label mb-1">Patrimônio</label>
+                <p-dropdown [options]="patrimoniosDisponiveis" [(ngModel)]="servico.patrimonio"
+                            placeholder="Selecione um Patrimônio" optionLabel="patrimonio" [filter]="true"></p-dropdown>
+              </div>
+              
+              <div class="col-2 form-group">
+                <label class="form-label mb-1">Quantidade</label>
+                <input type="number" class="form-control form-control-sm no-spin" 
+                      [(ngModel)]="servico.quantidade" (change)="calcularTotal()">
+              </div>
+              
+              <div class="col-3 form-group">
+                <label class="form-label mb-1">Valor Unitário</label>
+                <input type="number" class="form-control form-control-sm no-spin" 
+                      [(ngModel)]="servico.valorUnit" (change)="calcularTotal()">
+              </div>
+              
+              <div class="col-2 form-group">
+                <label class="form-label mb-1">Subtotal</label>
+                <input type="number" class="form-control form-control-sm" 
+                      [value]="servico.quantidade * servico.valorUnit" readonly>
+              </div>
+              
+              <div class="col-1 text-end">
+                <button class="btn btn-danger btn-sm" (click)="removerServico(i, j)">
+                  <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-sm mb-3" (click)="adicionarServico(i)">
+          <i class="pi pi-plus"></i> Adicionar Serviço
+        </button>
+      </div>
+
+      <div class="text-end mb-3">
+        <button class="btn btn-success" (click)="adicionarNovoAmbiente()">
+          <i class="pi pi-plus"></i> Adicionar Ambiente
+        </button>
+      </div>
+    </div>
+    
+    <div class="modal-footer border-top p-3 bg-light">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-6">
+            <div class="total-value display-6 text-primary fw-bold">
+              Total: {{ total | currency:'BRL' }}
+            </div>
+          </div>
+          <div class="col-6 text-end">
+            <button class="btn btn-primary btn-lg px-5 py-3" (click)="guardarOrdem()">
+              <i class="pi pi-check-circle me-2"></i>Cadastrar
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

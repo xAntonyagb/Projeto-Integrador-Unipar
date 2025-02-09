@@ -12,7 +12,7 @@ import {StatusOrdem} from "../dtos/enums/StatusOrdem.enum";
   providedIn: 'root'
 })
 export class OrdemService {
-  private apiUrl = ApiBaseUrls.DESENVOLVIMENTO;
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
   constructor(private http: HttpClient) {}
 

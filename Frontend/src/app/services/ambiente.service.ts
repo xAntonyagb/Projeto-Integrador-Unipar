@@ -14,7 +14,7 @@ import {AmbienteRequest} from "../dtos/requests/Ambiente.request";
 
 export class AmbienteService {
 
-  private apiUrl=ApiBaseUrls.DESENVOLVIMENTO;
+  private apiUrl=ApiBaseUrls.getBaseUrl();
 
   constructor(private http:HttpClient, private auth: AuthService){}
 

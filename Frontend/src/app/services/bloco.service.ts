@@ -10,7 +10,7 @@ import {PaginacaoResponse} from "../dtos/responses/Paginacao.response";
   providedIn: 'root',
 })
 export class BlocoService {
-  private readonly apiUrl = ApiBaseUrls.DESENVOLVIMENTO;
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();;
 
   constructor(private http: HttpClient) {}
 

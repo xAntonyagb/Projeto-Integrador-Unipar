@@ -13,7 +13,7 @@ import {PrioridadeTarefa} from "../dtos/enums/PrioridadeTarefa.enum";
   providedIn: 'root'
 })
 export class TarefaService {
-  private apiUrl = ApiBaseUrls.DESENVOLVIMENTO;
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
   constructor(private http: HttpClient) {}
 

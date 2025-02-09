@@ -11,7 +11,7 @@ import {PaginacaoResponse} from "../dtos/responses/Paginacao.response";
   providedIn: 'root',
 })
 export class CategoriaService {
-  private readonly apiUrl = ApiBaseUrls.DESENVOLVIMENTO;
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();;
 
   constructor(private http: HttpClient) {}
 

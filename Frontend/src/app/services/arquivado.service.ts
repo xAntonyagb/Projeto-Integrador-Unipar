@@ -10,7 +10,7 @@ import {TipoArquivado} from "../dtos/enums/TipoArquivado.enum";
   providedIn: 'root',
 })
 export class ArquivadosRequest {
-  private readonly apiUrl = ApiBaseUrls.DESENVOLVIMENTO
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
   constructor(private http: HttpClient) {}
 

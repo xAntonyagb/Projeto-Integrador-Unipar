@@ -11,7 +11,7 @@ import {RelatoriosFullResponse} from "../dtos/responses/relatorios/RelatoriosFul
   providedIn: 'root'
 })
 export class RelatoriosService {
-  private apiUrl = `${ApiBaseUrls.DESENVOLVIMENTO}`;
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
   constructor(private http: HttpClient) {}
 
