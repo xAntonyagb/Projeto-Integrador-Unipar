@@ -22,7 +22,6 @@ export class BlocoService {
     size: number = 10,
     descricao?: string,
   ): Observable<PaginacaoResponse<BlocoResponse>> {
-    this.loadingService.show();
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
