@@ -1,21 +1,26 @@
-import { AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
 import { AmbienteService } from '../../../services/ambiente.service';
-import {MatPaginator} from "@angular/material/paginator";
-import {PaginacaoResponse} from "../../../dtos/responses/Paginacao.response";
-import {ToastrService} from "ngx-toastr";
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import { MatPaginator } from '@angular/material/paginator';
+import { PaginacaoResponse } from '../../../dtos/responses/Paginacao.response';
+import { ToastrService } from 'ngx-toastr';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-tab-ambientes',
   templateUrl: './tab-ambientes.component.html',
-  styleUrls: ['./tab-ambientes.component.scss']
+  styleUrls: ['./tab-ambientes.component.scss'],
 })
-export class TabAmbientesComponent  implements AfterViewInit, OnInit {
-
+export class TabAmbientesComponent implements AfterViewInit, OnInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
 
   isModalOpen = false;
@@ -31,9 +36,8 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit {
 
   constructor(
     private ambiente: AmbienteService,
-    private genericToast: ApiGenericToasts
-  ) {
-  }
+    private genericToast: ApiGenericToasts,
+  ) {}
 
   openModal() {
     this.isModalOpen = true;
@@ -46,7 +50,6 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.loadAmbientes();
-
   }
 
   ngAfterViewInit() {
@@ -60,10 +63,10 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit {
         this.dataSource.data = response.content;
       },
       error: (e) => {
-        if(e.status === 404) {
+        if (e.status === 404) {
           this.dataSource.data = [];
         } else {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         }
       },
     });
@@ -88,10 +91,9 @@ export class TabAmbientesComponent  implements AfterViewInit, OnInit {
           this.loadAmbientes();
         },
         error: (e) => {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         },
       });
     }
   }
-
 }

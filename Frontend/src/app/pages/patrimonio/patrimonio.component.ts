@@ -1,19 +1,25 @@
-import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {PatrimonioResponse} from "../../dtos/responses/Patrimonio.response";
-import {PatrimonioService} from "../../services/patrimonio.service";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort, Sort} from "@angular/material/sort";
-import {ToastrService} from "ngx-toastr";
-import {LiveAnnouncer} from "@angular/cdk/a11y";
-import {AmbienteService} from "../../services/ambiente.service";
-import {AmbienteResponse} from "../../dtos/responses/Ambiente.response";
-import {ApiGenericToasts} from "../../infra/api/api.genericToasts";
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { PatrimonioResponse } from '../../dtos/responses/Patrimonio.response';
+import { PatrimonioService } from '../../services/patrimonio.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { ToastrService } from 'ngx-toastr';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { AmbienteService } from '../../services/ambiente.service';
+import { AmbienteResponse } from '../../dtos/responses/Ambiente.response';
+import { ApiGenericToasts } from '../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-patrimonio',
   templateUrl: './patrimonio.component.html',
-  styleUrl: './patrimonio.component.scss'
+  styleUrl: './patrimonio.component.scss',
 })
 export class PatrimonioComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
@@ -33,7 +39,7 @@ export class PatrimonioComponent implements OnInit, AfterViewInit {
     private patrimonioRequest: PatrimonioService,
     private toastr: ToastrService,
     private ambienteRequest: AmbienteService,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {}
 
   ngOnInit() {
@@ -61,12 +67,12 @@ export class PatrimonioComponent implements OnInit, AfterViewInit {
       },
 
       error: (e) => {
-        if(e.status === 404) {
+        if (e.status === 404) {
           this.dataSource.data = [];
         } else {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         }
-      }
+      },
     });
   }
 
@@ -83,12 +89,10 @@ export class PatrimonioComponent implements OnInit, AfterViewInit {
 
   openModal() {
     this.isModalOpen = true;
-
   }
 
   closeModal() {
     this.isModalOpen = false;
     this.loadPatrimonios();
   }
-
 }

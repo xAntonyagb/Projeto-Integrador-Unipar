@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -8,7 +9,7 @@ body, html {
   font-family: Inter;
 }
 
-.centro{
+.centro {
   border-radius: 10px;
   top: 120px;
   left: 340px;
@@ -21,12 +22,11 @@ body, html {
   text-decoration: none;
 }
 
-.header{
+.header {
   padding: 10px;
 }
 
-.nomePagina
-{
+.nomePagina {
   text-align: end;
   right: 10px;
   font-weight: 700;
@@ -42,18 +42,16 @@ body, html {
   color: gray;
   font-weight: bold;
 }
-.cinza
-{
+.cinza {
   padding-top: 20px;
   text-size-adjust: 10px;
   color: gray;
 }
-.novo-ambiente{
+.novo-ambiente {
   background-color: white;
-  color: #D6001C;
-  border-color: #D6001C;
+  color: #d6001c;
+  border-color: #d6001c;
   border-radius: 6px;
-
 }
 .header-container {
   margin-top: 24px;
@@ -65,8 +63,8 @@ body, html {
 
 .large-button {
   font-size: 1.2em;
-  color: #D6001C;
-  border-color: #D6001C ;
+  color: #d6001c;
+  border-color: #d6001c;
   font-weight: 700;
   background-color: white;
   position: relative;
@@ -142,7 +140,7 @@ th.mat-sort-header-sorted {
   right: 1rem;
   z-index: 1000;
   width: auto;
-  overflow:hidden;
+  overflow: hidden;
 }
 .col-id {
   padding-right: 4rem;
@@ -160,11 +158,7 @@ th.mat-sort-header-sorted {
 }
 
 .col-dtExcluir {
-
-
-
 }
 
 .col-excluir {
-
 }

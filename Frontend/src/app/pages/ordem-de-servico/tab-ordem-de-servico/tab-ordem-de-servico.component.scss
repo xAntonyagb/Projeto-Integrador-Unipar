@@ -1,18 +1,16 @@
-body{
+body {
   font-family: Inter;
   overflow: hidden;
 }
-.cinza
-{
+.cinza {
   padding-top: 20px;
   color: gray;
 }
-.novo-ambiente{
+.novo-ambiente {
   background-color: white;
-  color: #D6001C;
-  border-color: #D6001C;
+  color: #d6001c;
+  border-color: #d6001c;
   border-radius: 6px;
-
 }
 .header-container {
   display: flex;
@@ -20,14 +18,13 @@ body{
   gap: 16px;
   margin-bottom: 16px;
 }
-.modal{
-z-index: 1000;
-
+.modal {
+  z-index: 1000;
 }
 .large-button {
   font-size: 1.2em;
-  color: #D6001C;
-  border-color: #D6001C ;
+  color: #d6001c;
+  border-color: #d6001c;
   font-weight: 700;
   background-color: white;
   position: relative;
@@ -52,21 +49,20 @@ z-index: 1000;
   right: 1rem;
   z-index: 1000;
   width: auto;
-  overflow:hidden;
+  overflow: hidden;
 }
 .status-incompleta {
   color: red;
 }
 .status-preenchida {
-  color:green;
+  color: green;
 }
 table {
   width: 100%;
   max-width: 100%;
-  overflow:hidden;
+  overflow: hidden;
 }
 .mat-table {
   table-layout: fixed;
   word-wrap: break-word;
 }
-

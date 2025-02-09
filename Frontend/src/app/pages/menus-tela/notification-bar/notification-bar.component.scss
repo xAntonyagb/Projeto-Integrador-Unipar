@@ -1,5 +1,5 @@
 .notification-bar {
-  font-family:"Inter";
+  font-family: "Inter";
   position: absolute;
   top: 2rem;
   right: 8rem;
@@ -20,32 +20,31 @@
   }
 }
 
-  h2 {
-    margin-top: 0;
-    font-size: 1.5em;
-    color: white;
-  }
+h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: white;
+}
 
-  ul {
-    list-style-type: none;
-    padding: 0;
+ul {
+  list-style-type: none;
+  padding: 0;
 
-    li {
-      margin-bottom: 15px;
-      padding: 10px;
-      background: #444;
-      border-radius: 5px;
+  li {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #444;
+    border-radius: 5px;
 
-      strong {
-        color: #f39c12;
-      }
+    strong {
+      color: #f39c12;
+    }
 
-      small {
-        display: block;
-        margin-top: 5px;
-        font-size: 0.9em;
-        color: black;
-      }
+    small {
+      display: block;
+      margin-top: 5px;
+      font-size: 0.9em;
+      color: black;
     }
   }
-
+}

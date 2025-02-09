@@ -1,9 +1,9 @@
-import {UsuarioResponse} from "./Usuario.response";
+import { UsuarioResponse } from './Usuario.response';
 
 export interface BlocoResponse {
-    id: number;
-    descricao: string;
-    qtdAmbientes: number;
-    lastChange: Date;
-    lastChangedBy : UsuarioResponse;
-  }
+  id: number;
+  descricao: string;
+  qtdAmbientes: number;
+  lastChange: Date;
+  lastChangedBy: UsuarioResponse;
+}

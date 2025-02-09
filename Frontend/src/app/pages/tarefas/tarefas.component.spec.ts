@@ -8,10 +8,9 @@ describe('TarefasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TarefasComponent]
-    })
-    .compileComponents();
-    
+      declarations: [TarefasComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TarefasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

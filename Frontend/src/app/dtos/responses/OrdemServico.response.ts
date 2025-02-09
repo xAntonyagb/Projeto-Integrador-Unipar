@@ -1,6 +1,6 @@
-import {ServicoResponse} from "./Servico.response";
-import {UsuarioResponse} from "./Usuario.response";
-import {StatusOrdem} from "../enums/StatusOrdem.enum";
+import { ServicoResponse } from './Servico.response';
+import { UsuarioResponse } from './Usuario.response';
+import { StatusOrdem } from '../enums/StatusOrdem.enum';
 
 export interface OrdemServicoResponse {
   id: Number;
@@ -14,7 +14,3 @@ export interface OrdemServicoResponse {
   lastChange: Date;
   arquivada: Boolean;
 }
-
-
-
-

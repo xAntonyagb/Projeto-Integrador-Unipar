@@ -8,10 +8,9 @@ describe('TabBlocoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TabBlocoComponent]
-    })
-    .compileComponents();
-    
+      declarations: [TabBlocoComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TabBlocoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

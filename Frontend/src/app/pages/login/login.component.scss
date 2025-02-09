@@ -1,10 +1,9 @@
-.form-container{
+.form-container {
   max-width: 300px;
   padding: 1rem;
-
-
 }
-html,body{
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -13,11 +12,11 @@ html,body{
   color: red;
   margin-top: 10px;
 }
-body{
+body {
   margin: 0;
- padding: 0;
- }
- .cookie-consent {
+  padding: 0;
+}
+.cookie-consent {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -35,7 +34,7 @@ body{
   margin: 0;
   padding: 0px;
 }
-.btnAccept{
+.btnAccept {
   margin-top: 10px;
   justify-content: right;
 }

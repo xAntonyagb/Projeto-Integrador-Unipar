@@ -1,13 +1,12 @@
-<div class="notification-bar" [ngClass]="{ 'open': isOpen }">
+<div class="notification-bar" [ngClass]="{ open: isOpen }">
   <h2>Notificações</h2>
-  <div *ngIf="notificacoes.length === 0">
-    Nenhuma notificação disponível.
-  </div>
+  <div *ngIf="notificacoes.length === 0">Nenhuma notificação disponível.</div>
   <div *ngIf="notificacoes.length > 0">
     <ul>
       <li *ngFor="let notificacao of notificacoes">
-        <strong>{{ notificacao.titulo }}</strong>: {{ notificacao.descricao }} <br>
-        <small>Enviado em: {{ notificacao.dtEnvio | date:'short' }}</small>
+        <strong>{{ notificacao.titulo }}</strong
+        >: {{ notificacao.descricao }} <br />
+        <small>Enviado em: {{ notificacao.dtEnvio | date: "short" }}</small>
       </li>
     </ul>
   </div>

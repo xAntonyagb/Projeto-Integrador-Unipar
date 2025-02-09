@@ -1,19 +1,19 @@
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import {NotificacaoResponse} from "../../../dtos/responses/Notificacao.response";
-import {NotificacaoService} from "../../../services/notificacao.service";
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { NotificacaoResponse } from '../../../dtos/responses/Notificacao.response';
+import { NotificacaoService } from '../../../services/notificacao.service';
 
 @Component({
   selector: 'app-notification-bar',
   templateUrl: './notification-bar.component.html',
-  styleUrls: ['./notification-bar.component.scss']
+  styleUrls: ['./notification-bar.component.scss'],
 })
-export class NotificationBarComponent  implements OnInit {
+export class NotificationBarComponent implements OnInit {
   notificacoes: NotificacaoResponse[] = [];
   isOpen = false;
 
   constructor(
     private notificacao: NotificacaoService,
-    private eRef: ElementRef
+    private eRef: ElementRef,
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ export class NotificationBarComponent  implements OnInit {
       },
       (error) => {
         console.error('Erro ao carregar notificações:', error);
-      }
+      },
     );
   }
   toggleVisibility(): void {

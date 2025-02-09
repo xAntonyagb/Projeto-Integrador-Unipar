@@ -1,17 +1,17 @@
 .overlay {
-    font-family:"Inter";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-weight: bold;
-  }
+  font-family: "Inter";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+}
 
 .modal-container {
   background-color: white;
@@ -24,19 +24,19 @@
   flex-direction: column;
 }
 
-  .modal-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("/assets/HEADDER1.png");
-    background-size: cover;
-    background-position: center;
-  }
-
-.modal-header a{
-  position:fixed;
+.modal-header {
   display: flex;
-  left:43rem;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/assets/HEADDER1.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.modal-header a {
+  position: fixed;
+  display: flex;
+  left: 43rem;
   height: 3rem;
 }
 
@@ -44,10 +44,10 @@
   padding: 1rem;
   margin-top: 0.8rem;
   color: #000000;
-  font-size:1rem;
+  font-size: 1rem;
 }
 .modal-footer {
-  margin-top:3rem;
+  margin-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;

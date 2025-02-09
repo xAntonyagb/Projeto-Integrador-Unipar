@@ -1,4 +1,4 @@
 export interface AmbienteSimpleResponse {
-  id : Number;
-  descricao : String;
+  id: Number;
+  descricao: String;
 }

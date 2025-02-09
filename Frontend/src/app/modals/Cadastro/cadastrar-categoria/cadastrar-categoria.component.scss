@@ -1,5 +1,5 @@
 .overlay {
-  font-family:"Inter";
+  font-family: "Inter";
   position: fixed;
   top: 0;
   left: 0;
@@ -32,10 +32,10 @@
   background-size: cover;
   background-position: center;
 }
-.modal-header a{
-  position:fixed;
+.modal-header a {
+  position: fixed;
   display: flex;
-  left:43rem;
+  left: 43rem;
   height: 3rem;
 }
 
@@ -46,7 +46,7 @@
   color: #000000;
 }
 .modal-footer {
-  margin-top:3rem;
+  margin-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;

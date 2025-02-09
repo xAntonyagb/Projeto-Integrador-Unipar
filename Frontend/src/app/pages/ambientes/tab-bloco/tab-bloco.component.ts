@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MatTableDataSource } from '@angular/material/table';
 import { BlocoService } from '../../../services/bloco.service';
-import {BlocoResponse} from '../../../dtos/responses/Bloco.response';
-import {BlocoRequest} from "../../../dtos/requests/Bloco.request";
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
+import { BlocoRequest } from '../../../dtos/requests/Bloco.request';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-tab-bloco',
   templateUrl: './tab-bloco.component.html',
-  styleUrl: './tab-bloco.component.scss'
+  styleUrl: './tab-bloco.component.scss',
 })
 export class TabBlocoComponent implements OnInit {
   items: MenuItem[] | undefined;
@@ -20,9 +20,8 @@ export class TabBlocoComponent implements OnInit {
 
   constructor(
     private bloco: BlocoService,
-    private genericToast: ApiGenericToasts
-  ) {
-  }
+    private genericToast: ApiGenericToasts,
+  ) {}
 
   ngOnInit() {
     this.loadBlocos();
@@ -43,13 +42,13 @@ export class TabBlocoComponent implements OnInit {
         this.dataSource.data = data.content;
       },
       error: (e) => {
-        if(e.status === 404) {
+        if (e.status === 404) {
           this.dataSource.data = [];
         } else {
-          if(e.status === 404) {
+          if (e.status === 404) {
             this.dataSource.data = [];
           } else {
-            this.genericToast.showErro(e)
+            this.genericToast.showErro(e);
           }
         }
       },
@@ -64,7 +63,7 @@ export class TabBlocoComponent implements OnInit {
           this.loadBlocos();
         },
         error: (e) => {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         },
       });
     }
@@ -88,5 +87,4 @@ export class TabBlocoComponent implements OnInit {
 
     return retorno;
   }
-
 }

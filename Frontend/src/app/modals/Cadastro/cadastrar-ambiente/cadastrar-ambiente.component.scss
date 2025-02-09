@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  font-family:"Inter";
+  font-family: "Inter";
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
@@ -16,9 +16,9 @@
   background: #fff;
   border-radius: 8px;
   max-width: 60rem;
-  max-height:40rem;
+  max-height: 40rem;
   width: 100%;
-  height:100%;
+  height: 100%;
   z-index: 10010;
 }
 
@@ -29,14 +29,14 @@
   background-image: url("/assets/HEADDER1.png");
   background-size: cover;
   background-position: center;
-  color:#fff;
+  color: #fff;
 }
-.modal-header a{
+.modal-header a {
   position: absolute;
   display: flex;
-  left:30rem;
+  left: 30rem;
   height: 3rem;
-  cursor:pointer;
+  cursor: pointer;
 }
 .modal-body {
   margin-top: 1rem;
@@ -71,32 +71,32 @@ li {
   background: #fff;
   border-radius: 8px;
   max-width: 25rem;
-  max-height:25rem;
+  max-height: 25rem;
   width: 100%;
-  height:100%
+  height: 100%;
 }
 .modal-footer-find {
   display: flex;
   justify-content: flex-end;
   padding-top: 10rem;
-  padding-right:2rem;
+  padding-right: 2rem;
 }
 .modal-header-find {
-  font-size:1rem;
+  font-size: 1rem;
   padding-top: 1rem;
-  padding-left:1rem;
+  padding-left: 1rem;
   display: flex;
   align-items: center;
   justify-content: left;
-  color:#000;
+  color: #000;
 }
-.close-button{
-  background-color:white;
+.close-button {
+  background-color: white;
   position: absolute;
   display: flex;
-  left:69rem;
+  left: 69rem;
   height: 2rem;
-  cursor:pointer;
+  cursor: pointer;
 }
 .modal-body-find {
   margin-top: 1rem;
@@ -105,6 +105,6 @@ li {
   display: flex;
   justify-content: space-between;
 }
-.patrimonio-check{
-  padding-left:0.5rem;
+.patrimonio-check {
+  padding-left: 0.5rem;
 }

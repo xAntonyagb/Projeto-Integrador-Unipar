@@ -5,16 +5,16 @@ import { CategoriaResponse } from '../../../dtos/responses/Categoria.response';
 import { OrdemService } from '../../../services/ordem.service';
 import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
 import { ToastrService } from 'ngx-toastr';
-import { BlocoResponse} from '../../../dtos/responses/Bloco.response';
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
-import {OrdemServicoRequest} from "../../../dtos/requests/OrdemServico.request";
+import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { OrdemServicoRequest } from '../../../dtos/requests/OrdemServico.request';
 import { PatrimonioResponse } from '../../../dtos/responses/Patrimonio.response';
 import { PatrimonioService } from '../../../services/patrimonio.service';
 
 @Component({
   selector: 'app-cadastrar-ordem',
   templateUrl: './cadastrar-ordem.component.html',
-  styleUrl: './cadastrar-ordem.component.scss'
+  styleUrl: './cadastrar-ordem.component.scss',
 })
 export class CadastrarOrdemComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
@@ -31,15 +31,14 @@ export class CadastrarOrdemComponent implements OnInit {
     servicos: any[];
   }[] = [];
 
-
   novoServico: {
-    patrimonio: string,
-    servicoDescricao: string,
-    quantidade: number,
-    valorNumerico: number,
-    categoriaSelecionada: string,
-    ambientesSelecionados: string,
-    valorTotal: number
+    patrimonio: string;
+    servicoDescricao: string;
+    quantidade: number;
+    valorNumerico: number;
+    categoriaSelecionada: string;
+    ambientesSelecionados: string;
+    valorTotal: number;
   } = {
     quantidade: 0,
     patrimonio: '',
@@ -47,7 +46,7 @@ export class CadastrarOrdemComponent implements OnInit {
     valorNumerico: 0,
     categoriaSelecionada: '',
     ambientesSelecionados: '',
-    valorTotal: 0
+    valorTotal: 0,
   };
 
   total = 0;
@@ -58,9 +57,8 @@ export class CadastrarOrdemComponent implements OnInit {
     private patrimonio: PatrimonioService,
     private ordem: OrdemService,
     private toastr: ToastrService,
-    private apiToast: ApiGenericToasts
-  ) {
-  }
+    private apiToast: ApiGenericToasts,
+  ) {}
 
   ngOnInit() {
     this.loadCategorias();
@@ -69,22 +67,22 @@ export class CadastrarOrdemComponent implements OnInit {
   }
 
   guardarOrdem() {
-    const allServicos = this.ambientesComServicos.flatMap(ambienteGroup => 
-      ambienteGroup.servicos.map(servico => ({
+    const allServicos = this.ambientesComServicos.flatMap((ambienteGroup) =>
+      ambienteGroup.servicos.map((servico) => ({
         descricao: servico.descricao,
         quantidade: servico.quantidade,
         valorUnit: servico.valorUnit,
         valorTotal: servico.valorTotal,
         categoria: servico.categoria?.id,
         ambiente: ambienteGroup?.ambiente?.id,
-        patrimonio: servico.patrimonio?.patrimonio
-      }))
+        patrimonio: servico.patrimonio?.patrimonio,
+      })),
     );
-  
+
     const ordem: OrdemServicoRequest | any = {
       descricao: this.descricaoOrdem,
       data: this.data,
-      servicos: allServicos
+      servicos: allServicos,
     };
 
     this.ordem.save(ordem).subscribe({
@@ -94,7 +92,7 @@ export class CadastrarOrdemComponent implements OnInit {
       },
       error: () => {
         this.toastr.error('Erro ao cadastrar ordem');
-      }
+      },
     });
   }
 
@@ -105,7 +103,7 @@ export class CadastrarOrdemComponent implements OnInit {
       },
       error: (error) => {
         this.apiToast.showErro(error);
-      }
+      },
     });
   }
 
@@ -116,7 +114,7 @@ export class CadastrarOrdemComponent implements OnInit {
       },
       error: () => {
         this.toastr.error('Erro ao carregar categorias');
-      }
+      },
     });
   }
 
@@ -127,7 +125,7 @@ export class CadastrarOrdemComponent implements OnInit {
       },
       error: () => {
         this.toastr.error('Erro ao carregar patrimonios');
-      }
+      },
     });
   }
 
@@ -150,10 +148,10 @@ export class CadastrarOrdemComponent implements OnInit {
       quantidade: this.novoServico.quantidade,
       valorUnit: this.novoServico.valorNumerico,
       valorTotal: this.novoServico.quantidade * this.novoServico.valorNumerico,
-      categoria: { } as CategoriaResponse,
+      categoria: {} as CategoriaResponse,
       ambiente: this.ambientesComServicos[ambienteIndex].ambiente,
     };
-  
+
     this.ambientesComServicos[ambienteIndex].servicos.push(novoServico);
     this.calcularTotal();
     this.resetNovoServico();
@@ -167,22 +165,25 @@ export class CadastrarOrdemComponent implements OnInit {
       valorNumerico: 0,
       categoriaSelecionada: '',
       ambientesSelecionados: '',
-      valorTotal: 0
+      valorTotal: 0,
     };
   }
 
   adicionarNovoAmbiente() {
     this.ambientesComServicos.push({
       ambiente: null,
-      servicos: []
+      servicos: [],
     });
   }
 
   calcularTotal() {
     this.total = this.ambientesComServicos.reduce((acc, ambiente) => {
-      return acc + ambiente.servicos.reduce((sum, servico) => {
-        return sum + (servico.quantidade || 0) * (servico.valorUnit || 0);
-      }, 0);
+      return (
+        acc +
+        ambiente.servicos.reduce((sum, servico) => {
+          return sum + (servico.quantidade || 0) * (servico.valorUnit || 0);
+        }, 0)
+      );
     }, 0);
   }
 
@@ -199,22 +200,28 @@ export class CadastrarOrdemComponent implements OnInit {
   onQuantidadeChange(event: any, ambienteIndex: number, servicoIndex: number) {
     const quantidade = Number(event.target.value);
     if (quantidade >= 0) {
-      this.ambientesComServicos[ambienteIndex].servicos[servicoIndex].quantidade = quantidade;
+      this.ambientesComServicos[ambienteIndex].servicos[
+        servicoIndex
+      ].quantidade = quantidade;
       this.recalcularSubtotal(ambienteIndex, servicoIndex);
     }
   }
-  
+
   onValorChange(event: any, ambienteIndex: number, servicoIndex: number) {
     const valor = parseFloat(event.target.value);
     if (!isNaN(valor)) {
-      this.ambientesComServicos[ambienteIndex].servicos[servicoIndex].valorUnit = valor;
+      this.ambientesComServicos[ambienteIndex].servicos[
+        servicoIndex
+      ].valorUnit = valor;
       this.recalcularSubtotal(ambienteIndex, servicoIndex);
     }
   }
-  
+
   recalcularSubtotal(ambienteIndex: number, servicoIndex: number) {
-    const servico = this.ambientesComServicos[ambienteIndex].servicos[servicoIndex];
-    this.ambientesComServicos[ambienteIndex].servicos[servicoIndex].valorTotal = servico.quantidade * servico.valorUnit;
+    const servico =
+      this.ambientesComServicos[ambienteIndex].servicos[servicoIndex];
+    this.ambientesComServicos[ambienteIndex].servicos[servicoIndex].valorTotal =
+      servico.quantidade * servico.valorUnit;
     this.calcularTotal();
   }
 

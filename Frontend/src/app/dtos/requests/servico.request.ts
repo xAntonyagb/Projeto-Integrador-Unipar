@@ -16,7 +16,7 @@ export class ServicoRequest {
     quantidade?: number | any,
     valorUnit?: number | any,
     categoria?: number | any,
-    ambiente?: number | any
+    ambiente?: number | any,
   ) {
     this.id = id;
     this.patrimonio = patrimonio;

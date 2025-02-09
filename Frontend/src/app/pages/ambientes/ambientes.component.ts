@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-ambientes',
   templateUrl: './ambientes.component.html',
-  styleUrls: ['./ambientes.component.scss']
+  styleUrls: ['./ambientes.component.scss'],
 })
 export class AmbientesComponent {
   pageTitles: string[] = ['AMBIENTES', 'BLOCOS', 'LANÇAMENTOS'];

@@ -1,4 +1,4 @@
-import {StatusTarefa} from "../enums/StatusTarefa.enum";
+import { StatusTarefa } from '../enums/StatusTarefa.enum';
 
 export class TarefaRequest {
   id?: number;
@@ -20,7 +20,7 @@ export class TarefaRequest {
     previsao: Date,
     prioridade: string,
     status: StatusTarefa,
-    id?: number
+    id?: number,
   ) {
     this.id = id;
     this.titulo = titulo;

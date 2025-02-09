@@ -1,10 +1,10 @@
-body{
+body {
   font-family: Inter;
   overflow-x: hidden;
   overflow-y: hidden;
 }
 
-.cinza{
+.cinza {
   padding-top: 20px;
   text-size-adjust: 10px;
   color: gray;
@@ -16,14 +16,16 @@ body{
 }
 
 .card {
-  background-color: #EAEAEA;
+  background-color: #eaeaea;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
   padding: 16px;
   width: 300px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .card:hover {
   transform: translateY(-5px);
@@ -31,7 +33,7 @@ body{
 }
 .card-header {
   text-align: center;
-  background-color: #EAEAEA;
+  background-color: #eaeaea;
   border-bottom: 1px solid #fff;
   margin-bottom: 8px;
   padding-bottom: 8px;
@@ -39,14 +41,13 @@ body{
 
 .card-body {
   padding-top: 8px;
-  background-color: #EAEAEA;
+  background-color: #eaeaea;
 }
-.novo-ambiente{
+.novo-ambiente {
   background-color: white;
-  color: #D6001C;
-  border-color: #D6001C;
+  color: #d6001c;
+  border-color: #d6001c;
   border-radius: 6px;
-
 }
 .header-container {
   display: flex;
@@ -57,8 +58,8 @@ body{
 
 .large-button {
   font-size: 1.2em;
-  color: #D6001C;
-  border-color: #D6001C ;
+  color: #d6001c;
+  border-color: #d6001c;
   font-weight: 700;
   background-color: white;
   position: relative;

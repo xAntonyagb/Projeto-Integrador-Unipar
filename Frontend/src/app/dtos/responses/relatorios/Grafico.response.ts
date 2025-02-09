@@ -1,4 +1,4 @@
-import {TipoGraficos} from "../../enums/TipoGraficos.enum";
+import { TipoGraficos } from '../../enums/TipoGraficos.enum';
 
 export interface GraficoResponse {
   titulo: string;

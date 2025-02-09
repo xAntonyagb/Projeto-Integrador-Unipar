@@ -8,10 +8,9 @@ describe('CadastrarBlocoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CadastrarBlocoComponent]
-    })
-    .compileComponents();
-    
+      declarations: [CadastrarBlocoComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CadastrarBlocoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,18 +1,18 @@
 export enum StatusTarefa {
   ABERTA = 'Pendente',
   ATRASADA = 'Atrasada',
-  CONCLUIDA = 'Concluída'
+  CONCLUIDA = 'Concluída',
 }
 
 export function getStatusDescricao(status: StatusTarefa): string {
   switch (status) {
     case StatusTarefa.ABERTA:
-      return "Aberta";
+      return 'Aberta';
     case StatusTarefa.ATRASADA:
-      return "Atrasada";
+      return 'Atrasada';
     case StatusTarefa.CONCLUIDA:
-      return "Concluída";
+      return 'Concluída';
     default:
-      return "Aberta";
+      return 'Aberta';
   }
 }

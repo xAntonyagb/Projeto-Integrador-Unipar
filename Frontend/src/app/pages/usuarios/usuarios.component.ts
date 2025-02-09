@@ -1,23 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {UsuarioResponse} from "../../dtos/responses/Usuario.response";
-import {UsuarioService} from "../../services/usuario.service";
-import {EMPTY, Observable, of} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {ApiGenericToasts} from "../../infra/api/api.genericToasts";
+import { Component, OnInit } from '@angular/core';
+import { UsuarioResponse } from '../../dtos/responses/Usuario.response';
+import { UsuarioService } from '../../services/usuario.service';
+import { EMPTY, Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { ApiGenericToasts } from '../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss']
+  styleUrls: ['./usuarios.component.scss'],
 })
 export class UsuariosComponent implements OnInit {
   isModalOpen = false;
   usuarios: UsuarioResponse[] = [];
 
-
   constructor(
     private usuarioRequest: UsuarioService,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {}
 
   openModal() {
@@ -28,7 +27,7 @@ export class UsuariosComponent implements OnInit {
     this.isModalOpen = false;
   }
   ngOnInit(): void {
-    this.carregarUsuarios()
+    this.carregarUsuarios();
   }
   carregarUsuarios(): void {
     this.usuarioRequest.getAll().subscribe(
@@ -37,12 +36,12 @@ export class UsuariosComponent implements OnInit {
         this.usuarios = usuarios.content;
       },
       (e) => {
-        if(e.status === 404) {
+        if (e.status === 404) {
           this.usuarios = [];
         } else {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         }
-      }
+      },
     );
   }
 }

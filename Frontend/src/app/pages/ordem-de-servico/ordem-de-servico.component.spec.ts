@@ -8,10 +8,9 @@ describe('OrdemDeServicoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OrdemDeServicoComponent]
-    })
-    .compileComponents();
-    
+      declarations: [OrdemDeServicoComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(OrdemDeServicoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -16,7 +17,7 @@ body, html {
   margin-left: 16.1%;
 }
 
-.card{
+.card {
   border-radius: 15px;
 }
 
@@ -38,27 +39,26 @@ body, html {
   margin-bottom: 10px;
 }
 
-.month-font{
-font-weight: 900;
+.month-font {
+  font-weight: 900;
 }
-.month-selector{
+.month-selector {
   padding-left: 320px;
 }
-.form-control{
+.form-control {
   border-radius: 10px;
-
 }
 
-.card-container{
-padding-top: 120px;
-padding-left: 320px;
-}
-
-.charts-container{
+.card-container {
+  padding-top: 120px;
   padding-left: 320px;
-  padding-right:20px;
 }
-hr{
+
+.charts-container {
+  padding-left: 320px;
+  padding-right: 20px;
+}
+hr {
   width: 100%;
   padding-left: 100px;
 }

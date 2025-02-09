@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {DialogModule} from "primeng/dialog";
-import {ButtonModule} from "primeng/button";
-import {InputTextModule} from "primeng/inputtext";
-import {AvatarModule} from "primeng/avatar";
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-deletar-ambiente',

@@ -8,10 +8,9 @@ describe('DeletarAmbienteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DeletarAmbienteComponent]
-    })
-    .compileComponents();
-    
+      declarations: [DeletarAmbienteComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DeletarAmbienteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

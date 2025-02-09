@@ -1,19 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {ArquivadoResponse} from "../../dtos/responses/Arquivado.response";
-import {ArquivadosRequest} from "../../services/arquivado.service";
-import {ToastrService} from "ngx-toastr";
-import {PageEvent} from "@angular/material/paginator";
-import {ApiGenericToasts} from "../../infra/api/api.genericToasts";
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { ArquivadoResponse } from '../../dtos/responses/Arquivado.response';
+import { ArquivadosRequest } from '../../services/arquivado.service';
+import { ToastrService } from 'ngx-toastr';
+import { PageEvent } from '@angular/material/paginator';
+import { ApiGenericToasts } from '../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-arquivados',
   templateUrl: './arquivados.component.html',
-  styleUrls: ['./arquivados.component.scss']
+  styleUrls: ['./arquivados.component.scss'],
 })
 export class ArquivadosComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'tipo', 'descricao', 'dtArquivado', 'dtExcluir', 'excluir'];
-  dataSource: MatTableDataSource<ArquivadoResponse> = new MatTableDataSource<ArquivadoResponse>();
+  displayedColumns: string[] = [
+    'id',
+    'tipo',
+    'descricao',
+    'dtArquivado',
+    'dtExcluir',
+    'excluir',
+  ];
+  dataSource: MatTableDataSource<ArquivadoResponse> =
+    new MatTableDataSource<ArquivadoResponse>();
   totalItems: number = 0;
   pageSize: number = 5;
   currentPage: number = 0;
@@ -22,7 +30,7 @@ export class ArquivadosComponent implements OnInit {
   constructor(
     private arquivados: ArquivadosRequest,
     private toastr: ToastrService,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {}
 
   ngOnInit(): void {
@@ -38,10 +46,10 @@ export class ArquivadosComponent implements OnInit {
         this.currentPage = data.number;
       },
       error: (e) => {
-        if(e.status === 404) {
+        if (e.status === 404) {
           this.dataSource.data = [];
         } else {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         }
       },
     });
@@ -56,7 +64,7 @@ export class ArquivadosComponent implements OnInit {
   excluirArquivado(id: number): void {
     this.arquivados.deleteById(id).subscribe({
       complete: () => {
-        this.toastr.success("Arquivo excluído com sucesso");
+        this.toastr.success('Arquivo excluído com sucesso');
         this.loadArquivados();
       },
       error: (e) => {
@@ -68,7 +76,7 @@ export class ArquivadosComponent implements OnInit {
   restaurarArquivado(id: number): void {
     this.arquivados.restaurar(id).subscribe({
       complete: () => {
-        this.toastr.success("Arquivo restaurado com sucesso");
+        this.toastr.success('Arquivo restaurado com sucesso');
         this.loadArquivados();
       },
       error: (e) => {
@@ -77,7 +85,8 @@ export class ArquivadosComponent implements OnInit {
     });
   }
   calcularDiasRestantes(dtExcluir: Date, dtArquivado: Date): number {
-    const diffTime = new Date(dtExcluir).getTime() - new Date(dtArquivado).getTime();
+    const diffTime =
+      new Date(dtExcluir).getTime() - new Date(dtArquivado).getTime();
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   }
 }

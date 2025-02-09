@@ -1,26 +1,26 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CategoriaService } from '../../../services/categoria.service';
 
-import {CategoriaRequest} from "../../../dtos/requests/Categoria.request";
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import { CategoriaRequest } from '../../../dtos/requests/Categoria.request';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-cadastrar-categoria',
   templateUrl: './cadastrar-categoria.component.html',
-  styleUrl: './cadastrar-categoria.component.scss'
+  styleUrl: './cadastrar-categoria.component.scss',
 })
 export class CadastrarCategoriaComponent {
   descricaoCategoria: string[] = [];
-  id:number = 0;
+  id: number = 0;
   descricao: string = '';
 
   constructor(
     private categoriaService: CategoriaService,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {
     this.loadCategorias();
   }
-  onSubmit( event: Event): void {
+  onSubmit(event: Event): void {
     if (!this.descricao || this.descricaoCategoria.includes(this.descricao)) {
       return;
     }
@@ -32,27 +32,26 @@ export class CadastrarCategoriaComponent {
   loadCategorias() {
     this.categoriaService.getAll().subscribe({
       next: (data) => {
-        this.descricaoCategoria = data.content.map(bloco => bloco.descricao);
+        this.descricaoCategoria = data.content.map((bloco) => bloco.descricao);
       },
       error: (e) => {
-        this.genericToast.showErro(e)
+        this.genericToast.showErro(e);
       },
     });
   }
 
   adicionarCategoria() {
     let categoria: CategoriaRequest = new CategoriaRequest();
-    categoria.setValues(this.descricao, this.id)
+    categoria.setValues(this.descricao, this.id);
 
     this.categoriaService.save(categoria).subscribe({
       complete: () => {
-        this.genericToast.showSalvoSucesso(`Categoria`)
+        this.genericToast.showSalvoSucesso(`Categoria`);
       },
       error: (e) => {
-        this.genericToast.showErro(e)
+        this.genericToast.showErro(e);
       },
     });
-
   }
 
   @Output() close = new EventEmitter<void>();
@@ -63,4 +62,3 @@ export class CadastrarCategoriaComponent {
     this.loadCategorias();
   }
 }
-

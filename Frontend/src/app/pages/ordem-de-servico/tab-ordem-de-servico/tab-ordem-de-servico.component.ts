@@ -1,29 +1,36 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { OrdemService } from '../../../services/ordem.service';
-import {ToastrService} from "ngx-toastr";
-import {MatTableDataSource} from "@angular/material/table";
+import { ToastrService } from 'ngx-toastr';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import {catchError} from "rxjs/operators";
-import {of} from "rxjs";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {StatusOrdem} from "../../../dtos/enums/StatusOrdem.enum";
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
-
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { StatusOrdem } from '../../../dtos/enums/StatusOrdem.enum';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-tab-ordem-de-servico',
   templateUrl: './tab-ordem-de-servico.component.html',
   styleUrls: ['./tab-ordem-de-servico.component.scss'],
-  providers:[DatePipe]
+  providers: [DatePipe],
 })
 export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   isModalOpen = false;
-  showFilters =false;
-  filters = {data:'', status:''};
-  displayedColumns: string[] = ['id', 'descricao', 'qtdServicos', 'valorTotal', 'data', 'status','arquivar'];
+  showFilters = false;
+  filters = { data: '', status: '' };
+  displayedColumns: string[] = [
+    'id',
+    'descricao',
+    'qtdServicos',
+    'valorTotal',
+    'data',
+    'status',
+    'arquivar',
+  ];
   dataSource = new MatTableDataSource<any>([]);
   ordensServico: any[] = [];
   totalPages: number = 0;
@@ -37,21 +44,21 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
     private datePipe: DatePipe,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {
     this.filtersForm = this.fb.group({
       descricao: [''],
       servico: [''],
       valorTotal: [''],
       arquivada: [''],
-      sort: ['']
+      sort: [''],
     });
   }
 
   openModal() {
     this.isModalOpen = true;
   }
-  closeModal(){
+  closeModal() {
     this.isModalOpen = false;
     this.loadOrdensServico();
   }
@@ -77,21 +84,20 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
           data: this.datePipe.transform(ordem.data, 'dd/MM/yyyy'),
           qtdServicos: ordem.qtdServicos,
           valorTotal: ordem.valorTotal,
-          status: ordem.status
+          status: ordem.status,
         }));
         this.dataSource.data = this.ordensServico;
         this.totalPages = data.totalPages;
       },
       error: (e) => {
-        if(e.status === 404) {
+        if (e.status === 404) {
           this.dataSource.data = [];
         } else {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         }
       },
     });
   }
-
 
   arquivarOrdem(id: number) {
     this.ordem.arquivar(id).subscribe({
@@ -100,7 +106,7 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
         this.toastr.success('Ordem arquivada com sucesso');
       },
       error: (e) => {
-        this.genericToast.showErro(e)
+        this.genericToast.showErro(e);
       },
     });
   }

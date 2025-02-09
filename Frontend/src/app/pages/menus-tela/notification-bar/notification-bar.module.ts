@@ -6,6 +6,6 @@ import { NotificationBarComponent } from './notification-bar.component';
 @NgModule({
   declarations: [NotificationBarComponent],
   imports: [CommonModule],
-  exports: [NotificationBarComponent] // Export the component
+  exports: [NotificationBarComponent], // Export the component
 })
-export class NotificationBarModule { }
+export class NotificationBarModule {}

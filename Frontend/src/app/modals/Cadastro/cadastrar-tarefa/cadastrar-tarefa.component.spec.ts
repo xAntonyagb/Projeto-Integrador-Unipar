@@ -8,10 +8,9 @@ describe('CadastrarTarefaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CadastrarTarefaComponent]
-    })
-    .compileComponents();
-    
+      declarations: [CadastrarTarefaComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CadastrarTarefaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

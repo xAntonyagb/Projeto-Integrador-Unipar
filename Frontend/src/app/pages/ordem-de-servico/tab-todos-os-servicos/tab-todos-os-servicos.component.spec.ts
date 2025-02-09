@@ -8,10 +8,9 @@ describe('TabTodosOsServicosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TabTodosOsServicosComponent]
-    })
-    .compileComponents();
-    
+      declarations: [TabTodosOsServicosComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TabTodosOsServicosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

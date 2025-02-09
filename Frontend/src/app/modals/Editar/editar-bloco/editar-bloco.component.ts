@@ -1,14 +1,20 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {BlocoResponse} from "../../../dtos/responses/Bloco.response";
-import {BlocoService} from "../../../services/bloco.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {BlocoRequest} from "../../../dtos/requests/Bloco.request";
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from '@angular/core';
+import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
+import { BlocoService } from '../../../services/bloco.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { BlocoRequest } from '../../../dtos/requests/Bloco.request';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-editar-bloco',
   templateUrl: './editar-bloco.component.html',
-  styleUrl: './editar-bloco.component.scss'
+  styleUrl: './editar-bloco.component.scss',
 })
 export class EditarBlocoComponent implements OnChanges {
   @Input() blocoParaEditar: BlocoRequest | null = null;
@@ -17,7 +23,7 @@ export class EditarBlocoComponent implements OnChanges {
 
   constructor(
     private blocoService: BlocoService,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {}
 
   @Output() blocoEditado = new EventEmitter<void>();
@@ -44,7 +50,6 @@ export class EditarBlocoComponent implements OnChanges {
     this.editarBloco();
     this.closeModal();
     this.loadBlocos();
-
   }
 
   editarBloco() {
@@ -54,10 +59,10 @@ export class EditarBlocoComponent implements OnChanges {
 
       this.blocoService.save(bloco).subscribe({
         complete: () => {
-          this.genericToast.showSalvoSucesso(`Bloco`)
+          this.genericToast.showSalvoSucesso(`Bloco`);
         },
         error: (e) => {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         },
       });
 

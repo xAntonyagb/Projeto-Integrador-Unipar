@@ -1,4 +1,4 @@
-import {UsuarioPermissoes} from "../enums/UsuarioPermissoes.enum";
+import { UsuarioPermissoes } from '../enums/UsuarioPermissoes.enum';
 
 export class UsuarioRequest {
   username!: string;
@@ -7,7 +7,11 @@ export class UsuarioRequest {
 
   constructor() {}
 
-  setValues(username: string, password: string, permissoes: UsuarioPermissoes[]) {
+  setValues(
+    username: string,
+    password: string,
+    permissoes: UsuarioPermissoes[],
+  ) {
     this.username = username;
     this.password = password;
     this.permissoes = permissoes;

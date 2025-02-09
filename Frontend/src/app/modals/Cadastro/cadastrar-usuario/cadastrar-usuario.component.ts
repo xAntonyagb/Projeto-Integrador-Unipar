@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
-import {UsuarioResponse} from '../../../dtos/responses/Usuario.response';
-import {ToastrService} from "ngx-toastr";
-import {NgForm} from "@angular/forms";
-import {UsuarioRequest} from "../../../dtos/requests/Usuario.request";
-import {UsuarioPermissoes} from "../../../dtos/enums/UsuarioPermissoes.enum";
-import {CadastroRequest} from "../../../dtos/requests/Cadastro.request";
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import { UsuarioResponse } from '../../../dtos/responses/Usuario.response';
+import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
+import { UsuarioRequest } from '../../../dtos/requests/Usuario.request';
+import { UsuarioPermissoes } from '../../../dtos/enums/UsuarioPermissoes.enum';
+import { CadastroRequest } from '../../../dtos/requests/Cadastro.request';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-cadastrar-usuario',
   templateUrl: './cadastrar-usuario.component.html',
-  styleUrls: ['./cadastrar-usuario.component.scss']
+  styleUrls: ['./cadastrar-usuario.component.scss'],
 })
 export class CadastrarUsuarioComponent {
   isModalOpen = false;
@@ -24,7 +24,7 @@ export class CadastrarUsuarioComponent {
   constructor(
     private usuario: UsuarioService,
     private toastr: ToastrService,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {
     this.loadUsuarios();
   }
@@ -42,22 +42,25 @@ export class CadastrarUsuarioComponent {
         this.usuarioResponse = data.content;
       },
       error: (e) => {
-        this.genericToast.showErro(e)
+        this.genericToast.showErro(e);
       },
     });
   }
 
-  adicionarUsuario(form:NgForm) {
+  adicionarUsuario(form: NgForm) {
     console.log('Formulário enviado', form);
     if (!form.valid) {
       console.error('Formulário inválido');
       return;
     }
-    const permissoesValidas = this.permissoes.filter(perm => Object.values(UsuarioPermissoes).includes(perm));
+    const permissoesValidas = this.permissoes.filter((perm) =>
+      Object.values(UsuarioPermissoes).includes(perm),
+    );
     if (!Array.isArray(this.permissoes)) {
       console.error('Permissões não são um array:', this.permissoes);
       return;
-    } if (permissoesValidas.length === 0) {
+    }
+    if (permissoesValidas.length === 0) {
       console.error('Nenhuma permissão válida selecionada');
       return;
     }
@@ -76,11 +79,7 @@ export class CadastrarUsuarioComponent {
       error: (err) => {
         console.error('Erro ao cadastrar usuário:', err);
         this.toastr.error('Erro ao cadastrar usuário');
-      }
+      },
     });
   }
 }
-
-
-
-

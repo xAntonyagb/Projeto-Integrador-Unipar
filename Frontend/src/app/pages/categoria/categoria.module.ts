@@ -1,16 +1,16 @@
-import { NgModule } from "@angular/core";
-import { CategoriaComponent } from "./categoria.component";
-import {SidebarModule} from "../menus-tela/sidebar/sidebar.module";
-import {HeaderModule} from "../menus-tela/header/header.module";
-import {Button} from "primeng/button";
-import {MenuModule} from "primeng/menu";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CadastrarCategoriaModule} from "../../modals/Cadastro/cadastrar-categoria/cadastrar-categoria.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {EditarCategoriaModule} from "../../modals/Editar/editar-categoria/editar-categoria.module";
+import { NgModule } from '@angular/core';
+import { CategoriaComponent } from './categoria.component';
+import { SidebarModule } from '../menus-tela/sidebar/sidebar.module';
+import { HeaderModule } from '../menus-tela/header/header.module';
+import { Button } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CadastrarCategoriaModule } from '../../modals/Cadastro/cadastrar-categoria/cadastrar-categoria.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditarCategoriaModule } from '../../modals/Editar/editar-categoria/editar-categoria.module';
 
 @NgModule({
-    declarations: [CategoriaComponent],
+  declarations: [CategoriaComponent],
   imports: [
     FormsModule,
     BrowserAnimationsModule,
@@ -20,7 +20,8 @@ import {EditarCategoriaModule} from "../../modals/Editar/editar-categoria/editar
     SidebarModule,
     HeaderModule,
     Button,
-    MenuModule
+    MenuModule,
   ],
-    exports: [CategoriaComponent],
-}) export class CategoriaModule {}
+  exports: [CategoriaComponent],
+})
+export class CategoriaModule {}

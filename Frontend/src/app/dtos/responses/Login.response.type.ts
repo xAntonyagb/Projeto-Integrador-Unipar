@@ -1,4 +1,4 @@
-import {UsuarioPermissoes} from "../enums/UsuarioPermissoes.enum";
+import { UsuarioPermissoes } from '../enums/UsuarioPermissoes.enum';
 
 export type LoginResponse = {
   acessToken: string;
@@ -6,4 +6,4 @@ export type LoginResponse = {
   createdAt: Date;
   permissoes: UsuarioPermissoes[];
   refreshToken: string;
-}
+};

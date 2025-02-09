@@ -1,19 +1,16 @@
-@import 'ngx-toastr/toastr';
+@import "ngx-toastr/toastr";
 
-
-.form-container{
+.form-container {
   max-width: 300px;
   padding: 1rem;
-
-
 }
-html,body{
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
-.margem{
+.margem {
   margin: 0;
-   padding: 0;
+  padding: 0;
 }
-

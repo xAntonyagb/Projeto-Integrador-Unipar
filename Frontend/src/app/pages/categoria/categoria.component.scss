@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -8,7 +9,7 @@ body, html {
   font-family: Inter;
 }
 
-.centro{
+.centro {
   border-radius: 10px;
   top: 120px;
   left: 340px;
@@ -21,12 +22,11 @@ body, html {
   text-decoration: none;
 }
 
-.header{
+.header {
   padding: 10px;
 }
 
-.nomePagina
-{
+.nomePagina {
   text-align: end;
   right: 10px;
   font-weight: 700;
@@ -42,18 +42,16 @@ body, html {
   color: gray;
   font-weight: bold;
 }
-.cinza
-{
+.cinza {
   padding-top: 20px;
   text-size-adjust: 10px;
   color: gray;
 }
-.novo-ambiente{
+.novo-ambiente {
   background-color: white;
-  color: #D6001C;
-  border-color: #D6001C;
+  color: #d6001c;
+  border-color: #d6001c;
   border-radius: 6px;
-
 }
 .header-container {
   margin-top: 24px;
@@ -65,8 +63,8 @@ body, html {
 
 .large-button {
   font-size: 1.2em;
-  color: #D6001C;
-  border-color: #D6001C ;
+  color: #d6001c;
+  border-color: #d6001c;
   font-weight: 700;
   background-color: white;
   position: relative;
@@ -99,7 +97,9 @@ body, html {
   padding: 8px;
   width: 293px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .card:hover {
   transform: translateY(-5px);
@@ -156,12 +156,13 @@ th.mat-sort-header-sorted {
   position: relative;
   text-align: center;
 }
-.progress-p, h3{
+.progress-p,
+h3 {
   font-family: Inter;
   font-weight: 700;
-  margin:0;
+  margin: 0;
 }
-.progress-text-tar{
+.progress-text-tar {
   position: absolute;
   right: 2rem; // Define o alinhamento do texto ao final da barra
   top: 4.6rem;
@@ -169,7 +170,7 @@ th.mat-sort-header-sorted {
   color: #333;
   font-weight: bold;
 }
-.progress-text-serv{
+.progress-text-serv {
   position: absolute;
   right: 2rem; // Define o alinhamento do texto ao final da barra
   top: 6.3rem;

@@ -1,30 +1,34 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiBaseUrls } from '../infra/api/api.baseUrls';
 import { BlocoResponse } from '../dtos/responses/Bloco.response';
-import {BlocoRequest} from "../dtos/requests/Bloco.request";
-import {PaginacaoResponse} from "../dtos/responses/Paginacao.response";
+import { BlocoRequest } from '../dtos/requests/Bloco.request';
+import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BlocoService {
-  private readonly apiUrl = ApiBaseUrls.getBaseUrl();;
+  private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
   constructor(private http: HttpClient) {}
 
-  getAll(page: number = 0,
-         size: number = 10,
-         descricao?: string): Observable<PaginacaoResponse<BlocoResponse>>
-  {
+  getAll(
+    page: number = 0,
+    size: number = 10,
+    descricao?: string,
+  ): Observable<PaginacaoResponse<BlocoResponse>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
 
     if (descricao) params = params.set('descricao', descricao);
 
-    return this.http.get<PaginacaoResponse<BlocoResponse>>(`${this.apiUrl}/bloco/all`, { params });
+    return this.http.get<PaginacaoResponse<BlocoResponse>>(
+      `${this.apiUrl}/bloco/all`,
+      { params },
+    );
   }
 
   getById(id: number): Observable<BlocoResponse> {
@@ -40,7 +44,11 @@ export class BlocoService {
       .set('blocoId', blocoId.toString())
       .set('blocoDestinoId', blocoDestinoId.toString());
 
-    return this.http.put<void>(`${this.apiUrl}/bloco/transferir`, {}, { params });
+    return this.http.put<void>(
+      `${this.apiUrl}/bloco/transferir`,
+      {},
+      { params },
+    );
   }
 
   save(request: BlocoRequest): Observable<BlocoResponse> {

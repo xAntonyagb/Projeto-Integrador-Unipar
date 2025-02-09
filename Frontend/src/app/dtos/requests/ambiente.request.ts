@@ -6,7 +6,12 @@ export class AmbienteRequest {
 
   constructor() {}
 
-  setValues(descricao: string, bloco: number, id?: number, patrimonios?: number[]) {
+  setValues(
+    descricao: string,
+    bloco: number,
+    id?: number,
+    patrimonios?: number[],
+  ) {
     this.id = id;
     this.descricao = descricao;
     this.patrimonios = patrimonios;

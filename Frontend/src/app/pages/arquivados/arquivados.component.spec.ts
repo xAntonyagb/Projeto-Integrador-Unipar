@@ -8,10 +8,9 @@ describe('ArquivadosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ArquivadosComponent]
-    })
-    .compileComponents();
-    
+      declarations: [ArquivadosComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ArquivadosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

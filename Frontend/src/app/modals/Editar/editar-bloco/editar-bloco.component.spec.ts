@@ -8,10 +8,9 @@ describe('EditarBlocoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditarBlocoComponent]
-    })
-    .compileComponents();
-    
+      declarations: [EditarBlocoComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(EditarBlocoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

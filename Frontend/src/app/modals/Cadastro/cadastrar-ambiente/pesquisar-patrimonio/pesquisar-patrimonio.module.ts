@@ -1,24 +1,21 @@
-import {NgModule} from "@angular/core";
-import {PesquisarPatrimonioComponent} from "./pesquisar-patrimonio.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ButtonModule} from "primeng/button";
-import {ToastModule} from "primeng/toast";
-import {DynamicDialogModule} from "primeng/dynamicdialog";
+import { NgModule } from '@angular/core';
+import { PesquisarPatrimonioComponent } from './pesquisar-patrimonio.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
-  declarations: [
-    PesquisarPatrimonioComponent
-  ],
+  declarations: [PesquisarPatrimonioComponent],
   imports: [
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     DynamicDialogModule,
     ToastModule,
-    ButtonModule
+    ButtonModule,
   ],
-  exports: [
-    PesquisarPatrimonioComponent
-  ]
-})export class PesquisarPatrimonioModule {}
+  exports: [PesquisarPatrimonioComponent],
+})
+export class PesquisarPatrimonioModule {}

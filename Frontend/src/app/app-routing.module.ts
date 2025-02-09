@@ -4,7 +4,7 @@ import { LoginComponent } from './pages/login/login.component'; // Importe o Log
 import { routes } from './app.routes';
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

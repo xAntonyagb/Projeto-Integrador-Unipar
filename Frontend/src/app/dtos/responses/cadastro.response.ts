@@ -1,7 +1,7 @@
-import {UsuarioPermissoes} from "../enums/UsuarioPermissoes.enum";
+import { UsuarioPermissoes } from '../enums/UsuarioPermissoes.enum';
 
 export interface UsuarioResponse {
-    username: String;
-    createdAt: Number;
-    permissoes: UsuarioPermissoes[] ;
-  }
+  username: String;
+  createdAt: Number;
+  permissoes: UsuarioPermissoes[];
+}

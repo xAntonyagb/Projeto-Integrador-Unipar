@@ -5,7 +5,7 @@ import { NotificationBarModule } from '../menus-tela/notification-bar/notificati
 import { HeaderModule } from '../menus-tela/header/header.module';
 import { SidebarModule } from '../menus-tela/sidebar/sidebar.module';
 import { ButtonModule } from 'primeng/button';
-import {ChartModule} from "primeng/chart";
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [InicioComponent],
@@ -16,9 +16,7 @@ import {ChartModule} from "primeng/chart";
     SidebarModule,
     ButtonModule,
     ChartModule,
-],
-  exports: [InicioComponent]
+  ],
+  exports: [InicioComponent],
 })
-export class InicioModule {
-
-}
+export class InicioModule {}

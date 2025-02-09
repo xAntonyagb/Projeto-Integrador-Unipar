@@ -1,15 +1,15 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AmbienteResponse} from "../../../dtos/responses/Ambiente.response";
-import {PatrimonioService} from "../../../services/patrimonio.service";
-import {AmbienteService} from "../../../services/ambiente.service";
-import {ToastrService} from "ngx-toastr";
-import {PatrimonioRequest} from "../../../dtos/requests/Patrimonio.request";
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
+import { PatrimonioService } from '../../../services/patrimonio.service';
+import { AmbienteService } from '../../../services/ambiente.service';
+import { ToastrService } from 'ngx-toastr';
+import { PatrimonioRequest } from '../../../dtos/requests/Patrimonio.request';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-cadastrar-patrimonio',
   templateUrl: './cadastrar-patrimonio.component.html',
-  styleUrl: './cadastrar-patrimonio.component.scss'
+  styleUrl: './cadastrar-patrimonio.component.scss',
 })
 export class CadastrarPatrimonioComponent implements OnInit {
   isModalOpen = false;
@@ -25,13 +25,11 @@ export class CadastrarPatrimonioComponent implements OnInit {
     private patrimonioRequest: PatrimonioService,
     private ambienteRequest: AmbienteService,
     private toastr: ToastrService,
-    private genericToast: ApiGenericToasts
-  ) {
-  }
+    private genericToast: ApiGenericToasts,
+  ) {}
 
   ngOnInit(): void {
     this.loadAmbientes();
-
   }
 
   closeModal() {
@@ -45,7 +43,7 @@ export class CadastrarPatrimonioComponent implements OnInit {
       },
       error: () => {
         this.toastr.error('Erro ao carregar ambientes');
-      }
+      },
     });
   }
 
@@ -53,7 +51,7 @@ export class CadastrarPatrimonioComponent implements OnInit {
     const patrimonioData: PatrimonioRequest | any = {
       patrimonio: this.patrimonio,
       ambiente: this.ambiente || null, // Define ambiente as null if not selected
-      descricao: this.descricao
+      descricao: this.descricao,
     };
 
     this.patrimonioRequest.save(patrimonioData).subscribe({
@@ -64,7 +62,7 @@ export class CadastrarPatrimonioComponent implements OnInit {
       },
       error: (e) => {
         this.genericToast.showErro(e);
-      }
+      },
     });
   }
 }

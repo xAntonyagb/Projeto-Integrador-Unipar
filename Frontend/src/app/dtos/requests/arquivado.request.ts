@@ -1,4 +1,4 @@
-import {TipoArquivado} from "../enums/TipoArquivado.enum";
+import { TipoArquivado } from '../enums/TipoArquivado.enum';
 
 export class ArquivadoRequest {
   id?: number;
@@ -8,7 +8,12 @@ export class ArquivadoRequest {
 
   constructor() {}
 
-  setValues(tipo: TipoArquivado, id?: number, ordemServico?: number, tarefa?: number) {
+  setValues(
+    tipo: TipoArquivado,
+    id?: number,
+    ordemServico?: number,
+    tarefa?: number,
+  ) {
     this.id = id;
     this.tipo = tipo;
     this.ordemServico = ordemServico;

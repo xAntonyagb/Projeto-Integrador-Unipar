@@ -1,23 +1,28 @@
 <div class="overlay">
-    <div class="modal-container">
-        <div class="modal-header">
-            <a (click)="closeModal()">
-              <img src="assets/Voltar.png">
-            </a>
-            <h1>Cadastro De Categoria</h1>
-        </div>
-        <div class="body">
-            <form #form="ngForm" (ngSubmit)="onSubmit($event)">
-                <div class="form-group">
-                    <label for="descricao">Nome Da Categoria</label>
-                    <input type="text" class="form-control" id="descricao" name="descricao" [(ngModel)]="descricao" required>
-
-                </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Cadastrar</button>
-            </div>
-            </form>
-        </div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <a (click)="closeModal()">
+        <img src="assets/Voltar.png" />
+      </a>
+      <h1>Cadastro De Categoria</h1>
     </div>
+    <div class="body">
+      <form #form="ngForm" (ngSubmit)="onSubmit($event)">
+        <div class="form-group">
+          <label for="descricao">Nome Da Categoria</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descricao"
+            name="descricao"
+            [(ngModel)]="descricao"
+            required
+          />
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
-

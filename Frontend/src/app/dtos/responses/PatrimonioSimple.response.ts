@@ -1,4 +1,4 @@
-export interface PatrimonioSimpleResponse{
+export interface PatrimonioSimpleResponse {
   patrimonio: number;
-  selected ?: boolean;
+  selected?: boolean;
 }

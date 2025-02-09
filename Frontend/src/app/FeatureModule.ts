@@ -1,7 +1,8 @@
-import { NgModule } from "@angular/core";
-import { FeatureImportsModule } from "./FeatureImportsModule";
+import { NgModule } from '@angular/core';
+import { FeatureImportsModule } from './FeatureImportsModule';
 
 @NgModule({
-    imports: [FeatureImportsModule],
-    exports: [FeatureImportsModule],
-}) export class FeatureModule {}
+  imports: [FeatureImportsModule],
+  exports: [FeatureImportsModule],
+})
+export class FeatureModule {}

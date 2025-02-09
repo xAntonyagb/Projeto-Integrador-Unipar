@@ -2,22 +2,36 @@
   <div class="modal-container">
     <div class="modal-header">
       <a (click)="closeModal()">
-        <img src="assets/Voltar.png" >
+        <img src="assets/Voltar.png" />
       </a>
-        <h2>Cadastro De Ambientes</h2>
+      <h2>Cadastro De Ambientes</h2>
     </div>
 
     <div class="modal-body">
       <fieldset *ngFor="let ambiente of ambientesAdicionados; let i = index">
         <div class="form-row">
           <div class="desc-part col-8">
-            <label for="descricao-{{i}}">Nome do Ambiente:</label>
-            <input id="descricao-{{i}}" type="text" class="form-control" [(ngModel)]="ambiente.descricao" required>
+            <label for="descricao-{{ i }}">Nome do Ambiente:</label>
+            <input
+              id="descricao-{{ i }}"
+              type="text"
+              class="form-control"
+              [(ngModel)]="ambiente.descricao"
+              required
+            />
           </div>
           <div class="data-part col-4">
-            <label for="bloco-{{i}}">Bloco:</label>
-            <select id="bloco-{{i}}" class="form-control" [(ngModel)]="ambiente.bloco.id"  required>
-              <option *ngFor="let optBloco of blocosSelecionados" [value]="optBloco.id">
+            <label for="bloco-{{ i }}">Bloco:</label>
+            <select
+              id="bloco-{{ i }}"
+              class="form-control"
+              [(ngModel)]="ambiente.bloco.id"
+              required
+            >
+              <option
+                *ngFor="let optBloco of blocosSelecionados"
+                [value]="optBloco.id"
+              >
                 {{ optBloco.descricao }}
               </option>
             </select>
@@ -26,31 +40,56 @@
 
         <div class="service-entry">
           <div class="data-part">
-            <label for="patrimonio-{{i}}">Patrimônio:</label>
-            <button (click)="openPatrimonioOverlay(ambiente)" class="btn btn-primary">Selecionar Patrimônios</button>
+            <label for="patrimonio-{{ i }}">Patrimônio:</label>
+            <button
+              (click)="openPatrimonioOverlay(ambiente)"
+              class="btn btn-primary"
+            >
+              Selecionar Patrimônios
+            </button>
           </div>
           <div class="data-part">
-            <div *ngFor="let patrimonio of ambiente.patrimonios; let j = index" class="patrimonio-item">
+            <div
+              *ngFor="let patrimonio of ambiente.patrimonios; let j = index"
+              class="patrimonio-item"
+            >
               <div class="form-row">
                 <div class="desc-part col-8">
-                  <label for="patrimonio-{{i}}-{{j}}">Patrimônio:</label>
-                  <input id="patrimonio-{{i}}-{{j}}" type="text" class="form-control"
-                         [value]="patrimonio.patrimonio" readonly>
+                  <label for="patrimonio-{{ i }}-{{ j }}">Patrimônio:</label>
+                  <input
+                    id="patrimonio-{{ i }}-{{ j }}"
+                    type="text"
+                    class="form-control"
+                    [value]="patrimonio.patrimonio"
+                    readonly
+                  />
                 </div>
                 <div class="data-part col-4">
-                  <label for="descricao-{{i}}-{{j}}">Descrição:</label>
-                  <input id="descricao-{{i}}-{{j}}" type="text" class="form-control"
-                         [value]="patrimonio.descricao" readonly>
+                  <label for="descricao-{{ i }}-{{ j }}">Descrição:</label>
+                  <input
+                    id="descricao-{{ i }}-{{ j }}"
+                    type="text"
+                    class="form-control"
+                    [value]="patrimonio.descricao"
+                    readonly
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <img src="../../../assets/Vector.svg" class="removerServico" *ngIf="i > 0" (click)="removerAmbiente(i)" />
+          <img
+            src="../../../assets/Vector.svg"
+            class="removerServico"
+            *ngIf="i > 0"
+            (click)="removerAmbiente(i)"
+          />
         </div>
       </fieldset>
     </div>
     <div class="modal-footer">
-      <button (click)="salvarAmbientes()" class="btn btn-success">Guardar</button>
+      <button (click)="salvarAmbientes()" class="btn btn-success">
+        Guardar
+      </button>
     </div>
   </div>
 </div>
@@ -64,13 +103,19 @@
     <div class="modal-body-find">
       <ul>
         <li *ngFor="let patrimonio of patrimoniosDisponiveis">
-          <input class="patrimonio-check" type="checkbox" [(ngModel)]="patrimonio.selected" />
-          {{ patrimonio.patrimonio }} : {{ patrimonio.descricao}}
+          <input
+            class="patrimonio-check"
+            type="checkbox"
+            [(ngModel)]="patrimonio.selected"
+          />
+          {{ patrimonio.patrimonio }} : {{ patrimonio.descricao }}
         </li>
       </ul>
     </div>
     <div class="modal-footer-find">
-      <button (click)="confirmarPatrimonios()" class="btn btn-primary">Confirmar</button>
+      <button (click)="confirmarPatrimonios()" class="btn btn-primary">
+        Confirmar
+      </button>
     </div>
   </div>
 </div>

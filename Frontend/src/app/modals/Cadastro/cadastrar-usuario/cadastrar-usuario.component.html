@@ -1,36 +1,59 @@
 <div class="overlay">
-    <div class="modal-container">
-        <div class="modal-header">
-            <a (click)="closeModal()">
-              <img src="assets/Voltar.png">
-            </a>
-            <h1>Cadastro De Usuário</h1>
-        </div>
-        <div class="body">
-            <form #form="ngForm" (ngSubmit)="adicionarUsuario(form)">
-                <div class="form-group">
-                    <label for="username">Usuário</label>
-                    <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username" required>
-
-                </div>
-              <div class="form-group horizontal-group">
-                <div class="form-group-item">
-                  <label for="password">Senha:</label>
-                  <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" required>
-                </div>
-                <div class="form-group-item">
-                  <label for="permissoes">Cargo:</label>
-                  <select id="permissoes" class="form-control" name="permissoes" [(ngModel)]="permissoes" multiple required>
-                    <option *ngFor="let permissao of permissoesDisponiveis"  [value]="permissao">
-                      {{ permissao }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Cadastrar</button>
-            </div>
-            </form>
-        </div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <a (click)="closeModal()">
+        <img src="assets/Voltar.png" />
+      </a>
+      <h1>Cadastro De Usuário</h1>
     </div>
+    <div class="body">
+      <form #form="ngForm" (ngSubmit)="adicionarUsuario(form)">
+        <div class="form-group">
+          <label for="username">Usuário</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            [(ngModel)]="username"
+            required
+          />
+        </div>
+        <div class="form-group horizontal-group">
+          <div class="form-group-item">
+            <label for="password">Senha:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              required
+            />
+          </div>
+          <div class="form-group-item">
+            <label for="permissoes">Cargo:</label>
+            <select
+              id="permissoes"
+              class="form-control"
+              name="permissoes"
+              [(ngModel)]="permissoes"
+              multiple
+              required
+            >
+              <option
+                *ngFor="let permissao of permissoesDisponiveis"
+                [value]="permissao"
+              >
+                {{ permissao }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

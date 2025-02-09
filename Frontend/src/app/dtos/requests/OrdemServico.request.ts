@@ -1,4 +1,4 @@
-import {ServicoRequest} from "./Servico.request";
+import { ServicoRequest } from './Servico.request';
 
 export class OrdemServicoRequest {
   id?: number;
@@ -8,7 +8,12 @@ export class OrdemServicoRequest {
 
   constructor() {}
 
-  setValues(id?: number, descricao?: string, data?: Date, servicos?: ServicoRequest[]) {
+  setValues(
+    id?: number,
+    descricao?: string,
+    data?: Date,
+    servicos?: ServicoRequest[],
+  ) {
     this.id = id;
     this.descricao = descricao;
     this.data = data;

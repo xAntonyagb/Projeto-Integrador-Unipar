@@ -1,14 +1,20 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {CategoriaResponse} from "../../../dtos/responses/Categoria.response";
-import {CategoriaService} from "../../../services/categoria.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {CategoriaRequest} from "../../../dtos/requests/Categoria.request";
-import {ApiGenericToasts} from "../../../infra/api/api.genericToasts";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from '@angular/core';
+import { CategoriaResponse } from '../../../dtos/responses/Categoria.response';
+import { CategoriaService } from '../../../services/categoria.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { CategoriaRequest } from '../../../dtos/requests/Categoria.request';
+import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-editar-categoria',
   templateUrl: './editar-categoria.component.html',
-  styleUrl: './editar-categoria.component.scss'
+  styleUrl: './editar-categoria.component.scss',
 })
 export class EditarCategoriaComponent implements OnChanges {
   @Input() categoriaParaEditar: CategoriaRequest | null = null;
@@ -17,7 +23,7 @@ export class EditarCategoriaComponent implements OnChanges {
 
   constructor(
     private categoriaService: CategoriaService,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {}
 
   @Output() categoriaEditada = new EventEmitter<void>();
@@ -30,7 +36,10 @@ export class EditarCategoriaComponent implements OnChanges {
   }
 
   onSubmit(event: Event): void {
-    if (!this.descricao || this.descricao === this.categoriaParaEditar?.descricao) {
+    if (
+      !this.descricao ||
+      this.descricao === this.categoriaParaEditar?.descricao
+    ) {
       return;
     }
     this.editarCategoria();
@@ -48,10 +57,10 @@ export class EditarCategoriaComponent implements OnChanges {
 
     this.categoriaService.save(categoria).subscribe({
       complete: () => {
-        this.genericToast.showSalvoSucesso(`Categoria`)
+        this.genericToast.showSalvoSucesso(`Categoria`);
       },
       error: (e) => {
-        this.genericToast.showErro(e)
+        this.genericToast.showErro(e);
       },
     });
   }

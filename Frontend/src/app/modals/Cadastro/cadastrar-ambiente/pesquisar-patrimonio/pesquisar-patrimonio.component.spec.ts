@@ -8,10 +8,9 @@ describe('PesquisarPatrimonioComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PesquisarPatrimonioComponent]
-    })
-    .compileComponents();
-    
+      declarations: [PesquisarPatrimonioComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PesquisarPatrimonioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -2,7 +2,7 @@
   <div class="modal-container">
     <div class="modal-header">
       <a (click)="closeModal()">
-        <img src="/assets/Voltar.png">
+        <img src="/assets/Voltar.png" />
       </a>
       <h1>Editar Categoria</h1>
     </div>
@@ -10,10 +10,23 @@
       <form #form="ngForm" (ngSubmit)="onSubmit($event)">
         <div class="form-group">
           <label for="descricao">Nome Da Categoria</label>
-          <input type="text" class="form-control" id="descricao" name="descricao" [(ngModel)]="descricao" required>
+          <input
+            type="text"
+            class="form-control"
+            id="descricao"
+            name="descricao"
+            [(ngModel)]="descricao"
+            required
+          />
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success" (click)="loadCategorias()">Salvar</button>
+          <button
+            type="submit"
+            class="btn btn-success"
+            (click)="loadCategorias()"
+          >
+            Salvar
+          </button>
         </div>
       </form>
     </div>

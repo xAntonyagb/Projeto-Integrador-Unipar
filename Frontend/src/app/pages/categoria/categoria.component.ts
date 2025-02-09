@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {CategoriaResponse} from "../../dtos/responses/Categoria.response";
-import {CategoriaService} from "../../services/categoria.service";
-import {CategoriaRequest} from "../../dtos/requests/Categoria.request";
-import {ApiGenericToasts} from "../../infra/api/api.genericToasts";
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { CategoriaResponse } from '../../dtos/responses/Categoria.response';
+import { CategoriaService } from '../../services/categoria.service';
+import { CategoriaRequest } from '../../dtos/requests/Categoria.request';
+import { ApiGenericToasts } from '../../infra/api/api.genericToasts';
 
 @Component({
   selector: 'app-categoria',
   templateUrl: './categoria.component.html',
-  styleUrl: './categoria.component.scss'
+  styleUrl: './categoria.component.scss',
 })
-export class CategoriaComponent  implements OnInit {
+export class CategoriaComponent implements OnInit {
   isModalOpen = false;
   isEditModalOpen = false;
   dataSource = new MatTableDataSource<CategoriaResponse>([]);
@@ -18,7 +18,7 @@ export class CategoriaComponent  implements OnInit {
 
   constructor(
     private categoria: CategoriaService,
-    private genericToast: ApiGenericToasts
+    private genericToast: ApiGenericToasts,
   ) {}
 
   ngOnInit() {
@@ -31,10 +31,10 @@ export class CategoriaComponent  implements OnInit {
         this.dataSource.data = data.content;
       },
       error: (e) => {
-        if(e.status === 404) {
+        if (e.status === 404) {
           this.dataSource.data = [];
         } else {
-          this.genericToast.showErro(e)
+          this.genericToast.showErro(e);
         }
       },
     });
@@ -71,7 +71,6 @@ export class CategoriaComponent  implements OnInit {
   calcularProgressoTarefas(categoria: CategoriaResponse): number {
     return (categoria.qtdTarefas / categoria.qtdTotalTarefas) * 100;
   }
-
 
   calcularProgressoServicos(categoria: CategoriaResponse): number {
     return (categoria.qtdServicos / categoria.qtdTotalServicos) * 100;
