@@ -7,16 +7,19 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MyMatPaginatorIntl } from './services/paginacao.service';
 import { EditarBlocoComponent } from './modals/Editar/editar-bloco/editar-bloco.component';
 import { EditarCategoriaComponent } from './modals/Editar/editar-categoria/editar-categoria.component';
+import { LoadingComponent } from "./shared/loading/loading.component";
+import { LoadingInterceptor } from './services/loading.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [FeatureModule],
+  imports: [FeatureModule, LoadingComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     {
       provide: MatPaginatorIntl,
       useClass: MyMatPaginatorIntl,

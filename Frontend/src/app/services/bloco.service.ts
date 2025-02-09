@@ -5,6 +5,7 @@ import { ApiBaseUrls } from '../infra/api/api.baseUrls';
 import { BlocoResponse } from '../dtos/responses/Bloco.response';
 import { BlocoRequest } from '../dtos/requests/Bloco.request';
 import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +13,16 @@ import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
 export class BlocoService {
   private readonly apiUrl = ApiBaseUrls.getBaseUrl();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private loadingService: LoadingService
+  ) {}
 
   getAll(
     page: number = 0,
     size: number = 10,
     descricao?: string,
   ): Observable<PaginacaoResponse<BlocoResponse>> {
+    this.loadingService.show();
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
