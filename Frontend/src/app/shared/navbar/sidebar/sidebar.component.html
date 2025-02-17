@@ -1,113 +1,115 @@
-<div class="col-2 text-white vh-100 position-fixed sidebar">
-  <div class="py-4 text-center">
+<div class="sidebar vh-100 position-fixed">
+  <div class="pt-2 text-center">
     <img src="../../../../assets/Logo.png" class="img-fluid" />
   </div>
-  <div class="nav flex-column barralateral py-4">
+  <div class="nav flex-column barralateral pt-4">
     <a
       routerLink="/inicio"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-      class="nav-link text-white inicio sidebar-item"
+      class="nav-link text-white d-flex align-items-center sidebar-item"
     >
       <img
         src="../../../../assets/HomePage.svg"
         class="mr-2"
         style="width: 20px"
       />
-      INÍCIO
+      <span class="flex-grow-1">INÍCIO</span>
     </a>
     <a
       routerLink="/ordem-servico"
       routerLinkActive="active"
-      class="nav-link text-white sidebar-item"
+      class="nav-link text-white d-flex align-items-center sidebar-item"
     >
       <img
         src="../../../../assets/Document.svg"
         class="mr-2"
         style="width: 20px"
       />
-      ORDENS DE SERVIÇO
+      <span class="flex-grow-1">ORDENS DE SERVIÇO</span>
     </a>
     <a
       routerLink="/tarefas"
       routerLinkActive="active"
-      class="nav-link text-white sidebar-item"
+      class="nav-link text-white d-flex align-items-center sidebar-item"
     >
       <img
         src="../../../../assets/Todo%20List.svg"
         class="mr-2"
         style="width: 20px"
       />
-      TAREFAS
+      <span class="flex-grow-1">TAREFAS</span>
     </a>
     <a
       routerLink="/ambientes"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-      class="nav-link text-white sidebar-item"
+      class="nav-link text-white d-flex align-items-center sidebar-item"
     >
       <img
         src="../../../../assets/Ambiente.svg"
         class="mr-2"
         style="width: 20px"
       />
-      AMBIENTES
+      <span class="flex-grow-1">AMBIENTES</span>
     </a>
     <a
       routerLink="/categorias"
       routerLinkActive="active"
-      class="nav-link text-white sidebar-item"
+      class="nav-link text-white d-flex align-items-center sidebar-item"
     >
       <img
         src="../../../../assets/Categoria.svg"
         class="mr-2"
         style="width: 20px"
       />
-      CATEGORIAS
+      <span class="flex-grow-1">CATEGORIAS</span>
     </a>
     <a
       routerLink="/patrimonios"
       routerLinkActive="active"
-      class="nav-link text-white sidebar-item"
+      class="nav-link text-white d-flex align-items-center sidebar-item"
     >
       <img
         src="../../../../assets/Patrimonios.svg"
         class="mr-2"
         style="width: 20px"
       />
-      PATRIMÔNIOS
+      <span class="flex-grow-1">PATRIMÔNIOS</span>
     </a>
     <a
       routerLink="/usuarios"
       routerLinkActive="active"
-      class="nav-link text-white sidebar-item"
+      class="nav-link text-white d-flex align-items-center sidebar-item"
     >
-      <img src="../../../../assets/User.svg" class="mr-2" style="width: 20px" />
-      USUÁRIOS
+      <img
+        src="../../../../assets/User.svg"
+        class="mr-2"
+        style="width: 20px"
+      />
+      <span class="flex-grow-1">USUÁRIOS</span>
     </a>
     <a
       routerLink="/arquivados"
       routerLinkActive="active"
-      class="nav-link text-white sidebar-item"
+      class="nav-link text-white d-flex align-items-center sidebar-item"
     >
       <img
         src="../../../../assets/Arquivados.svg"
         class="mr-2"
         style="width: 20px"
       />
-      ARQUIVADOS
+      <span class="flex-grow-1">ARQUIVADOS</span>
     </a>
-    <div class="espacamento"></div>
     <a
       (click)="Logout($event)"
-      class="nav-link text-white mt-auto sidebar-item"
+      class="nav-link text-white mt-auto d-flex align-items-center sidebar-item mt-auto logout"
     >
       <img
         src="../../../../assets/Logout.svg"
         class="mr-2"
         style="width: 20px"
       />
-      SAIR
+      <span class="flex-grow-1">SAIR</span>
     </a>
-  </div>
 </div>

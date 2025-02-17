@@ -8,13 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { ButtonModule } from 'primeng/button';
-import { NotificationBarModule } from './pages/menus-tela/notification-bar/notification-bar.module';
 import { InicioModule } from './pages/inicio/inicio.module';
 import { RouterModule, RouterOutlet, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AmbientesModule } from './pages/ambientes/ambientes.module';
-import { SidebarModule } from './pages/menus-tela/sidebar/sidebar.module';
 import { TabBlocoModule } from './pages/ambientes/tab-bloco/tab-bloco.module';
 import { TabAmbientesModule } from './pages/ambientes/tab-ambientes/tab-ambientes.module';
 import { MenuModule } from 'primeng/menu';
@@ -42,6 +40,7 @@ import { DividerModule } from 'primeng/divider';
 import { EditarBlocoModule } from './modals/Editar/editar-bloco/editar-bloco.module';
 import { EditarCategoriaModule } from './modals/Editar/editar-categoria/editar-categoria.module';
 import { ChartModule } from 'primeng/chart';
+import { NavbarModule } from './shared/navbar/navbar.module';
 
 const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
   timeOut: 1100,
@@ -53,14 +52,13 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
   imports: [
     RouterOutlet,
     BrowserModule,
-    NotificationBarModule,
     AppRoutingModule,
     FormsModule,
+    NavbarModule,
     InicioModule,
     HttpClientModule,
     RouterModule,
     AmbientesModule,
-    SidebarModule,
     MatTabsModule,
     BrowserAnimationsModule,
     MatIconModule,
@@ -99,14 +97,13 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
   exports: [
     RouterOutlet,
     BrowserModule,
-    NotificationBarModule,
     AppRoutingModule,
     FormsModule,
+    NavbarModule,
     InicioModule,
     HttpClientModule,
     RouterModule,
     AmbientesModule,
-    SidebarModule,
     MatTabsModule,
     BrowserAnimationsModule,
     MatIconModule,

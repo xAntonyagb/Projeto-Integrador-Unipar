@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { AmbientesComponent } from './ambientes.component';
-import { HeaderModule } from '../menus-tela/header/header.module';
-import { SidebarModule } from '../menus-tela/sidebar/sidebar.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabViewModule } from 'primeng/tabview';
@@ -13,11 +11,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MenuModule } from 'primeng/menu';
 import { CadastrarOrdemModule } from '../../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.module';
+import { NavbarModule } from '../../shared/navbar/navbar.module';
 @NgModule({
   declarations: [AmbientesComponent],
   imports: [
-    HeaderModule,
-    SidebarModule,
+    NavbarModule,
     MatTabsModule,
     BrowserAnimationsModule,
     TabViewModule,

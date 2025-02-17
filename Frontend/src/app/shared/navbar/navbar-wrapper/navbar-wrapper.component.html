@@ -1,0 +1,7 @@
+<div class="main-wrapper">
+  <app-sidebar [class.active]="isSidebarActive"></app-sidebar>
+  <app-header (menuToggled)="onMenuToggled()"></app-header>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

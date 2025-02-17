@@ -13,44 +13,40 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { ArquivadosComponent } from './pages/arquivados/arquivados.component';
 import { TabOrdemDeServicoComponent } from './pages/ordem-de-servico/tab-ordem-de-servico/tab-ordem-de-servico.component';
 import { PatrimonioComponent } from './pages/patrimonio/patrimonio.component';
+import { NavbarWrapperComponent } from './shared/navbar/navbar-wrapper/navbar-wrapper.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { 
+    path: '',
+    component: NavbarWrapperComponent,
+    canActivate: [authGuard], // AuthGuard para todas as rotas filhas
+    children: [
+      { path: 'inicio', component: InicioComponent },
+      { path: 'tarefas', component: TarefasComponent },
+      { path: 'categorias', component: CategoriaComponent },
+      { path: 'usuarios', component: UsuariosComponent },
+      { path: 'arquivados', component: ArquivadosComponent },
+      { path: 'patrimonios', component: PatrimonioComponent },
+      { 
+        path: 'ambientes',
+        component: AmbientesComponent,
+        children: [
+          { path: '', component: TabAmbientesComponent },
+          { path: 'blocos', component: TabBlocoComponent },
+        ]
+      },
+      {
+        path: 'ordem-servico',
+        component: OrdemDeServicoComponent,
+        children: [
+          { path: '', component: TabOrdemDeServicoComponent },
+          { path: 'todos-servicos', component: TabTodosOsServicosComponent },
+        ]
+      },
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+    ]
+  },
   { path: 'login', component: LoginComponent },
-  { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
-  { path: 'tarefas', component: TarefasComponent, canActivate: [authGuard] },
-  {
-    path: 'categorias',
-    component: CategoriaComponent,
-    canActivate: [authGuard],
-  },
-  { path: 'usuarios', component: UsuariosComponent, canActivate: [authGuard] },
-  {
-    path: 'arquivados',
-    component: ArquivadosComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'patrimonios',
-    component: PatrimonioComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'ambientes',
-    component: AmbientesComponent,
-    canActivate: [authGuard],
-    children: [
-      { path: '', component: TabAmbientesComponent },
-      { path: 'blocos', component: TabBlocoComponent },
-    ],
-  },
-  {
-    path: 'ordem-servico',
-    component: OrdemDeServicoComponent,
-    canActivate: [authGuard],
-    children: [
-      { path: '', component: TabOrdemDeServicoComponent },
-      { path: 'todos-servicos', component: TabTodosOsServicosComponent },
-    ],
-  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'inicio' }
 ];

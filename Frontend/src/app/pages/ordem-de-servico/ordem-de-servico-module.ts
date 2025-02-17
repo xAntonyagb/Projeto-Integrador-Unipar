@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { OrdemDeServicoComponent } from './ordem-de-servico.component';
-import { SidebarModule } from '../menus-tela/sidebar/sidebar.module';
-import { HeaderModule } from '../menus-tela/header/header.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabViewModule } from 'primeng/tabview';
@@ -18,12 +16,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
 import { RouterOutlet } from '@angular/router';
+import { NavbarModule } from '../../shared/navbar/navbar.module';
 
 @NgModule({
   declarations: [OrdemDeServicoComponent],
   imports: [
-    HeaderModule,
-    SidebarModule,
+    NavbarModule,
     MatTabsModule,
     BrowserAnimationsModule,
     DropdownModule,

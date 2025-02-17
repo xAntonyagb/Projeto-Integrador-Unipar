@@ -6,10 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MenuModule } from 'primeng/menu';
-import { SidebarModule } from '../menus-tela/sidebar/sidebar.module';
-import { HeaderModule } from '../menus-tela/header/header.module';
 import { CadastrarTarefaModule } from '../../modals/Cadastro/cadastrar-tarefa/cadastrar-tarefa.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavbarModule } from '../../shared/navbar/navbar.module';
 
 @NgModule({
   declarations: [TarefasComponent],
@@ -22,8 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatButtonModule,
     MenuModule,
-    SidebarModule,
-    HeaderModule,
+    NavbarModule,
     CadastrarTarefaModule,
   ],
   exports: [TarefasComponent],

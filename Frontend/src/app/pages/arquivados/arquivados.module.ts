@@ -5,13 +5,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MenuModule } from 'primeng/menu';
-import { SidebarModule } from '../menus-tela/sidebar/sidebar.module';
-import { HeaderModule } from '../menus-tela/header/header.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArquivadosComponent } from './arquivados.component';
-import { CadastrarCategoriaModule } from '../../modals/Cadastro/cadastrar-categoria/cadastrar-categoria.module';
-import { MatTable, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { NavbarModule } from '../../shared/navbar/navbar.module';
 
 @NgModule({
   declarations: [ArquivadosComponent],
@@ -24,8 +22,7 @@ import { MatPaginator } from '@angular/material/paginator';
     MatMenuModule,
     MatButtonModule,
     MenuModule,
-    SidebarModule,
-    HeaderModule,
+    NavbarModule,
     MatTableModule,
     MatPaginator,
   ],

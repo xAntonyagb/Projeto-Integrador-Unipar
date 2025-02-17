@@ -1,0 +1,60 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5em;
+  background: url('../../../../assets/HEADDER1.png') no-repeat center center;
+  background-size: cover;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  &-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 20px;
+  }
+
+  .menu-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    margin-right: 15px;
+  }
+
+  .header-image {
+    display: none; /* Esconde a imagem, pois agora ela é usada como background */
+  }
+}
+
+.user-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  box-sizing: content-box;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Empurra os ícones para a direita */
+}
+
+.notification-icon {
+  width: 40px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 1.4rem;
+  right: 5.7rem;
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  border-radius: 50%;
+  z-index: 110;
+  border: 2px solid #fff;
+}
