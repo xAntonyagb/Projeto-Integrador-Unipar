@@ -134,11 +134,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-
-  <app-cadastrar-ordem
-    *ngIf="isModalOpen"
-    (close)="closeModal()"
-  ></app-cadastrar-ordem>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

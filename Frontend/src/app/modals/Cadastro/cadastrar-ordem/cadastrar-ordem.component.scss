@@ -4,10 +4,9 @@
   right: 0;
   width: 800px;
   height: 100vh;
-  padding-top: 10vh;
   background: white;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 2000;
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
 }
@@ -49,6 +48,20 @@
       }
     }
   }
+}
+
+.modal-header {
+  background: url('../../../../assets/HEADDER1.png') no-repeat center center;
+  background-size: cover;
+  border-radius: 0px;
+  height: 5.05em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-large {
+  font-size: 1.8rem; 
 }
 
 .servico-item {

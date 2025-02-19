@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatusOrdem } from '../../../dtos/enums/StatusOrdem.enum';
 import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-tab-ordem-de-servico',
@@ -19,7 +20,6 @@ import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
-  isModalOpen = false;
   showFilters = false;
   filters = { data: '', status: '' };
   displayedColumns: string[] = [
@@ -38,6 +38,7 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
   pageSize: number = 10;
   statusList: { key: string; value: string }[] = [];
   filtersForm: FormGroup;
+  isModalOpen = false;
 
   constructor(
     private ordem: OrdemService,
@@ -45,6 +46,7 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
     private toastr: ToastrService,
     private fb: FormBuilder,
     private genericToast: ApiGenericToasts,
+    private modalService: ModalService
   ) {
     this.filtersForm = this.fb.group({
       descricao: [''],
@@ -55,15 +57,10 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openModal() {
-    this.isModalOpen = true;
-  }
-  closeModal() {
-    this.isModalOpen = false;
-    this.loadOrdensServico();
-  }
-
   ngOnInit() {
+    this.modalService.isOpen$.subscribe((state) => {
+      this.isModalOpen = state;
+    });
     this.loadOrdensServico();
   }
   ngAfterViewInit() {
@@ -126,5 +123,12 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
       key,
       value,
     }));
+  }
+
+  openModal() {
+    this.modalService.openModal();
+  }
+  closeModal() {
+    this.modalService.closeModal();
   }
 }
