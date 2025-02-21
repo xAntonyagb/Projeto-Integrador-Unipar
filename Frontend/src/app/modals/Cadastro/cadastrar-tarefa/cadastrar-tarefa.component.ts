@@ -4,11 +4,7 @@ import { CategoriaResponse } from '../../../dtos/responses/Categoria.response';
 import { AmbienteService } from '../../../services/ambiente.service';
 import { CategoriaService } from '../../../services/categoria.service';
 import { TarefaService } from '../../../services/tarefa.service';
-import { ToastrService } from 'ngx-toastr';
-import {
-  getStatusDescricao,
-  StatusTarefa,
-} from '../../../dtos/enums/StatusTarefa.enum';
+import { getStatusDescricao, StatusTarefa } from '../../../dtos/enums/StatusTarefa.enum';
 import { TarefaRequest } from '../../../dtos/requests/Tarefa.request';
 import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
 import { TarefaResponse } from '../../../dtos/responses/Tarefa.response';
@@ -20,20 +16,23 @@ import { TarefaResponse } from '../../../dtos/responses/Tarefa.response';
 })
 export class CadastrarTarefaComponent implements OnInit {
   isModalOpen = false;
-  titulo = '';
-  descricao = '';
-  previsao = '';
-  categoriaSelecionada: string = '';
-  ambienteSelecionado = '';
-  prioridade: string = '';
-  statusSelecionado: string = '';
-  tarefasAdicionadas: TarefaResponse[] = [];
-  ambientes: AmbienteResponse[] = [];
-  categorias: CategoriaResponse[] = [];
-  statusArray = Object.entries(StatusTarefa).map(([key, value]) => ({
+  tituloAtual = '';
+  descricaoAtual = '';
+  previsaoAtual!: Date;
+  categoriaAtual: CategoriaResponse = {} as CategoriaResponse;
+  ambienteAtual: AmbienteResponse = {} as AmbienteResponse;
+  prioridadeAtual: string = '';
+  statusAtual: { key: string; value: string } = { key: '', value: '' };
+  lovTarefas: TarefaResponse[] = [];
+  lovAmbientes: AmbienteResponse[] = [];
+  lovCategorias: CategoriaResponse[] = [];
+  lovStatus = Object.entries(StatusTarefa).map(([key, value]) => ({
     key,
     value,
   }));
+  showClearCategoria: boolean = false;
+  showClearStatus: boolean = false;
+  showClearAmbiente: boolean = false;
 
   constructor(
     private ambiente: AmbienteService,
@@ -50,7 +49,7 @@ export class CadastrarTarefaComponent implements OnInit {
   loadTarefas() {
     this.tarefa.getAll(0, 999).subscribe({
       next: (data) => {
-        this.tarefasAdicionadas = data.content;
+        this.lovTarefas = data.content;
       },
       error: (e) => {
         this.genericToast.showErro(e);
@@ -61,7 +60,7 @@ export class CadastrarTarefaComponent implements OnInit {
   loadCategorias() {
     this.categoria.getAll(0, 999).subscribe({
       next: (data) => {
-        this.categorias = data.content;
+        this.lovCategorias = data.content;
       },
       error: (e) => {
         this.genericToast.showErro(e);
@@ -72,11 +71,11 @@ export class CadastrarTarefaComponent implements OnInit {
   loadAmbientes() {
     this.ambiente.getAll(0, 999).subscribe({
       next: (data) => {
-        this.ambientes = data.content;
+        this.lovAmbientes = data.content;
       },
       error: (e) => {
         if (e.status === 404) {
-          this.ambientes = [];
+          this.lovAmbientes = [];
         } else {
           this.genericToast.showErro(e);
         }
@@ -86,19 +85,13 @@ export class CadastrarTarefaComponent implements OnInit {
 
   adicionarTarefa() {
     const novaTarefa: TarefaRequest | any = {
-      titulo: this.titulo,
-      descricao: this.descricao,
-      previsao: new Date(this.previsao),
-      prioridade: this.prioridade,
-      status: this.statusSelecionado,
-      categoria: (
-        this.categorias.find((cat) => cat.id === +this.categoriaSelecionada) ||
-        ({} as CategoriaResponse)
-      ).id,
-      ambiente: (
-        this.ambientes.find((amb) => amb.id === +this.ambienteSelecionado) ||
-        ({} as AmbienteResponse)
-      ).id,
+      titulo: this.tituloAtual,
+      descricao: this.descricaoAtual,
+      previsao: this.previsaoAtual,
+      prioridade: this.prioridadeAtual,
+      status: this.statusAtual.key,
+      categoria: this.categoriaAtual?.id,
+      ambiente: this.ambienteAtual?.id,
     };
 
     this.tarefa.save(novaTarefa).subscribe({
@@ -110,6 +103,16 @@ export class CadastrarTarefaComponent implements OnInit {
         this.genericToast.showErro(e);
       },
     });
+  }
+
+  onCategoriaChange(): void {
+    this.showClearCategoria = !(this.categoriaAtual.id === null || this.categoriaAtual.id === undefined);
+  }
+  onStatusChange(): void {
+    this.showClearStatus = this.statusAtual.key.length > 0;
+  }
+  onAmbienteChange(): void {
+    this.showClearAmbiente = !(this.ambienteAtual.id === null || this.ambienteAtual.id === undefined);
   }
 
   openModal() {

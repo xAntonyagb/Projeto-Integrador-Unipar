@@ -78,3 +78,9 @@ h1 {
 prioridade-config div {
   padding-top: 1rem;
 }
+
+
+::ng-deep .p-datepicker {
+  position: absolute !important;
+  z-index: 9999 !important;
+}

@@ -2,3 +2,20 @@
   padding: 0;
   margin: 0;
 }
+/* fix PrimeNG dropdown não respeitando tamanho do campo */
+::ng-deep .p-dropdown {
+  width: 100% !important;
+  min-width: 100% !important;
+}
+
+::ng-deep .p-dropdown .p-dropdown-label {
+  width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  display: block !important;
+}
+
+::ng-deep .p-dropdown-panel {
+  width: auto !important;
+}

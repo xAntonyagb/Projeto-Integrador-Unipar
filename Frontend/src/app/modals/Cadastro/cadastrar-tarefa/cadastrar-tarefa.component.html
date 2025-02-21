@@ -16,36 +16,51 @@
               class="form-control"
               id="titulo"
               name="titulo"
-              [(ngModel)]="titulo"
+              [(ngModel)]="tituloAtual"
               required
             />
           </div>
           <div class="col-4">
             <label for="previsao">Previsão</label>
-            <input
+            <!-- <input
               type="date"
               class="form-control"
               id="previsao"
               name="previsao"
-              [(ngModel)]="previsao"
+              [(ngModel)]="previsaoAtual"
               required
+            /> -->
+            <p-calendar 
+              [(ngModel)]="previsaoAtual" 
+              [iconDisplay]="'input'" 
+              [showIcon]="true" 
+              dateFormat="dd/mm/yy"
+              inputId="previsao"
+              class="custom-calendar"
+              appendTo="body"
+              id="previsao"
+              name="previsao"
             />
           </div>
+          
         </div>
         <div class="form-row">
           <div class="col">
-            <label for="ambiente">Ambiente</label>
-            <select
+            <label class="form-label mb-1">Ambiente</label>
+            <p-dropdown
               id="ambiente"
               name="ambiente"
-              [(ngModel)]="ambienteSelecionado"
-              class="form-control"
-            >
-              <option *ngFor="let ambiente of ambientes" [value]="ambiente.id">
-                {{ ambiente.descricao }}
-              </option>
-            </select>
+              [options]="lovAmbientes"
+              [(ngModel)]="ambienteAtual"
+              placeholder="Selecione um Ambiente"
+              optionLabel="descricao"
+              (ngModelChange)="onAmbienteChange()"
+              [showClear]="showClearAmbiente"
+              [filter]="true"
+              [resetFilterOnHide]="true"
+            ></p-dropdown>
           </div>
+
           <div class="col">
             <label>Prioridade</label>
             <div class="prioridade-config">
@@ -55,7 +70,7 @@
                   id="prioridade-baixa"
                   name="prioridade"
                   value="BAIXA"
-                  [(ngModel)]="prioridade"
+                  [(ngModel)]="prioridadeAtual"
                 />
                 <label for="prioridade-baixa">Baixa</label>
               </div>
@@ -65,7 +80,7 @@
                   id="prioridade-media"
                   name="prioridade"
                   value="MEDIA"
-                  [(ngModel)]="prioridade"
+                  [(ngModel)]="prioridadeAtual"
                 />
                 <label for="prioridade-media">Média</label>
               </div>
@@ -75,7 +90,7 @@
                   id="prioridade-alta"
                   name="prioridade"
                   value="ALTA"
-                  [(ngModel)]="prioridade"
+                  [(ngModel)]="prioridadeAtual"
                 />
                 <label for="prioridade-alta">Alta</label>
               </div>
@@ -84,33 +99,35 @@
         </div>
         <div class="form-row">
           <div class="col">
-            <label for="categoria">Categoria</label>
-            <select
+            <label class="form-label mb-1">Categoria</label>
+            <p-dropdown
               id="categoria"
               name="categoria"
-              [(ngModel)]="categoriaSelecionada"
-              class="form-control"
-            >
-              <option
-                *ngFor="let categoria of categorias"
-                [value]="categoria.id.toString()"
-              >
-                {{ categoria.descricao }}
-              </option>
-            </select>
+              [options]="lovCategorias"
+              [(ngModel)]="categoriaAtual"
+              placeholder="Selecione uma Categoria"
+              optionLabel="descricao"
+              (ngModelChange)="onCategoriaChange()"
+              [showClear]="showClearCategoria"
+              [filter]="true"
+              [resetFilterOnHide]="true"
+            ></p-dropdown>
           </div>
+
           <div class="col">
-            <label for="status">Status</label>
-            <select
+            <label class="form-label mb-1">Status</label>
+            <p-dropdown
               id="status"
-              [(ngModel)]="statusSelecionado"
               name="status"
-              class="form-control"
-            >
-              <option *ngFor="let status of statusArray" [value]="status.key">
-                {{ status.value }}
-              </option>
-            </select>
+              [options]="lovStatus"
+              [(ngModel)]="statusAtual"
+              placeholder="Selecione um Status"
+              optionLabel="value"
+              (ngModelChange)="onStatusChange()"
+              [showClear]="showClearStatus"
+              [filter]="true"
+              [resetFilterOnHide]="true"
+            ></p-dropdown>
           </div>
         </div>
         <div class="form-group">
@@ -118,7 +135,7 @@
           <textarea
             id="descricao"
             name="descricao"
-            [(ngModel)]="descricao"
+            [(ngModel)]="descricaoAtual"
             class="form-control"
             rows="3"
             placeholder="Digite a descrição"
