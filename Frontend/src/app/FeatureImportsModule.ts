@@ -9,7 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { ButtonModule } from 'primeng/button';
 import { InicioModule } from './pages/inicio/inicio.module';
-import { RouterModule, RouterOutlet, Routes } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AmbientesModule } from './pages/ambientes/ambientes.module';
@@ -41,6 +41,9 @@ import { EditarBlocoModule } from './modals/Editar/editar-bloco/editar-bloco.mod
 import { EditarCategoriaModule } from './modals/Editar/editar-categoria/editar-categoria.module';
 import { ChartModule } from 'primeng/chart';
 import { NavbarModule } from './shared/navbar/navbar.module';
+import { GenericModalModule } from './modals/generic-modal/generic-modal.module';
+import { CadastrarPatrimonioModule } from './modals/Cadastro/cadastrar-patrimonio/cadastrar-patrimonio.module';
+import { ModalHeaderModule } from './modals/modal-header/modal-header.module';
 
 const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
   timeOut: 1100,
@@ -54,6 +57,8 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ModalHeaderModule,
+    GenericModalModule,
     NavbarModule,
     InicioModule,
     HttpClientModule,
@@ -81,6 +86,7 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
     CadastrarTarefaModule,
     CadastrarUsuarioModule,
     CadastrarAmbienteModule,
+    CadastrarPatrimonioModule,
     CategoriaModule,
     LoginModule,
     TarefasModule,
@@ -99,6 +105,8 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ModalHeaderModule,
+    GenericModalModule,
     NavbarModule,
     InicioModule,
     HttpClientModule,
@@ -123,6 +131,7 @@ const toastrModule: ModuleWithProviders<ToastrModule> = ToastrModule.forRoot({
     CadastrarTarefaModule,
     CadastrarUsuarioModule,
     CadastrarAmbienteModule,
+    CadastrarPatrimonioModule,
     CategoriaModule,
     LoginModule,
     TarefasModule,

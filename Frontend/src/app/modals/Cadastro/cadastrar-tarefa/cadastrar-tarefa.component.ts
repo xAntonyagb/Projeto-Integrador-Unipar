@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
-import { CategoriaResponse } from '../../../dtos/responses/Categoria.response';
+import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
+import { CategoriaResponse } from '../../../dtos/responses/categoria.response';
 import { AmbienteService } from '../../../services/ambiente.service';
 import { CategoriaService } from '../../../services/categoria.service';
 import { TarefaService } from '../../../services/tarefa.service';
-import { getStatusDescricao, StatusTarefa } from '../../../dtos/enums/StatusTarefa.enum';
-import { TarefaRequest } from '../../../dtos/requests/Tarefa.request';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
-import { TarefaResponse } from '../../../dtos/responses/Tarefa.response';
+import { getStatusDescricao, StatusTarefa } from '../../../dtos/enums/status-tarefa.enum';
+import { TarefaRequest } from '../../../dtos/requests/tarefa.request';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
+import { TarefaResponse } from '../../../dtos/responses/tarefa.response';
 
 @Component({
   selector: 'app-cadastrar-tarefa',
@@ -27,7 +27,7 @@ export class CadastrarTarefaComponent implements OnInit {
   lovAmbientes: AmbienteResponse[] = [];
   lovCategorias: CategoriaResponse[] = [];
   lovStatus = Object.entries(StatusTarefa).map(([key, value]) => ({
-    key,
+    key, 
     value,
   }));
   showClearCategoria: boolean = false;
@@ -118,11 +118,13 @@ export class CadastrarTarefaComponent implements OnInit {
   openModal() {
     this.isModalOpen = true;
   }
-  onSubmit(event: Event): void {}
+  onSubmit(event: Event): void {
+    this.loadTarefas();
+  }
+
   @Output() close = new EventEmitter<void>();
   closeModal() {
     this.close.emit();
-    this.loadTarefas();
   }
   protected readonly getStatusDescricao = getStatusDescricao;
 }

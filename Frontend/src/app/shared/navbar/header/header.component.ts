@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NotificationBarComponent } from '../notification-bar/notification-bar.component';
-import { NotificacaoResponse } from '../../../dtos/responses/Notificacao.response';
+import { NotificacaoResponse } from '../../../dtos/responses/notificacao.response';
 
 @Component({
   selector: 'app-header',

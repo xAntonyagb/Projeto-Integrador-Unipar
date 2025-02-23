@@ -1,4 +1,4 @@
-import { UsuarioResponse } from './Usuario.response';
+import { UsuarioResponse } from './usuario.response';
 
 export interface CategoriaResponse {
   id: number | any;

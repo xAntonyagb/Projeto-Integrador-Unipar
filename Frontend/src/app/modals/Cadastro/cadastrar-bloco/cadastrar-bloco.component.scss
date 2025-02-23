@@ -1,44 +1,44 @@
-.overlay {
-  font-family: "Inter";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-weight: bold;
-}
+// .overlay {
+//   font-family: "Inter";
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: rgba(0, 0, 0, 0.5);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   color: #fff;
+//   font-weight: bold;
+// }
 
-.modal-container {
-  background-color: white;
-  padding: 0;
-  border-radius: 5px;
-  width: 50%;
-  max-width: 600px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-}
+// .modal-container {
+//   background-color: white;
+//   padding: 0;
+//   border-radius: 5px;
+//   width: 50%;
+//   max-width: 600px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+//   display: flex;
+//   flex-direction: column;
+// }
 
-.modal-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url("/assets/HEADDER1.png");
-  background-size: cover;
-  background-position: center;
-}
+// .modal-header {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-image: url("/assets/HEADDER1.png");
+//   background-size: cover;
+//   background-position: center;
+// }
 
-.modal-header a {
-  position: fixed;
-  display: flex;
-  left: 43rem;
-  height: 3rem;
-}
+// .modal-header a {
+//   position: fixed;
+//   display: flex;
+//   left: 43rem;
+//   height: 3rem;
+// }
 
 .body {
   padding: 1rem;

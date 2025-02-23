@@ -1,7 +1,7 @@
-import { AmbienteResponse } from './Ambiente.response';
-import { CategoriaResponse } from './Categoria.response';
-import { UsuarioResponse } from './Usuario.response';
-import { PatrimonioSimpleResponse } from './PatrimonioSimple.response';
+import { AmbienteResponse } from './ambiente.response';
+import { CategoriaResponse } from './categoria.response';
+import { UsuarioResponse } from './usuario.response';
+import { PatrimonioSimpleResponse } from './patrimonio-simple.response';
 
 export interface ServicoResponse {
   id: Number;

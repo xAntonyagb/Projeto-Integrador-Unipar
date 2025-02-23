@@ -4,16 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CadastrarTarefaComponent } from './cadastrar-tarefa.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { GenericModalModule } from "../../generic-modal/generic-modal.module";
 
 @NgModule({
   declarations: [CadastrarTarefaComponent],
   imports: [
-    BrowserAnimationsModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     DropdownModule,
-    CalendarModule
-  ],
+    CalendarModule,
+    RadioButtonModule,
+    GenericModalModule
+],
   exports: [CadastrarTarefaComponent],
 })
 export class CadastrarTarefaModule {}

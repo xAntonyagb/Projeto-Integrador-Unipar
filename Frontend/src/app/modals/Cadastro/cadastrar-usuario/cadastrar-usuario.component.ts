@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
-import { UsuarioResponse } from '../../../dtos/responses/Usuario.response';
+import { UsuarioResponse } from '../../../dtos/responses/usuario.response';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
-import { UsuarioRequest } from '../../../dtos/requests/Usuario.request';
-import { UsuarioPermissoes } from '../../../dtos/enums/UsuarioPermissoes.enum';
-import { CadastroRequest } from '../../../dtos/requests/Cadastro.request';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { UsuarioRequest } from '../../../dtos/requests/usuario.request';
+import { UsuarioPermissoes } from '../../../dtos/enums/usuario-permissoes.enum';
+import { CadastroRequest } from '../../../dtos/requests/cadastro.request';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-cadastrar-usuario',

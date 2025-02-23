@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ArquivadoResponse } from '../dtos/responses/Arquivado.response';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
-import { TipoArquivado } from '../dtos/enums/TipoArquivado.enum';
+import { ArquivadoResponse } from '../dtos/responses/arquivado.response';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
+import { TipoArquivado } from '../dtos/enums/tipo-arquivado.enum';
 
 @Injectable({
   providedIn: 'root',

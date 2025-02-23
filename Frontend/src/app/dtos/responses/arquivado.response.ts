@@ -1,7 +1,7 @@
-import { TipoArquivado } from '../enums/TipoArquivado.enum';
-import { OrdemServicoResponse } from './OrdemServico.response';
-import { TarefaResponse } from './Tarefa.response';
-import { UsuarioResponse } from './Usuario.response';
+import { TipoArquivado } from '../enums/tipo-arquivado.enum';
+import { OrdemServicoResponse } from './ordem-servico.response';
+import { TarefaResponse } from './tarefa.response';
+import { UsuarioResponse } from './usuario.response';
 
 export interface ArquivadoResponse {
   id: number;

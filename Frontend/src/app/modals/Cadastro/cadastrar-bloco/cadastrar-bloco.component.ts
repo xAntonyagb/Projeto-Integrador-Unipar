@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { BlocoService } from '../../../services/bloco.service';
-import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
-import { BlocoRequest } from '../../../dtos/requests/Bloco.request';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { BlocoResponse } from '../../../dtos/responses/bloco.response';
+import { BlocoRequest } from '../../../dtos/requests/bloco.request';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-cadastrar-bloco',

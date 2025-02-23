@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
-import { NotificacaoResponse } from '../../../dtos/responses/Notificacao.response';
+import { NotificacaoResponse } from '../../../dtos/responses/notificacao.response';
 import { NotificacaoService } from '../../../services/notificacao.service';
 
 @Component({

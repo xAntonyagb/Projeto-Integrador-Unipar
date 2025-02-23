@@ -1,156 +1,138 @@
-<div class="overlay">
-  <div class="modal-container">
-    <div class="modal-header">
-      <h1>Nova Tarefa</h1>
-      <button type="button" class="close" (click)="closeModal()">
-        &times;
+<app-generic-modal [titulo]="'Cadastrar Tarefa'" (close)="closeModal()"> 
+  <form #form="ngForm" (ngSubmit)="onSubmit($event)">
+    <div class="form-row">
+      <div class="col-8">
+        <label for="titulo" class="form-label mb-1">Nome da Tarefa</label>
+        <input
+          type="text"
+          class="form-control"
+          id="titulo"
+          name="titulo"
+          [(ngModel)]="tituloAtual"
+          required
+        />
+      </div>
+      <div class="col-4">
+        <label for="previsao" class="form-label mb-1">Previsão</label>
+        <p-calendar 
+          [(ngModel)]="previsaoAtual" 
+          [iconDisplay]="'input'" 
+          [showIcon]="true" 
+          dateFormat="dd/mm/yy"
+          inputId="previsao"
+          class="custom-calendar"
+          appendTo="body"
+          id="previsao"
+          name="previsao"
+        />
+      </div>
+      
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <label for="ambiente" class="form-label mb-1">Ambiente</label>
+        <p-dropdown
+          id="ambiente"
+          name="ambiente"
+          [options]="lovAmbientes"
+          [(ngModel)]="ambienteAtual"
+          placeholder="Selecione um Ambiente"
+          optionLabel="descricao"
+          (ngModelChange)="onAmbienteChange()"
+          [showClear]="showClearAmbiente"
+          [filter]="true"
+          [resetFilterOnHide]="true"
+        ></p-dropdown>
+      </div>
+
+      <div class="col">
+        <label class="form-label mb-1">Prioridade</label>
+        <div class="flex flex-wrap gap-3 radio-button-container">
+          <div class="flex align-items-center mb-1 mt-1">
+            <p-radioButton
+              name="prioridade"
+              value="BAIXA"
+              [(ngModel)]="prioridadeAtual"
+              inputId="prioridade-baixa"
+            />
+            <label for="prioridade-baixa" class="ml-2 mb-0">Baixa</label>
+          </div>
+
+          <div class="flex align-items-center  mb-1 mt-1">
+            <p-radioButton
+              name="prioridade"
+              value="MEDIA"
+              [(ngModel)]="prioridadeAtual"
+              inputId="prioridade-media"
+            />
+            <label for="prioridade-media" class="ml-2 mb-0">Média</label>
+          </div>
+
+          <div class="flex align-items-center mb-1 mt-1">
+            <p-radioButton
+              name="prioridade"
+              value="ALTA"
+              [(ngModel)]="prioridadeAtual"
+              inputId="prioridade-alta"
+            />
+            <label for="prioridade-alta" class="ml-2 mb-0">Alta</label>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <label for="categoria" class="form-label mb-1">Categoria</label>
+        <p-dropdown
+          id="categoria"
+          name="categoria"
+          [options]="lovCategorias"
+          [(ngModel)]="categoriaAtual"
+          placeholder="Selecione uma Categoria"
+          optionLabel="descricao"
+          (ngModelChange)="onCategoriaChange()"
+          [showClear]="showClearCategoria"
+          [filter]="true"
+          [resetFilterOnHide]="true"
+        ></p-dropdown>
+      </div>
+
+      <div class="col">
+        <label for="status" class="form-label mb-1">Status</label>
+        <p-dropdown
+          id="status"
+          name="status"
+          [options]="lovStatus"
+          [(ngModel)]="statusAtual"
+          placeholder="Selecione um Status"
+          optionLabel="value"
+          (ngModelChange)="onStatusChange()"
+          [showClear]="showClearStatus"
+          [filter]="true"
+          [resetFilterOnHide]="true"
+        ></p-dropdown>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="descricao" class="form-label mb-1">Descrição</label>
+      <textarea
+        id="descricao"
+        name="descricao"
+        [(ngModel)]="descricaoAtual"
+        class="form-control"
+        rows="3"
+        placeholder="Digite a descrição"
+      ></textarea>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-success"
+        (click)="adicionarTarefa()"
+      >
+        Cadastrar
       </button>
     </div>
-    <div class="body">
-      <form #form="ngForm" (ngSubmit)="onSubmit($event)">
-        <div class="form-row">
-          <div class="col-8">
-            <label for="titulo">Nome da Tarefa</label>
-            <input
-              type="text"
-              class="form-control"
-              id="titulo"
-              name="titulo"
-              [(ngModel)]="tituloAtual"
-              required
-            />
-          </div>
-          <div class="col-4">
-            <label for="previsao">Previsão</label>
-            <!-- <input
-              type="date"
-              class="form-control"
-              id="previsao"
-              name="previsao"
-              [(ngModel)]="previsaoAtual"
-              required
-            /> -->
-            <p-calendar 
-              [(ngModel)]="previsaoAtual" 
-              [iconDisplay]="'input'" 
-              [showIcon]="true" 
-              dateFormat="dd/mm/yy"
-              inputId="previsao"
-              class="custom-calendar"
-              appendTo="body"
-              id="previsao"
-              name="previsao"
-            />
-          </div>
-          
-        </div>
-        <div class="form-row">
-          <div class="col">
-            <label class="form-label mb-1">Ambiente</label>
-            <p-dropdown
-              id="ambiente"
-              name="ambiente"
-              [options]="lovAmbientes"
-              [(ngModel)]="ambienteAtual"
-              placeholder="Selecione um Ambiente"
-              optionLabel="descricao"
-              (ngModelChange)="onAmbienteChange()"
-              [showClear]="showClearAmbiente"
-              [filter]="true"
-              [resetFilterOnHide]="true"
-            ></p-dropdown>
-          </div>
-
-          <div class="col">
-            <label>Prioridade</label>
-            <div class="prioridade-config">
-              <div>
-                <input
-                  type="radio"
-                  id="prioridade-baixa"
-                  name="prioridade"
-                  value="BAIXA"
-                  [(ngModel)]="prioridadeAtual"
-                />
-                <label for="prioridade-baixa">Baixa</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="prioridade-media"
-                  name="prioridade"
-                  value="MEDIA"
-                  [(ngModel)]="prioridadeAtual"
-                />
-                <label for="prioridade-media">Média</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="prioridade-alta"
-                  name="prioridade"
-                  value="ALTA"
-                  [(ngModel)]="prioridadeAtual"
-                />
-                <label for="prioridade-alta">Alta</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col">
-            <label class="form-label mb-1">Categoria</label>
-            <p-dropdown
-              id="categoria"
-              name="categoria"
-              [options]="lovCategorias"
-              [(ngModel)]="categoriaAtual"
-              placeholder="Selecione uma Categoria"
-              optionLabel="descricao"
-              (ngModelChange)="onCategoriaChange()"
-              [showClear]="showClearCategoria"
-              [filter]="true"
-              [resetFilterOnHide]="true"
-            ></p-dropdown>
-          </div>
-
-          <div class="col">
-            <label class="form-label mb-1">Status</label>
-            <p-dropdown
-              id="status"
-              name="status"
-              [options]="lovStatus"
-              [(ngModel)]="statusAtual"
-              placeholder="Selecione um Status"
-              optionLabel="value"
-              (ngModelChange)="onStatusChange()"
-              [showClear]="showClearStatus"
-              [filter]="true"
-              [resetFilterOnHide]="true"
-            ></p-dropdown>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="descricao">Descrição</label>
-          <textarea
-            id="descricao"
-            name="descricao"
-            [(ngModel)]="descricaoAtual"
-            class="form-control"
-            rows="3"
-            placeholder="Digite a descrição"
-          ></textarea>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="submit"
-            class="btn btn-success"
-            (click)="adicionarTarefa()"
-          >
-            Cadastrar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+  </form>
+</app-generic-modal>

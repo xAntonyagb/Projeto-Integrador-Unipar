@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { NotificacaoResponse } from '../dtos/responses/Notificacao.response';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { NotificacaoResponse } from '../dtos/responses/notificacao.response';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
 
 @Injectable({
   providedIn: 'root',

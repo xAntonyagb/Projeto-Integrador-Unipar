@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { BlocoResponse } from '../dtos/responses/Bloco.response';
-import { BlocoRequest } from '../dtos/requests/Bloco.request';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { BlocoResponse } from '../dtos/responses/bloco.response';
+import { BlocoRequest } from '../dtos/requests/bloco.request';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
 import { LoadingService } from './loading.service';
 
 @Injectable({

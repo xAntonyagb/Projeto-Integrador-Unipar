@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
-import { PatrimonioResponse } from '../dtos/responses/Patrimonio.response';
-import { PatrimonioRequest } from '../dtos/requests/Patrimonio.request';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
+import { PatrimonioResponse } from '../dtos/responses/patrimonio.response';
+import { PatrimonioRequest } from '../dtos/requests/patrimonio.request';
 
 @Injectable({
   providedIn: 'root',

@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable, of } from 'rxjs';
-import { UsuarioResponse } from '../dtos/responses/Usuario.response';
-import { catchError, tap } from 'rxjs/operators';
-import { UsuarioRequest } from '../dtos/requests/Usuario.request';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
-import { UsuarioPermissoes } from '../dtos/enums/UsuarioPermissoes.enum';
-import { CadastroRequest } from '../dtos/requests/Cadastro.request';
+import { Observable } from 'rxjs';
+import { UsuarioResponse } from '../dtos/responses/usuario.response';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
+import { UsuarioPermissoes } from '../dtos/enums/usuario-permissoes.enum';
+import { CadastroRequest } from '../dtos/requests/cadastro.request';
 
 @Injectable({
   providedIn: 'root',

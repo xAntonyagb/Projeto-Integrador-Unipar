@@ -5,11 +5,11 @@ import {
   OnChanges,
   Output,
 } from '@angular/core';
-import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
+import { BlocoResponse } from '../../../dtos/responses/bloco.response';
 import { BlocoService } from '../../../services/bloco.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { BlocoRequest } from '../../../dtos/requests/Bloco.request';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { BlocoRequest } from '../../../dtos/requests/bloco.request';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-editar-bloco',

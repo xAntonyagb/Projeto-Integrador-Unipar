@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MatTableDataSource } from '@angular/material/table';
 import { BlocoService } from '../../../services/bloco.service';
-import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
-import { BlocoRequest } from '../../../dtos/requests/Bloco.request';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { BlocoResponse } from '../../../dtos/responses/bloco.response';
+import { BlocoRequest } from '../../../dtos/requests/bloco.request';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-tab-bloco',

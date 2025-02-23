@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { AmbienteResponse } from '../dtos/responses/Ambiente.response';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { AmbienteResponse } from '../dtos/responses/ambiente.response';
 import { AuthService } from './auth.service';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
-import { AmbienteRequest } from '../dtos/requests/Ambiente.request';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
+import { AmbienteRequest } from '../dtos/requests/ambiente.request';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class AmbienteService {
   private apiUrl = ApiBaseUrls.getBaseUrl();
 
   constructor(
-    private http: HttpClient,
+    private http: HttpClient, 
     private auth: AuthService,
   ) {}
 

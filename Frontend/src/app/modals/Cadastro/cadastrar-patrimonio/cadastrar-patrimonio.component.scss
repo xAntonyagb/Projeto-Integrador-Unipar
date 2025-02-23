@@ -1,52 +1,3 @@
-.overlay {
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10010;
-  color: #fff;
-}
-.modal-container {
-  background-color: white;
-  padding: 0px;
-  border-radius: 1rem;
-  width: 50%;
-  max-width: 600px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url("/assets/HEADDER1.png");
-  background-size: cover;
-  background-position: center;
-}
-
-.modal-body {
-  margin-top: 20px;
-}
-.modal-header a {
-  position: fixed;
-  display: flex;
-  left: 43rem;
-  height: 3rem;
-}
-.body {
-  padding: 1rem;
-  margin-top: 0.8rem;
-
-  color: #000000;
-}
 .modal-footer {
   margin-top: 3rem;
   display: flex;
@@ -60,6 +11,7 @@
   width: 100%;
   border-radius: 20px;
 }
+
 .horizontal-group {
   display: flex;
   gap: 1rem;
@@ -67,4 +19,8 @@
 
 .form-group-item {
   flex: 2;
+}
+
+textarea {
+  max-height: 20rem;
 }

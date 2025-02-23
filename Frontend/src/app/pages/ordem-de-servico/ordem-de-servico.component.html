@@ -1,56 +1,30 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link href="https://unpkg.com/primeflex/primeflex.css" rel="stylesheet" />
-    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
-    <link
-      href="https://unpkg.com/quill@1.3.7/dist/quill.snow.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    
-    
-
-    <div class="conteudo">
-      <div class="centro">
-        <div class="centro">
-          <p class="nomePagina">{{ currentPageTitle }}</p>
-          <nav class="nav nav-tabs">
-            <a
-              class="nav-item nav-link"
-              [routerLink]="['/ordem-servico']"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="updatePageTitle(0)"
-              >Ordem de Serviço</a
-            >
-            <a
-              class="nav-item nav-link"
-              [routerLink]="['/ordem-servico/todos-servicos']"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="updatePageTitle(1)"
-              >Todos os Serviços</a
-            >
-          </nav>
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-      <app-cadastrar-ordem
-        *ngIf="isModalOpen"
-        (close)="closeModal()"
-      ></app-cadastrar-ordem>
+<div class="conteudo">
+  <div class="centro">
+    <div class="centro">
+      <p class="nomePagina">{{ currentPageTitle }}</p>
+      <nav class="nav nav-tabs">
+        <a
+          class="nav-item nav-link"
+          [routerLink]="['/ordem-servico']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="updatePageTitle(0)"
+          >Ordem de Serviço</a
+        >
+        <a
+          class="nav-item nav-link"
+          [routerLink]="['/ordem-servico/todos-servicos']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="updatePageTitle(1)"
+          >Todos os Serviços</a
+        >
+      </nav>
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</html>
+  </div>
+  <app-cadastrar-ordem
+    *ngIf="isModalOpen"
+    (close)="closeModal()"
+  ></app-cadastrar-ordem>
+</div>

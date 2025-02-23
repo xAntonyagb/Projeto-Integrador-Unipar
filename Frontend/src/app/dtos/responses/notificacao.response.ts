@@ -1,4 +1,4 @@
-import { TipoNotificacao } from '../enums/TipoNotificacao.enum';
+import { TipoNotificacao } from '../enums/tipo-notificacao.enum';
 
 export interface NotificacaoResponse {
   id: Number;

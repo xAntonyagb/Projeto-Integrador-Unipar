@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { OrdemService } from '../../services/ordem.service';
-import { ModalService } from '../../services/modal.service';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-ordem-de-servico',
@@ -12,25 +10,27 @@ export class OrdemDeServicoComponent {
   currentPageTitle: string = this.pageTitles[0];
   isModalOpen = false;
 
-  constructor (
-    private modalService: ModalService
-  ) {}
-
-  ngOnInit() {
-    this.modalService.isOpen$.subscribe((state) => {
-      this.isModalOpen = state;
-    });
-  }
+  @Output() close = new EventEmitter<void>();
 
   updatePageTitle(index: number) {
     this.currentPageTitle = this.pageTitles[index];
   }
 
+  onActivate(componentInstance: any) {
+    if (componentInstance.open) {
+      componentInstance.open.subscribe(() => this.openModal());
+    }
+    if (componentInstance.close) {
+      componentInstance.close.subscribe(() => this.closeModal());
+    }
+  }
+
   openModal() {
-    this.modalService.openModal();
+    this.isModalOpen = true;
   }
   closeModal() {
-    this.modalService.closeModal();
+    this.isModalOpen = false;
+    this.close.emit();
   }
 
 }

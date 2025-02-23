@@ -5,13 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Button } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MatTableModule } from '@angular/material/table';
-import { CadastrarPatrimonioComponent } from '../../modals/Cadastro/cadastrar-patrimonio/cadastrar-patrimonio.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NavbarModule } from '../../shared/navbar/navbar.module';
+import { CadastrarPatrimonioModule } from '../../modals/Cadastro/cadastrar-patrimonio/cadastrar-patrimonio.module';
 
 @NgModule({
-  declarations: [PatrimonioComponent, CadastrarPatrimonioComponent],
+  declarations: [PatrimonioComponent],
   imports: [
     BrowserAnimationsModule,
     FormsModule,
@@ -22,6 +22,7 @@ import { NavbarModule } from '../../shared/navbar/navbar.module';
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
+    CadastrarPatrimonioModule
   ],
   exports: [PatrimonioComponent],
 })

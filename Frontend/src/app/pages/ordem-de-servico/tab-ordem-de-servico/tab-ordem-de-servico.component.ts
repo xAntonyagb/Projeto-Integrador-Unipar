@@ -1,16 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { OrdemService } from '../../../services/ordem.service';
+import { OrdemService } from '../../../services/ordem-servico.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { StatusOrdem } from '../../../dtos/enums/StatusOrdem.enum';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
-import { ModalService } from '../../../services/modal.service';
-
+import { StatusOrdem } from '../../../dtos/enums/status-ordem.enum';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
 @Component({
   selector: 'app-tab-ordem-de-servico',
   templateUrl: './tab-ordem-de-servico.component.html',
@@ -45,8 +41,7 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
     private datePipe: DatePipe,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private genericToast: ApiGenericToasts,
-    private modalService: ModalService
+    private genericToast: ApiGenericToasts
   ) {
     this.filtersForm = this.fb.group({
       descricao: [''],
@@ -56,13 +51,11 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
       sort: [''],
     });
   }
-
+ 
   ngOnInit() {
-    this.modalService.isOpen$.subscribe((state) => {
-      this.isModalOpen = state;
-    });
     this.loadOrdensServico();
   }
+
   ngAfterViewInit() {
     if (this.sort) {
       this.dataSource.sort = this.sort;
@@ -125,10 +118,12 @@ export class TabOrdemDeServicoComponent implements OnInit, AfterViewInit {
     }));
   }
 
+  @Output() open = new EventEmitter<void>();
   openModal() {
-    this.modalService.openModal();
+    this.isModalOpen = true;
+    this.open.emit();
   }
   closeModal() {
-    this.modalService.closeModal();
+    this.isModalOpen = false;
   }
 }

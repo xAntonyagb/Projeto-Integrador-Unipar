@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RelatoriosService } from '../../services/relatorios.service';
-import { RelatoriosMensaisResponse } from '../../dtos/responses/relatorios/RelatoriosMensais.response';
-import { RelatoriosAnoResponse } from '../../dtos/responses/relatorios/RelatoriosAno.response';
+import { RelatoriosMensaisResponse } from '../../dtos/responses/relatorios/relatorios-mensais.response';
+import { RelatoriosAnoResponse } from '../../dtos/responses/relatorios/relatorios-ano.response';
 
 @Component({
   selector: 'app-inicio',

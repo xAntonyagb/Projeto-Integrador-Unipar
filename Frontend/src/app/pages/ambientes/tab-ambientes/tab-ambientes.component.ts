@@ -8,12 +8,12 @@ import {
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
-import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
+import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
 import { AmbienteService } from '../../../services/ambiente.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { PaginacaoResponse } from '../../../dtos/responses/Paginacao.response';
+import { PaginacaoResponse } from '../../../dtos/responses/paginacao.response';
 import { ToastrService } from 'ngx-toastr';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-tab-ambientes',

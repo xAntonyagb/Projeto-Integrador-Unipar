@@ -1,4 +1,4 @@
-import { StatusTarefa } from '../enums/StatusTarefa.enum';
+import { StatusTarefa } from '../enums/status-tarefa.enum';
 
 export class TarefaRequest {
   id?: number;

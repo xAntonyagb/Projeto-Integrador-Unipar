@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
-import { OrdemServicoResponse } from '../dtos/responses/OrdemServico.response';
-import { OrdemServicoRequest } from '../dtos/requests/OrdemServico.request';
-import { StatusOrdem } from '../dtos/enums/StatusOrdem.enum';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
+import { OrdemServicoResponse } from '../dtos/responses/ordem-servico.response';
+import { OrdemServicoRequest } from '../dtos/requests/ordem-servico.request';
+import { StatusOrdem } from '../dtos/enums/status-ordem.enum';
 
 @Injectable({
   providedIn: 'root',

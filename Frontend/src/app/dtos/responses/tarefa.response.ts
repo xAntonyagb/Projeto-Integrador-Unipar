@@ -1,8 +1,8 @@
-import { UsuarioResponse } from './Usuario.response';
-import { AmbienteResponse } from './Ambiente.response';
-import { CategoriaResponse } from './Categoria.response';
-import { PrioridadeTarefa } from '../enums/PrioridadeTarefa.enum';
-import { StatusTarefa } from '../enums/StatusTarefa.enum';
+import { UsuarioResponse } from './usuario.response';
+import { AmbienteResponse } from './ambiente.response';
+import { CategoriaResponse } from './categoria.response';
+import { PrioridadeTarefa } from '../enums/prioridade-tarefa.enum';
+import { StatusTarefa } from '../enums/status-tarefa.enum';
 
 export interface TarefaResponse {
   id: Number;

@@ -1,6 +1,6 @@
-import { BlocoServicoResponse } from './BlocoServico.response';
-import { PatrimonioServicoResponse } from './PatrimonioServico.response';
-import { GraficoResponse } from './Grafico.response';
+import { BlocoServicoResponse } from './bloco-servico.response';
+import { PatrimonioServicoResponse } from './patrimonio-servico.response';
+import { GraficoResponse } from './grafico.response';
 
 export interface RelatoriosAnoResponse {
   graficos: GraficoResponse[];

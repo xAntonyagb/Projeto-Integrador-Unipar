@@ -11,10 +11,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { TabOrdemDeServicoComponent } from './tab-ordem-de-servico.component';
 import { CadastrarOrdemModule } from '../../../modals/Cadastro/cadastrar-ordem/cadastrar-ordem.module';
-import {
-  MatPaginatorIntl,
-  MatPaginatorModule,
-} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { DropdownModule } from 'primeng/dropdown';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';

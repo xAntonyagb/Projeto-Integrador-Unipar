@@ -6,15 +6,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { PatrimonioResponse } from '../../dtos/responses/Patrimonio.response';
+import { PatrimonioResponse } from '../../dtos/responses/patrimonio.response';
 import { PatrimonioService } from '../../services/patrimonio.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { ToastrService } from 'ngx-toastr';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AmbienteService } from '../../services/ambiente.service';
-import { AmbienteResponse } from '../../dtos/responses/Ambiente.response';
-import { ApiGenericToasts } from '../../infra/api/api.genericToasts';
+import { AmbienteResponse } from '../../dtos/responses/ambiente.response';
+import { ApiGenericToasts } from '../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-patrimonio',

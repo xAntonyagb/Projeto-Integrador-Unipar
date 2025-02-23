@@ -1,6 +1,6 @@
-import { AmbienteResponse } from './Ambiente.response';
-import { UsuarioResponse } from './Usuario.response';
-import { AmbienteSimpleResponse } from './AmbienteSimple.response';
+import { AmbienteResponse } from './ambiente.response';
+import { UsuarioResponse } from './usuario.response';
+import { AmbienteSimpleResponse } from './ambiente-simple.response';
 
 export interface PatrimonioResponse {
   selected?: boolean;

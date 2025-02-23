@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { CategoriaResponse } from '../dtos/responses/Categoria.response';
-import { AuthService } from './auth.service';
-import { CategoriaRequest } from '../dtos/requests/Categoria.request';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { CategoriaResponse } from '../dtos/responses/categoria.response';
+import { CategoriaRequest } from '../dtos/requests/categoria.request';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
 
 @Injectable({
   providedIn: 'root',

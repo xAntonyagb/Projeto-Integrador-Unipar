@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { RelatoriosGeraisResponse } from '../dtos/responses/relatorios/RelatoriosGerais.response';
-import { RelatoriosMensaisResponse } from '../dtos/responses/relatorios/RelatoriosMensais.response';
-import { RelatoriosAnoResponse } from '../dtos/responses/relatorios/RelatoriosAno.response';
-import { RelatoriosFullResponse } from '../dtos/responses/relatorios/RelatoriosFull.response';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { RelatoriosGeraisResponse } from '../dtos/responses/relatorios/relatorios-gerais.response';
+import { RelatoriosMensaisResponse } from '../dtos/responses/relatorios/relatorios-mensais.response';
+import { RelatoriosAnoResponse } from '../dtos/responses/relatorios/relatorios-ano.response';
+import { RelatoriosFullResponse } from '../dtos/responses/relatorios/relatorios-full.response';
 
 @Injectable({
   providedIn: 'root',

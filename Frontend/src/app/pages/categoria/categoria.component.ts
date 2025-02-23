@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { CategoriaResponse } from '../../dtos/responses/Categoria.response';
+import { CategoriaResponse } from '../../dtos/responses/categoria.response';
 import { CategoriaService } from '../../services/categoria.service';
-import { CategoriaRequest } from '../../dtos/requests/Categoria.request';
-import { ApiGenericToasts } from '../../infra/api/api.genericToasts';
+import { CategoriaRequest } from '../../dtos/requests/categoria.request';
+import { ApiGenericToasts } from '../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-categoria',

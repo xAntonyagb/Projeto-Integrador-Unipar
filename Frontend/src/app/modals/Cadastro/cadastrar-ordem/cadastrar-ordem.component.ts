@@ -1,14 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AmbienteService } from '../../../services/ambiente.service';
 import { CategoriaService } from '../../../services/categoria.service';
-import { CategoriaResponse } from '../../../dtos/responses/Categoria.response';
-import { OrdemService } from '../../../services/ordem.service';
-import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
+import { CategoriaResponse } from '../../../dtos/responses/categoria.response';
+import { OrdemService } from '../../../services/ordem-servico.service';
+import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
 import { ToastrService } from 'ngx-toastr';
-import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
-import { OrdemServicoRequest } from '../../../dtos/requests/OrdemServico.request';
-import { PatrimonioResponse } from '../../../dtos/responses/Patrimonio.response';
+import { BlocoResponse } from '../../../dtos/responses/bloco.response';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
+import { OrdemServicoRequest } from '../../../dtos/requests/ordem-servico.request';
+import { PatrimonioResponse } from '../../../dtos/responses/patrimonio.response';
 import { PatrimonioService } from '../../../services/patrimonio.service';
 
 @Component({
@@ -19,7 +19,6 @@ import { PatrimonioService } from '../../../services/patrimonio.service';
 export class CadastrarOrdemComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
 
-  isModalOpen = false;
   descricaoOrdem = '';
   data: Date | any = '';
   bloco: BlocoResponse[] = [];
@@ -188,7 +187,6 @@ export class CadastrarOrdemComponent implements OnInit {
   }
 
   closeModal() {
-    this.isModalOpen = false;
     this.close.emit();
   }
 

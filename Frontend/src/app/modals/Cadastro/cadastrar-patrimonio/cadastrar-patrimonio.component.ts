@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
+import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
 import { PatrimonioService } from '../../../services/patrimonio.service';
 import { AmbienteService } from '../../../services/ambiente.service';
 import { ToastrService } from 'ngx-toastr';
-import { PatrimonioRequest } from '../../../dtos/requests/Patrimonio.request';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { PatrimonioRequest } from '../../../dtos/requests/patrimonio.request';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-cadastrar-patrimonio',

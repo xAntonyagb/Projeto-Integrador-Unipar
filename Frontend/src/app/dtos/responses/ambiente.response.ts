@@ -1,7 +1,7 @@
-import { BlocoResponse } from './Bloco.response';
+import { BlocoResponse } from './bloco.response';
 import { ServicoResponse } from './Servico.response';
-import { PatrimonioResponse } from './Patrimonio.response';
-import { PatrimonioSimpleResponse } from './PatrimonioSimple.response';
+import { PatrimonioResponse } from './patrimonio.response';
+import { PatrimonioSimpleResponse } from './patrimonio-simple.response';
 
 export interface AmbienteResponse {
   id: number;

@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BlocoService } from '../../../services/bloco.service';
 import { PatrimonioService } from '../../../services/patrimonio.service';
-import { BlocoResponse } from '../../../dtos/responses/Bloco.response';
-import { PatrimonioResponse } from '../../../dtos/responses/Patrimonio.response';
-import { AmbienteResponse } from '../../../dtos/responses/Ambiente.response';
+import { BlocoResponse } from '../../../dtos/responses/bloco.response';
+import { PatrimonioResponse } from '../../../dtos/responses/patrimonio.response';
+import { AmbienteResponse } from '../../../dtos/responses/ambiente.response';
 import { AmbienteService } from '../../../services/ambiente.service';
-import { AmbienteRequest } from '../../../dtos/requests/Ambiente.request';
-import { ApiGenericToasts } from '../../../infra/api/api.genericToasts';
+import { AmbienteRequest } from '../../../dtos/requests/ambiente.request';
+import { ApiGenericToasts } from '../../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-cadastrar-ambiente',

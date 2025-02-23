@@ -1,4 +1,4 @@
-import { ServicoRequest } from './Servico.request';
+import { ServicoRequest } from './servico.request';
 
 export class OrdemServicoRequest {
   id?: number;

@@ -14,6 +14,7 @@ import { CadastrarOrdemComponent } from './cadastrar-ordem.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
+import { ModalHeaderModule } from "../../modal-header/modal-header.module";
 
 @NgModule({
   declarations: [CadastrarOrdemComponent],
@@ -32,8 +33,10 @@ import { DialogModule } from 'primeng/dialog';
     DropdownModule,
     DividerModule,
     DialogModule,
-  ],
+    ModalHeaderModule
+],
 
   exports: [CadastrarOrdemComponent],
 })
 export class CadastrarOrdemModule {}
+ 

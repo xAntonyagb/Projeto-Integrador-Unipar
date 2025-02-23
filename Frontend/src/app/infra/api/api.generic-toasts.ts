@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AmbienteService } from '../../services/ambiente.service';
 import { CategoriaService } from '../../services/categoria.service';
-import { OrdemService } from '../../services/ordem.service';
+import { OrdemService } from '../../services/ordem-servico.service';
 import { Toast, ToastRef, ToastrIconClasses, ToastrService } from 'ngx-toastr';
 
 @Injectable({

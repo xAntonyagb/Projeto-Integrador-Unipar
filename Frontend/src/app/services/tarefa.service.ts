@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { PaginacaoResponse } from '../dtos/responses/Paginacao.response';
-import { TarefaResponse } from '../dtos/responses/Tarefa.response';
-import { TarefaRequest } from '../dtos/requests/Tarefa.request';
-import { StatusTarefa } from '../dtos/enums/StatusTarefa.enum';
-import { PrioridadeTarefa } from '../dtos/enums/PrioridadeTarefa.enum';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { PaginacaoResponse } from '../dtos/responses/paginacao.response';
+import { TarefaResponse } from '../dtos/responses/tarefa.response';
+import { TarefaRequest } from '../dtos/requests/tarefa.request';
+import { StatusTarefa } from '../dtos/enums/status-tarefa.enum';
+import { PrioridadeTarefa } from '../dtos/enums/prioridade-tarefa.enum';
 
 @Injectable({
   providedIn: 'root',

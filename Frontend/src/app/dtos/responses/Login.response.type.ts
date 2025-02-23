@@ -1,4 +1,4 @@
-import { UsuarioPermissoes } from '../enums/UsuarioPermissoes.enum';
+import { UsuarioPermissoes } from '../enums/usuario-permissoes.enum';
 
 export type LoginResponse = {
   acessToken: string;

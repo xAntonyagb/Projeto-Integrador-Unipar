@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { ApiBaseUrls } from '../infra/api/api.baseUrls';
-import { LoginResponse } from '../dtos/responses/Login.response.type';
+import { ApiBaseUrls } from '../infra/api/api.base-urls';
+import { LoginResponse } from '../dtos/responses/login.response.type';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({

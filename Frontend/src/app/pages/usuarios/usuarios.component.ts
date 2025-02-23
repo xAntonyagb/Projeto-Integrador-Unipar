@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioResponse } from '../../dtos/responses/Usuario.response';
+import { UsuarioResponse } from '../../dtos/responses/usuario.response';
 import { UsuarioService } from '../../services/usuario.service';
-import { EMPTY, Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { ApiGenericToasts } from '../../infra/api/api.genericToasts';
+import { ApiGenericToasts } from '../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-usuarios',

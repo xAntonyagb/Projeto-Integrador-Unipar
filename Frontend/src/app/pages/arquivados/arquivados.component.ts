@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ArquivadoResponse } from '../../dtos/responses/Arquivado.response';
+import { ArquivadoResponse } from '../../dtos/responses/arquivado.response';
 import { ArquivadosRequest } from '../../services/arquivado.service';
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
-import { ApiGenericToasts } from '../../infra/api/api.genericToasts';
+import { ApiGenericToasts } from '../../infra/api/api.generic-toasts';
 
 @Component({
   selector: 'app-arquivados',

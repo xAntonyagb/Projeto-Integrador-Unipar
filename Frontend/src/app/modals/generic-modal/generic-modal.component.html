@@ -1,0 +1,8 @@
+<div class="overlay">
+    <div class="modal-container">
+        <app-modal-header [titulo]="titulo" (close)="closeModal()"></app-modal-header>
+        <div class="body">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

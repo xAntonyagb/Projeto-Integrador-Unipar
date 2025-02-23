@@ -1,4 +1,4 @@
-import { TipoArquivado } from '../enums/TipoArquivado.enum';
+import { TipoArquivado } from '../enums/tipo-arquivado.enum';
 
 export class ArquivadoRequest {
   id?: number;
